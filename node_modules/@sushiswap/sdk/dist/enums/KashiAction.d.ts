@@ -1,0 +1,18 @@
+export declare enum KashiAction {
+    ADD_ASSET = 1,
+    REPAY = 2,
+    REMOVE_ASSET = 3,
+    REMOVE_COLLATERAL = 4,
+    BORROW = 5,
+    GET_REPAY_SHARE = 6,
+    GET_REPAY_PART = 7,
+    ACCRUE = 8,
+    ADD_COLLATERAL = 10,
+    UPDATE_EXCHANGE_RATE = 11,
+    BENTO_DEPOSIT = 20,
+    BENTO_WITHDRAW = 21,
+    BENTO_TRANSFER = 22,
+    BENTO_TRANSFER_MULTIPLE = 23,
+    BENTO_SETAPPROVAL = 24,
+    CALL = 30
+}

@@ -1,0 +1,57 @@
+[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "foo",
+        "type": "address"
+      },
+      {
+        "name": "bar",
+        "type": "uint256"
+      },
+      {
+        "name": "baz",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "foo",
+            "type": "address"
+          },
+          {
+            "name": "bar",
+            "type": "uint256"
+          }
+        ]
+      },
+      {
+        "name": "qux",
+        "type": "tuple",
+        "components": [
+          {
+            "name": "foo",
+            "type": "address"
+          },
+          {
+            "name": "bar",
+            "type": "tuple",
+            "components": [
+              {
+                "name": "foo",
+                "type": "address"
+              },
+              {
+                "name": "bar",
+                "type": "uint256"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "name": "foo",
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
