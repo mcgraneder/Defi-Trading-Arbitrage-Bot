@@ -6,10 +6,11 @@ const UniswapFactory = require("../node_modules/@uniswap/v2-core/build/IUniswapV
 const UniswapV2Pair = require("../node_modules/@uniswap/v2-core/build/IUniswapV2Pair.json");
 const UniswapRouter = require("./contractBuilds/IUniswapV2Router02.json");
 const Utils = require("./contractBuilds/Utils.json");
-const IERC20 = require("../node_modules/@uniswap/v2-core/build/ERC20.json");
+const IERC20 = require("./contractBuilds/IERC20.json");
 const crowSwapFactory = require("./contractBuilds/CrowSwapFactory.json");
+const crowSwapRouter = require("./contractBuilds/CrowDefiSwapPair.json");
 const shibaswapFactory = require("./contractBuilds/ShibaSwapFactory.json");
-const { sqrt } = require("@sushiswap/sdk");
+const { sqrt, Rounding } = require("@sushiswap/sdk");
 // const { utils } = require("ethers");
 
 //defining address parameters. 
@@ -22,6 +23,7 @@ const UniswapRouterAddress = "0xf164fC0Ec4E93095b804a4795bBe1e041497b92a";
 const sakeswapFactoryAddress = "0x75e48C954594d64ef9613AeEF97Ad85370F13807";
 const sakeswapRouterAddress = "0x9C578b573EdE001b95d51a55A3FAfb45f5608b1f";
 const crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
+const crowSapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
 const shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
 
 const token01 = "0x514910771af9ca656af840dff83e8264ecf986ca"; //Link
@@ -29,7 +31,10 @@ const token0 = "0x6b175474e89094c44da98b954eedeac495271d0f"; //Link
 const token1 = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" //WETH
 const tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
 const pairName = "ETH/DAI";
-
+var amountToTradeInEth = 1;
+const validPeriod = 5;
+var eth;
+var link;
 
 //here we will initialise the needed smart contracts aswell as some vars
 //PAIR CONTRACTS
@@ -42,9 +47,6 @@ var uniswapRouterContract, sushiswapRouterContract, akeswapRouterContract;
 var uniswapPair0, uniswapPair1, sushiswapPair, sakeswapPair, crowswapPair, shibaswapPair;
 //HELPER VARS
 var userAccount, tokenName0, tokenName1, tokenSymbol0, tokenSymbol1;
-
-var state;
-
 
 //initialise web3
 
@@ -87,12 +89,16 @@ function initialiseFactoryContracts() {
     sakeswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, sakeswapFactoryAddress);
     sakeswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, sakeswapRouterAddress);
     crowswapFactoryContract = new web3.eth.Contract(crowSwapFactory, crowswapFactoryAddress);
+    crowswapRouterContract = new web3.eth.Contract(crowSwapRouter, crowSapRouterAddress);
     shibaswapFactoryContract = new web3.eth.Contract(shibaswapFactory, shibaSwapFactoryAddress);
     utils = new web3.eth.Contract(Utils.abi, "0xE78941610Ffef0eEA391BAe6d842175E389973E9");
+    eth = new web3.eth.Contract(IERC20.abi, token0);
+    link = new web3.eth.Contract(IERC20.abi, token1);
 }
 
 loadWeb3();
 loadBlockchainData();
+// console.log(eth)
 FindArbitrageOpportunity()
 
 
@@ -122,7 +128,7 @@ async function getExchangeTokenPairPrice() {
 
 async function getTokenPriceFromPoolReserves(contract, exchangeName) {
 
-    state = { blockNumber: undefined, token0: undefined, token1: undefined};
+    var state = { blockNumber: undefined, token0: undefined, token1: undefined};
 
     [state.token0, state.token1] = await getReserves(contract)
     state.blockNumber = await web3.eth.getBlockNumber();
@@ -173,28 +179,73 @@ async function FindArbitrageOpportunity() {
             uniswapReserve0 = uniswapReserve[0];
             uniswapReserve1 = uniswapReserve[1];
             var priceETH = (uniswapReserve0 / uniswapReserve1);
+            console.log(priceETH);
+            // console.log("Oppsotie is"+ (uniswapReserve1 / uniswapReserve0))
 
             uniswapReserve = await uniswapPairContract1.methods.getReserves().call();
             uniswapReserve0 = uniswapReserve[0];
             uniswapReserve1 = uniswapReserve[1];
 
+            console.log("Uniswap reserves: " + uniswapReserve0, uniswapReserve1 + "/n")
+            
             sushiswapReserve = await sushiSwapPairContract.methods.getReserves().call();
             sushiswapReserve0 = sushiswapReserve[0];
             sushiswapReserve1 = sushiswapReserve[1];
 
-            const aToB =  ((uniswapReserve0 * sushiswapReserve1) /  uniswapReserve1) < sushiswapReserve0;
-            const invariant = (uniswapReserve0 * uniswapReserve1);
+            sakeswapReserve = await sakeswapPairContract.methods.getReserves().call();
+            sakeswapReserve0 = sakeswapReserve[0];
+            sakeswapReserve1 = sakeswapReserve[1];
 
-            const leftSide = sqrt((invariant * 1000) * (aToB ? sushiswapReserve0 : sushiswapReserve1) / (aToB ? sushiswapReserve1 : sushiswapReserve0) * 997);
-            const rightSide = (aToB ? uniswapReserve0 *1000 : uniswapReserve1 * 1000) / 997;
+            cr = await crowswapPairContract.methods.getReserves().call();
+            const cr0 = cr[0];
+            const cr1 = cr[1];
+            const CC = (cr0 / cr1);
+           
+            console.log("sushiswap reserves: " + sushiswapReserve0, sushiswapReserve1+ "/n")
 
-            const amountIn = leftSide - rightSide;
-            console.log(amountIn);
-            if (amountIn <= 0) {
-                
-                console.log("There is no arbitrage opportunity available");
-                return;
-            }
+            const amountIn = web3.utils.toWei(amountToTradeInEth.toString(), "Ether");
+           
+            const newUniswapReserve0 = Number(uniswapReserve0) + Number(uniswapReserve1);
+            const newUniswapReserve1 = Number(uniswapReserve0) - Number(uniswapReserve1);
+         
+
+            var amountOut = await uniswapRouterContract.methods.getAmountOut(BigInt(amountIn), uniswapReserve0, uniswapReserve1).call()
+            var sushiAmountIn = await sushiswapRouterContract.methods.getAmountIn(BigInt(amountIn), sushiswapReserve1, sushiswapReserve0).call();
+
+            var am1 = await uniswapRouterContract.methods.getAmountOut(BigInt(amountIn), cr0, cr1).call();
+
+            var am2 = await sakeswapRouterContract.methods.getAmountOut(BigInt(amountIn), sakeswapReserve0, sakeswapReserve1).call();
+           
+
+            const sushiPrice = 1 / (sushiAmountIn / amountIn);
+            const difference = amountOut - sushiPrice;
+
+           
+            console.log("The amount generated from a swap of 1 eth to DAI on uniswap is : " + web3.utils.fromWei(amountOut.toString(), "Ether") + "DAI\n");
+            console.log("The input amount of DAI on sushiswap  required to get " + web3.utils.fromWei(amountOut.toString(), "Ether") + " is: "  + web3.utils.fromWei(sushiAmountIn.toString(), "Ether"));
+            console.log("\nSushiPrice Eth: " + 1/(sushiAmountIn/amountIn));
+            console.log("\n Uni price: " + priceETH)
+          
+            const totalDifference = difference * Math.round(amountIn / 10 ** 18);
+            const tokenPath = [token0, token1];
+            const deadline = Math.round(Date.now() /  1000 + validPeriod * 60);
+
+            // const gasNeeded0 = (0.03 * 10 ** 6) * 2;
+            const gasNeeded0 = await link.methods.approve(UniswapRouterAddress, amountIn).estimateGas();
+            console.log("Required gas is: " + gasNeeded0);
+            const gasNeeded1 = (0.15 * 10 ** 6) * 2;
+            // await eth.methods.approve(UniswapRouterAddress, amountIn).send({from: userAccount});
+            // const gasNeeded1 = await uniswapRouterContract.methods.swapExactTokensForTokens(amountIn, 0, tokenPath, userAccount, deadline).estimateGas();
+            // console.log("Required1 gas is: " + gasNeeded1)
+
+            const gasNeeded = gasNeeded0 + gasNeeded1;
+            const gasPrice = await web3.eth.getGasPrice();
+            const gasCost = Number(gasPrice) * gasNeeded / 10 ** 18;
+
+            const price = (uniswapReserve0 / uniswapReserve1);
+            const profit = (totalDifference * price) - gasCost;
+
+            console.log("\n your expected profit after gas Consideration is: " + web3.utils.fromWei(profit.toString(), "Ether"));
             
 
         }catch (error) {
@@ -204,4 +255,5 @@ async function FindArbitrageOpportunity() {
     })
 
 }
+// const amountOut = await uRouter.methods.getAmountOut(amountIn,uReserve0 ,uReserve1).call()
 
