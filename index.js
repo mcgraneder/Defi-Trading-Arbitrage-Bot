@@ -9,6 +9,7 @@ const app = express();
 var web3;
 require('colors');
 
+
 const PORT = process.env.PORT || 5000
 const server = http.createServer(app).listen(PORT, () => console.log(`Listening on ${ PORT }`))
 app.use(express.static(path.join(__dirname, 'public')))
@@ -50,14 +51,14 @@ const token1 = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" //WETH1
 const tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
 const pairName = "ETH/DAI";
 var localStorage = new LocalStorage('./scratch');
-var amountToTradeInEth = 3;
+var amountToTradeInEth = 1;
 const validPeriod = 5;
 var eth;
 var link;
 
 //here we will initialise the needed smart contracts aswell as some vars
 //PAIR CONTRACTS
-var uniswapPairContract, uniswapPairContract1, sushiSwapPairContract, sakeswapPairContract, crowswapPairContract, shibaswapPairContract, utils;
+var uniswapPairContract, uniswapPairContract1, sushiSwapPairContract, sakeswapPairContract, crowswapPairContract, shibaswapPairContract;
 //FACTORY CONTRACTS
 var uniswapFactoryContract, sushiswapFactoryContract, sakeswapFactoryContract, crowswapFactoryContract, shibaswapFactoryContract;
 //ROUTER CONTRACTS
@@ -112,19 +113,23 @@ function initialiseFactoryContracts() {
     crowswapFactoryContract = new web3.eth.Contract(crowSwapFactory, crowswapFactoryAddress);
     crowswapRouterContract = new web3.eth.Contract(crowSwapRouter, crowSapRouterAddress);
     shibaswapFactoryContract = new web3.eth.Contract(shibaswapFactory, shibaSwapFactoryAddress);
-    utils = new web3.eth.Contract(Utils.abi, "0xE78941610Ffef0eEA391BAe6d842175E389973E9");
+    // utils = new web3.eth.Contract(Utils.abi, "0xE78941610Ffef0eEA391BAe6d842175E389973E9");
     weth = new web3.eth.Contract(IERC20.abi, token0);
     dai = new web3.eth.Contract(IERC20.abi, token1);
+
+    
+ 
 }
 
 
 async function getExchangeTokenPairPrice() {
 
-    uniswapPair0 = await uniswapFactoryContract.methods.getPair(WETH1, DAI).call();
+    uniswapPair0 = await uniswapFactoryContract.methods.getPair(DAI, WETH1).call();
     uniswapPair1 = await uniswapFactoryContract.methods.getPair(token0, token1 ).call();
+    console.log(uniswapPair0, uniswapPair1)
     sushiswapPair = await sushiswapFactoryContract.methods.getPair(token0, token1 ).call();
     sakeswapPair = await sakeswapFactoryContract.methods.getPair(token0, token1 ).call();
-    crowswapPair = await crowswapFactoryContract.methods.getPair(token1, token0).call();
+    crowswapPair = await crowswapFactoryContract.methods.getPair(token0, token1).call();
     shibaswapPair = await shibaswapFactoryContract.methods.getPair(token0, token1).call();
 
     uniswapPairContract= new web3.eth.Contract(UniswapV2Pair.abi, uniswapPair0);
@@ -132,13 +137,21 @@ async function getExchangeTokenPairPrice() {
     sakeswapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, sakeswapPair);
     crowswapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, crowswapPair);
     shibaswapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, shibaswapPair);
-
+   
     uniswapPairContract1 = new web3.eth.Contract(UniswapV2Pair.abi, uniswapPair1);
     getTokenPriceFromPoolReserves(uniswapPairContract, "Uniswap");
     getTokenPriceFromPoolReserves(sushiSwapPairContract, "SushiSwap");
     getTokenPriceFromPoolReserves(sakeswapPairContract, "SakeSwap");
     getTokenPriceFromPoolReserves(crowswapPairContract, "CrowSwap");
     getTokenPriceFromPoolReserves(shibaswapPairContract, "ShibaSwap");
+
+    let gasLimit, receipt
+    gasLimit = await utils.deploy().estimateGas()
+    receipt = await utils.deploy().send({from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",gas: gasLimit})
+    utils.options.address = receipt._address
+
+  console.log(`Utils contract deployed at ${utils.options.address}\n`)
+
 }
 
 
@@ -172,8 +185,11 @@ async function updateState(data, exchangeName) {
 
 
 loadWeb3();
+const utils = new web3.eth.Contract(Utils.abi,'',{data:Utils.bytecode})
 initialiseFactoryContracts()
 loadBlockchainData();
+
+
 
 //we will look for profit every two blockss because (two transactions made)
 async function FindArbitrageOpportunity() {
@@ -181,7 +197,7 @@ async function FindArbitrageOpportunity() {
     let skip = true;
     console.log("hey")
     const newBlockEvent = web3.eth.subscribe("newBlockHeaders");
-    newBlockEvent.on("connected", () => {console.log("/nArbitrage bot listening/n");});
+    newBlockEvent.on("connected", () => {console.log("\nArbitrage bot listening.....\n");});
 
     skip != skip;
         if (!skip) return;
@@ -191,6 +207,11 @@ async function FindArbitrageOpportunity() {
             var uniswapReserve, sushiswapReserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
             var uniswapReserve0, uniswapReserve1, sushiswapReserve0, sushiswapReserve1, sakeswapReserve0, sakeswapReserve1, shibaswapReserve0, shibaswapReserve1;
 
+            var x = await uniswapPairContract.methods.price0CumulativeLast().call();
+            console.log(x)
+
+            var y = await uniswapPairContract.methods.price1CumulativeLast().call();
+            console.log(x/y)
 
             //get the reserves for supported exchanges
             uniswapReserve = await uniswapPairContract1.methods.getReserves().call();
@@ -237,7 +258,7 @@ async function FindArbitrageOpportunity() {
             // //use the dex router contracts to calulate the expected output and input amounts. we reverse the reserve oders bease
             // //the trades are executed on opposite sides on both dexes
             var uniswapAmountOut = await uniswapRouterContract.methods.getAmountIn(amountIn, uniswapReserve0, uniswapReserve1).call() //in wei
-            var sushiswapAmountIn = await uniswapRouterContract.methods.getAmountOut(amountIn, sushiswapReserve1, sushiswapReserve0).call(); //in wei
+            var sushiswapAmountIn = await sushiswapRouterContract.methods.getAmountOut(amountIn, sushiswapReserve1, sushiswapReserve0).call(); //in wei
             var sakeswapAmountIn = await sakeswapRouterContract.methods.getAmountOut(amountIn, sakeswapReserve0, sakeswapReserve1).call(); //in wei
             var crowswapAmountIn = await await uniswapRouterContract.methods.getAmountOut(amountIn, crowswapReserve0, crowswapReserve1).call(); //in wei
             var shibaswapAmountIn = await sushiswapRouterContract.methods.getAmountIn(amountIn, shibaswapReserve0, shibaswapReserve1).call(); //in wei
@@ -305,18 +326,18 @@ async function FindArbitrageOpportunity() {
                 
             //now that we have estimated the gas that it will cost for us to execute the trades on both exchanges we simly
             //subtract this from our total difference above to get the final expected profit from the trade if any.
-            var totalProfit = (totalDifference) -  web3.utils.fromWei(gasCost.toString(), "Ether");
-            console.log(`\nThe total estimated profit is ${totalDifference} - ${web3.utils.fromWei(gasCost.toString(), "Ether")} = ${totalProfit}`);
-           
+            var totalProfit = (totalDifference) -  web3.utils.fromWei(gasCost.toString(), "Ether");       
             if (totalProfit < 0) {
-                
-                console.log("\nThere is no profit to be made form this trade after the cost of gas and slippage");
+
+                amountToTradeInEth += 1;
+                console.log(`\nThere is no profit to be made form this trade after the cost of gas and slippage your loss is ` + `${Math.abs(totalProfit)}`.red + ` Try increasing your trade amount`);
                 return;
 
             } else {
 
-                console.log(`\nEstimated profit expected. Preparing to execute flashloan. Note that these are only estimations the\n` +
-                        `flashloan might still fail due to deylaed price feeds and market volaitity which affects the gas and slippage estimations`)
+                console.log(`\nThe total estimated profit is ${totalDifference} - ${web3.utils.fromWei(gasCost.toString(), "Ether")} =S` + `${totalProfit}`.green);
+
+                console.log(`\n...Estimated profit expected. Preparing to execute flashloan. Note that these are only estimations the flashloan might still fail due to deylaed price feeds and market volaitity which affects the gas and slippage estimations`.green)
             }
         
             // console.log(
@@ -394,7 +415,7 @@ async function FindArbitrageOpportunity() {
 
 }
 
-FindArbitrageOpportunity();
+// FindArbitrageOpportunity();
 
-const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 8000 // 3 Seconds
+const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 8000 // 8 Seconds
 priceMonitor = setInterval(async () => { await FindArbitrageOpportunity() }, POLLING_INTERVAL)
