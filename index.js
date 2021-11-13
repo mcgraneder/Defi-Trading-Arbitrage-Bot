@@ -1,156 +1,94 @@
+//IMPORTS 
+const Web3 = require("web3");
 const express = require("express");
 const http = require("http");
-const Web3 = require("web3");
 const cors = require('cors')
-const {LocalStorage} = require("node-localstorage");
-const axios = require('axios');
 const path = require("path");
 const app = express();
-var web3;
 require('colors');
+const { LocalStorage } = require("node-localstorage");
+const Registry = require("./registry.js");
 
-
-const PORT = process.env.PORT || 5000
-const server = http.createServer(app).listen(PORT, () => console.log(`Listening on ${ PORT }`))
-app.use(express.static(path.join(__dirname, 'public')))
-app.use(cors({credentials: true, origin: '*'}));
-app.get("/", function(req, res) {
-
-    res.send({ uniswapBuy: "hello" });
-})
-
-const privateKey = "0xc51f7826f42baad15e0ab5a6d11d5c49301c7feb5c5961f857725cb8f283b4bb"
-  
-//ABIS
-const UniswapFactory = require("../node_modules/@uniswap/v2-core/build/IUniswapV2Factory.json");
-const UniswapV2Pair = require("../node_modules/@uniswap/v2-core/build/IUniswapV2Pair.json");
-const UniswapRouter = require("./contractBuilds/IUniswapV2Router02.json");
-const Utils = require("./contractBuilds/Utils.json");
-const IERC20 = require("./contractBuilds/IERC20.json");
-const crowSwapFactory = require("./contractBuilds/CrowSwapFactory.json");
-const crowSwapRouter = require("./contractBuilds/CrowDefiSwapPair.json");
-const shibaswapFactory = require("./contractBuilds/ShibaSwapFactory.json");
-;
-
-//defining address parameters. 
-const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
-const WETH1 = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-const SushiSwapFactoryAddress = "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac";
-const SushiSwapRouterAddress = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
-const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
-const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
-const sakeswapFactoryAddress = "0x75e48C954594d64ef9613AeEF97Ad85370F13807";
-const sakeswapRouterAddress = "0x9C578b573EdE001b95d51a55A3FAfb45f5608b1f";
-const crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
-const crowSapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
-const shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-
-const token01 = "0x514910771af9ca656af840dff83e8264ecf986ca"; //Link
-const token0 = "0x6b175474e89094c44da98b954eedeac495271d0f"; //Link
-const token1 = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2" //WETH1
-const tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
-const pairName = "ETH/DAI";
+//GLOBAL VARS
 var localStorage = new LocalStorage('./scratch');
-var amountToTradeInEth = 1;
+let registry = new Registry()
+var web3;
+const amountToTradeInEth = 1;
 const validPeriod = 5;
-var eth;
-var link;
-
-//here we will initialise the needed smart contracts aswell as some vars
-//PAIR CONTRACTS
-var uniswapPairContract, uniswapPairContract1, sushiSwapPairContract, sakeswapPairContract, crowswapPairContract, shibaswapPairContract;
-//FACTORY CONTRACTS
-var uniswapFactoryContract, sushiswapFactoryContract, sakeswapFactoryContract, crowswapFactoryContract, shibaswapFactoryContract;
-//ROUTER CONTRACTS
-var uniswapRouterContract, sushiswapRouterContract;
-//TOKEN PAIRS ACROSS LISTED EXCHANGES
 var uniswapPair0, uniswapPair1, sushiswapPair, sakeswapPair, crowswapPair, shibaswapPair;
-//HELPER VARS
-var userAccount;
-var account;
-        // this.uniswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, this.UniswapFactoryAddress);
+var server, PORT;
+var pairName = "DAI/WETH";
 
-// console.log(registry.uniswapFactoryContract)
+//I
 async function loadWeb3() {
    
-    const provider = new Web3.providers.WebsocketProvider("http://127.0.0.1:8545")
+    const provider = new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/ba5ee6592e68419cab422190121eca4c")
     web3 = new Web3(provider);
    
     const accounts = await web3.eth.getAccounts()
-    account = accounts[0]
+    // account = accounts[0]
     console.log(accounts)
     
     const netId = await web3.eth.net.getId()
     console.log("The network id is:" + netId);
     
-    userAccount = "0xf60c2Ea62EDBfE808163751DD0d8693DCb30019c";
+    userAccount = "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE";
     const balance = await web3.eth.getBalance(userAccount);
     console.log("Your balance is: " + balance);
+
+    PORT = process.env.PORT || 5000
+    server = http.createServer(app).listen(PORT, () => console.log(`Listening on ${ PORT }`))
+    app.use(express.static(path.join(__dirname, 'public')))
+    app.use(cors({credentials: true, origin: '*'}));
+    app.get("/", function(req, res) {
+
+        res.send({ uniswapBuy: "hello" });
+    });
+
 }
 
 async function loadBlockchainData() {
 
     //sort tokens uniswap uses sorted tokens
-    if (token0 > token1) {
+    if (registry.DAI > registry.WETH) {
 
-        aux = token0;
-        token0 = token1;
-        token1 = aux;
+        aux = registry.DAI;
+        registry.DAI = registry.WETH;
+        registry.WETH = aux;
     }
 
-    initialiseFactoryContracts();
     getExchangeTokenPairPrice();
 }
 
-function initialiseFactoryContracts() {
-
-    uniswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, UniswapFactoryAddress);
-    uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, UniswapRouterAddress);
-    sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
-    sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
-    sakeswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, sakeswapFactoryAddress);
-    sakeswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, sakeswapRouterAddress);
-    crowswapFactoryContract = new web3.eth.Contract(crowSwapFactory, crowswapFactoryAddress);
-    crowswapRouterContract = new web3.eth.Contract(crowSwapRouter, crowSapRouterAddress);
-    shibaswapFactoryContract = new web3.eth.Contract(shibaswapFactory, shibaSwapFactoryAddress);
-    // utils = new web3.eth.Contract(Utils.abi, "0xE78941610Ffef0eEA391BAe6d842175E389973E9");
-    weth = new web3.eth.Contract(IERC20.abi, token0);
-    dai = new web3.eth.Contract(IERC20.abi, token1);
-
-    
- 
-}
-
-
 async function getExchangeTokenPairPrice() {
 
-    uniswapPair0 = await uniswapFactoryContract.methods.getPair(DAI, WETH1).call();
-    uniswapPair1 = await uniswapFactoryContract.methods.getPair(token0, token1 ).call();
-    console.log(uniswapPair0, uniswapPair1)
-    sushiswapPair = await sushiswapFactoryContract.methods.getPair(token0, token1 ).call();
-    sakeswapPair = await sakeswapFactoryContract.methods.getPair(token0, token1 ).call();
-    crowswapPair = await crowswapFactoryContract.methods.getPair(token0, token1).call();
-    shibaswapPair = await shibaswapFactoryContract.methods.getPair(token0, token1).call();
+    // initialise DAI & WETH Token interfaces to access ERC20 functions
+    weth = new web3.eth.Contract(registry.IERC20.abi, registry.DAI);
+    dai = new web3.eth.Contract(registry.IERC20.abi, registry.WETH);
 
-    uniswapPairContract= new web3.eth.Contract(UniswapV2Pair.abi, uniswapPair0);
-    sushiSwapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, sushiswapPair);
-    sakeswapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, sakeswapPair);
-    crowswapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, crowswapPair);
-    shibaswapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, shibaswapPair);
-   
-    uniswapPairContract1 = new web3.eth.Contract(UniswapV2Pair.abi, uniswapPair1);
+    //get all DAI/WETH pair addresses on all required exchanges
+    uniswapPair0 = await registry.uniswapFactoryContract.methods.getPair(registry.DAI, registry.WETH).call();
+    uniswapPair1 = await registry.uniswapFactoryContract.methods.getPair(registry.DAI, registry.WETH ).call();
+    console.log(uniswapPair0, uniswapPair1)
+    sushiswapPair = await registry.sushiswapFactoryContract.methods.getPair(registry.DAI, registry.WETH ).call();
+    sakeswapPair = await registry.sakeswapFactoryContract.methods.getPair(registry.DAI, registry.WETH ).call();
+    crowswapPair = await registry.crowswapFactoryContract.methods.getPair(registry.DAI, registry.WETH).call();
+    shibaswapPair = await registry.shibaswapFactoryContract.methods.getPair(registry.DAI, registry.WETH).call();
+
+    //initialise DAI/WETH pair contracts on all required exchanges
+    uniswapPairContract= new web3.eth.Contract(registry.UniswapV2Pair.abi, uniswapPair0);
+    sushiSwapPairContract = new web3.eth.Contract(registry.UniswapV2Pair.abi, sushiswapPair);
+    sakeswapPairContract = new web3.eth.Contract(registry.UniswapV2Pair.abi, sakeswapPair);
+    crowswapPairContract = new web3.eth.Contract(registry.UniswapV2Pair.abi, crowswapPair);
+    shibaswapPairContract = new web3.eth.Contract(registry.UniswapV2Pair.abi, shibaswapPair);
+
+    //fetch DAI/WETH Price from all exchanges
     getTokenPriceFromPoolReserves(uniswapPairContract, "Uniswap");
     getTokenPriceFromPoolReserves(sushiSwapPairContract, "SushiSwap");
     getTokenPriceFromPoolReserves(sakeswapPairContract, "SakeSwap");
     getTokenPriceFromPoolReserves(crowswapPairContract, "CrowSwap");
     getTokenPriceFromPoolReserves(shibaswapPairContract, "ShibaSwap");
 
-    let gasLimit, receipt
-    gasLimit = await utils.deploy().estimateGas()
-    receipt = await utils.deploy().send({from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",gas: gasLimit})
-    utils.options.address = receipt._address
-
-  console.log(`Utils contract deployed at ${utils.options.address}\n`)
 
 }
 
@@ -180,142 +118,95 @@ async function updateState(data, exchangeName) {
     state.blockNumber = data.blockNumber;
 
     console.log("Current Block: " + state.blockNumber + " The price of: " + pairName + "on" + exchangeName +  "is: " 
-                + (state.token0 / state.token1).toString());
+                + (state.tojen0 / state.token1).toString());
 }
 
 
 loadWeb3();
-const utils = new web3.eth.Contract(Utils.abi,'',{data:Utils.bytecode})
-initialiseFactoryContracts()
 loadBlockchainData();
 
 
-
 //we will look for profit every two blockss because (two transactions made)
-async function FindArbitrageOpportunity() {
+async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterAddress) {
 
     let skip = true;
     console.log("hey")
     const newBlockEvent = web3.eth.subscribe("newBlockHeaders");
-    newBlockEvent.on("connected", () => {console.log("\nArbitrage bot listening.....\n");});
+    newBlockEvent.on('connected', () =>{console.log('\nBot listening!\n')})
 
-    skip != skip;
-        if (!skip) return;
-
+//look up for a profit whenever a new block is minned
+    await newBlockEvent.on('data', async function(blockHeader){
         try {
+
+            const pairContract0 = uniswapPairContract;
+            const pairContract1 = sushiSwapPairContract;
             
-            var uniswapReserve, sushiswapReserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
-            var uniswapReserve0, uniswapReserve1, sushiswapReserve0, sushiswapReserve1, sakeswapReserve0, sakeswapReserve1, shibaswapReserve0, shibaswapReserve1;
-
-            var x = await uniswapPairContract.methods.price0CumulativeLast().call();
-            console.log(x)
-
-            var y = await uniswapPairContract.methods.price1CumulativeLast().call();
-            console.log(x/y)
+            
+            var pair0Reserve, pair1Reserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
+            var pair0Reserve1, upair0eserve1, sushiswapReserve0, sushiswapReserve1, sakeswapReserve0, sakeswapReserve1, shibaswapReserve0, shibaswapReserve1;
 
             //get the reserves for supported exchanges
-            uniswapReserve = await uniswapPairContract1.methods.getReserves().call();
-            sushiswapReserve = await sushiSwapPairContract.methods.getReserves().call();
-            sakeswapReserve = await sakeswapPairContract.methods.getReserves().call();
-            crowswapReserve = await crowswapPairContract.methods.getReserves().call();
-            shibaswapReserve = await shibaswapPairContract.methods.getReserves().call();
+            pair0Reserve = await uniswapPairContract.methods.getReserves().call();
+            pair1Reserve = await sushiSwapPairContract.methods.getReserves().call();
+           
 
-            //tuple unpack the token reserves reserve[0] == DAI, reserve[1] ==weth
-            uniswapReserve0 = uniswapReserve[0];
-            uniswapReserve1 = uniswapReserve[1];
+            //tuple unpack the token reserves reserve[0] == registry.DAI, reserve[1] ==weth
+            var pair0Reserve0 = pair0Reserve[0];
+            var pair0Reserve1 = pair0Reserve[1];
 
-            sushiswapReserve0 = sushiswapReserve[0];
-            sushiswapReserve1 = sushiswapReserve[1];
+            var pair1Reserve0 = pair1Reserve[0];
+            var pair1Reserve1 = pair1Reserve[1];
 
-            sakeswapReserve0 = sakeswapReserve[0];
-            sakeswapReserve1 = sakeswapReserve[1];
-
-            crowswapReserve0 = crowswapReserve[0];
-            crowswapReserve1 = crowswapReserve[1];
-
-            shibaswapReserve0 = shibaswapReserve[0];
-            shibaswapReserve1 = shibaswapReserve[1];
-
+            
             //calculate dai and weth prices from exchange reserves
-            var PriceEth = (uniswapReserve0 / uniswapReserve1);
-            var uniswapETHPrice = (uniswapReserve0 / uniswapReserve1);
-            var uniswapDAIRate = (1 / uniswapETHPrice);
+            var PriceEth = (pair0Reserve1 / pair0Reserve1);
+            var exchange0ETHPrice = (pair0Reserve1 / pair0Reserve1);
+            var uniswapDAIRate = (1 / exchange0ETHPrice);
 
-            var sushiswapETHPrice = (sushiswapReserve0 / sushiswapReserve1);
-            var sushiswapDAIRate = (1 / sushiswapETHPrice);
+            var exchange1ETHPrice = (sushiswapReserve0 / sushiswapReserve1);
+            var exchange1DAIRate = (1 / exchange1ETHPrice);
 
-            var crowswapETHPrice = (crowswapReserve0 / crowswapReserve1);
-            var crowswapDAIRate = (1 / crowswapETHPrice);
-
-            var shibaswapETHPrice = (shibaswapReserve0 / shibaswapReserve1);
-            var shibaswapDAIRate = (1 / shibaswapETHPrice);
-
-            //now that we have the prices of DAI/WETH on the different exchanges we can calculate
+            //now that we have the prices of registry.DAI/WETH on the different exchanges we can calculate
             //the pair price difference between each exchange and take the most profitiable to make
             //our trade.
             const amountIn = web3.utils.toWei(amountToTradeInEth.toString(), "Ether");
 
             // //use the dex router contracts to calulate the expected output and input amounts. we reverse the reserve oders bease
             // //the trades are executed on opposite sides on both dexes
-            var uniswapAmountOut = await uniswapRouterContract.methods.getAmountIn(amountIn, uniswapReserve0, uniswapReserve1).call() //in wei
-            var sushiswapAmountIn = await sushiswapRouterContract.methods.getAmountOut(amountIn, sushiswapReserve1, sushiswapReserve0).call(); //in wei
-            var sakeswapAmountIn = await sakeswapRouterContract.methods.getAmountOut(amountIn, sakeswapReserve0, sakeswapReserve1).call(); //in wei
-            var crowswapAmountIn = await await uniswapRouterContract.methods.getAmountOut(amountIn, crowswapReserve0, crowswapReserve1).call(); //in wei
-            var shibaswapAmountIn = await sushiswapRouterContract.methods.getAmountIn(amountIn, shibaswapReserve0, shibaswapReserve1).call(); //in wei
+            //check for arb tading registry.DAI/ETH on uniswap/sushiswap 
+            var exchange0AmountDaiForInputETH = await registry.uniswapRouterContract.methods.getAmountIn(amountIn, pair0Reserve0, pair0Reserve1).call() //in wei
+            var exchange1AmountDaiForInputETH = await registry.sushiswapRouterContract.methods.getAmountIn(amountIn, pair1Reserve0, pair1Reserve1).call() //in wei
+           
+            var exchange0AmountETHForInputDAI = await registry.uniswapRouterContract.methods.getAmountOut(amountIn, pair0Reserve1, pair0Reserve0).cpair0//in wei
+            var exchange1AmountETHForInputDAI = await registry.sushiswapRouterContract.methods.getAmountOut(amountIn, pair1Reserve1, pair1Reserve0).call(); //in wei
+           
 
-            console.log(
-                `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(uniswapAmountOut.toString(), "Ether")} DAI on Uniswap. ` +
-                `conversley ${web3.utils.fromWei(sushiswapAmountIn.toString(), "Ether")} will buy us ${amountToTradeInEth} WETH on Sushiswap\n`
-            );
+            var totalDifference, deadline, estimatedGasForApproval, estimatedGasForFlashLoan, totalEstimatedGas, gasCost;
+            const gasPrice = await web3.eth.getGasPrice();
 
-            //now we can claulate the difference between the rates on the different exachanges in order to figure out what exchange to
-            //take out the flashswap on. The price is the difference between the in and out results
-            const expectedSushiPrice = (sushiswapAmountIn / amountIn);
-            const expectedSakePrice = (sushiswapAmountIn / amountIn);
-            const expectedCrowPrice = (sushiswapAmountIn / amountIn);
-            const expectedShibaPrice = (sushiswapAmountIn / amountIn);
+        
+            var exchange0Exchange1PriceDifference = (exchange1AmountETHForInputDAI / amountIn) - (exchange0AmountDaiForInputETH/amountIn);
 
-            var uniswapForLoan = true;
-            var sushiDifference = expectedSushiPrice - uniswapAmountOut/amountIn;
-            var sakeiDifference = expectedSakePrice - uniswapAmountOut/amountIn;
-            var crowDifference = expectedCrowPrice - uniswapAmountOut/amountIn;
-            var shibaDifference = expectedShibaPrice - uniswapAmountOut/amountIn;
-            const profitArray = [sushiDifference, sakeiDifference, crowDifference, shibaDifference];
-            // var mostProfitableDifference = Math.max(...profitArray);
-            var mostProfitableDifference = sushiDifference;
+            if (exchange0Exchange1PriceDifference <= 0) {
 
-            if(mostProfitableDifference <= 0) {
+                console.log(`No arbitrage exists for this current trade`);
+                console.log(exchange0Exchange1PriceDifference)
+                return                        
+            } 
 
-                uniswapForLoan = false;
-                mostProfitableDifference = Math.abs(mostProfitableDifference);
-                console.log(`In order for successfuly arbitrage you need to take out your flashloan on Sushiswap`);
-                
-            } else {
-                
-                // sushiDifference = Math.abs(sushiDifference);
-                console.log(`In order for successfuly arbitrage you need to take out your flashloan on Uniswap`);
-                
-            }
-
-            //the total difference is the total trade amunt by the difference
-            var totalDifference = mostProfitableDifference * Math.round(amountIn / 10 ** 18);
-            console.log("\nThe toal difference between the Uni and Sushi prices is " + totalDifference);
-            //next we need to take into consideration slippage and gas costs. we need to deduct
-            //these from our calculate margin or difference above to estimate the final expected profit
-            const tokenPath = [token0, token1];
-            const deadline = Math.round(Date.now() /  1000 + validPeriod * 60);
+            totalDifference = exchange0Exchange1PriceDifference * web3.utils.fromWei(amountIn.toString(), "Ether");
+            deadline = Math.round(Date.now() /  1000 + validPeriod * 60);
 
             // to estimate the gas we can quote the expected gas that the flashwap loan will cost. howeecr
             //we also need to call the approve function so we need to estimate gas for this too
-            const estimatedGasForApproval = await dai.methods.approve(UniswapRouterAddress, amountIn).estimateGas();
+            estimatedGasForApproval = await dai.methods.approve(registry.UniswapRouterAddress, amountIn).estimateGas();
             // const estimatedGasForFlashLoan = await contract.methods.executeFlashSwap(...args).estimateGas();
-            const estimatedGasForFlashLoan = (0.3 * 10 ** 6) * 2;
-            const totalEstimatedGas = estimatedGasForApproval + estimatedGasForFlashLoan;
+            estimatedGasForFlashLoan = (0.3 * 10 ** 6) * 2;
+            totalEstimatedGas = estimatedGasForApproval + estimatedGasForFlashLoan;
 
             //now that we have the estimated gas amonnt we need to query the current gas cost and multiply
             //this by the estimated amount to get the final estimated gas price
-            const gasPrice = await web3.eth.getGasPrice();
-            const gasCost = Number(gasPrice) * totalEstimatedGas * PriceEth //in dai
+            gasCost = Number(gasPrice) * totalEstimatedGas * PriceEth //in dai
 
             console.log(`
                 \nThe estimated gas amount for calling the approve function is ${web3.utils.fromWei(estimatedGasForApproval.toString(), "Gwei")},` +
@@ -330,92 +221,74 @@ async function FindArbitrageOpportunity() {
             if (totalProfit < 0) {
 
                 amountToTradeInEth += 1;
+                ex = "SushiSwap";
                 console.log(`\nThere is no profit to be made form this trade after the cost of gas and slippage your loss is ` + `${Math.abs(totalProfit)}`.red + ` Try increasing your trade amount`);
                 return;
 
             } else {
-
+                
+                ex = "SushiSwap";
                 console.log(`\nThe total estimated profit is ${totalDifference} - ${web3.utils.fromWei(gasCost.toString(), "Ether")} =S` + `${totalProfit}`.green);
-
                 console.log(`\n...Estimated profit expected. Preparing to execute flashloan. Note that these are only estimations the flashloan might still fail due to deylaed price feeds and market volaitity which affects the gas and slippage estimations`.green)
             }
-        
-            // console.log(
-            //     `Block`+`\n\n`+
-            //     `Wrapped Ether (WETH1) {T0} | DAI Stablecoin (DAI) {T1} reserves\n\n`+
-            //     `On Uniswap\n`+
-            //     `WETH: ${Math.round(uniswapReserve0/10**18)} | DAI: ${Math.round(uniswapReserve1/10**18)}\n\n`+
-            //     `On Sushiswap\n`+
-            //     `WETH: ${Math.round(sushiswapReserve0/10**18)} | DAI: ${Math.round(sushiswapReserve1/10**18)}\n\n`+
-            //     `Swap's direction\n`+
-            //     `$WETH -> DAI\n\n`+
-            //     `Uniswap's pool state\n`+
-            //     `DAI excess/WETH shortage\n\n`+
-            //     `On Uniswap\n`+
-            //     `Mid price before swap: ${(uniswapReserve0/uniswapReserve1).toFixed(10)} WETH/DAI\n`+
-            //     `Mid price after swap: ${(newUniswapReserve0/newUniswapReserve1).toFixed(10)} WETH/DAI\n`+
-            //     `Swap ${amountIn/10**18} WETH for ${uniAmountOut/10**18} DAI\n`+
-            //     `Trade price: ${(1/(uniAmountOut/sushiAmountIn)).toFixed(10)} ${WETH1}/${DAI} (buy price)\n\n`+
-            //     `Sushiswap price: ${(sushiPrice).toFixed(2)} WETH/DAI (sell price)\n`+
-            //     `Difference: ${(sushiDifference).toFixed(10)} WETH/DAI\n`+
-            //     `Total difference: ${(sushiDifference*0.99).toFixed(10)} ETH or ${sushiDifference.toFixed(2)} DAI\n\n`+
-            //     `Gas needed: ${gasNeeded/10**6}\n`+
-            //     `Gas price: ${gasPrice/10**9} gwei\n`+
-            //     `Gas cost: ${gasCost.toFixed(5)} ETH\n\n`+
-            //     `${sushiProfit > 0 ? `Profit: ${sushiProfit.toFixed(20)} ETH or ${(sushiProfit*priceEth).toFixed(2)} DAI\n`.green: 
-            //     `No profit! (gas cost higher than the total difference achievable)\n`.red}`
-            // )
 
-            // if (sushiProfit <= 0) return;
+                      
+            console.log(
+                `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(exchange0AmountDaiForInputETH.toString(), "Ether")} registry.DAI on Uniswap. ` +
+                `conversley ${web3.utils.fromWei(sushiswapAmountETHForInputDAI.toString(), "Ether")} will buy us ${amountToTradeInEth} WETH on Sushiswap\n`
+            );
+
+            // // if (sushiProfit <= 0) return;
 
     
-            // const transaction0 = {from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: WETH1, gas: gasNeeded0, data: eth.methods.approve(uniswapRouterContract.options.address, amountIn).encodeABI()}
-            // const transaction1 = {from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: DAI, gas: gasNeeded0 * 5, data: eth.methods.approve(sushiswapRouterContract.options.address, amountIn).encodeABI()}
-            // const signedTX0 = await web3.eth.sendTransaction(transaction0);
-            // const receiptTX0 = signedTX0.transactionHash;
-            // const signedTX1 = await web3.eth.sendTransaction(transaction1);
-            // const receiptTX1 = signedTX1.transactionHash;
+            // // const transaction0 = {from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: registry.WETH1, gas: gasNeeded0, data: eth.methods.approve(registry.uniswapRouterContract.options.address, amountIn).encodeABI()}
+            // // const transaction1 = {from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: registry.DAI, gas: gasNeeded0 * 5, data: eth.methods.approve(registry.sushiswapRouterContract.options.address, amountIn).encodeABI()}
+            // // const signedTX0 = await web3.eth.sendTransaction(transaction0);
+            // // const receiptTX0 = signedTX0.transactionHash;
+            // // const signedTX1 = await web3.eth.sendTransaction(transaction1);
+            // // const receiptTX1 = signedTX1.transactionHash;
 
-            // const add = uniswapRouterContract.address;
-            // // 
+            // // const add = registry.uniswapRouterContract.address;
+            // // // 
 
-            // const transaction2 = await uniswapRouterContract.methods.swapExactTokensForTokens(
-            //     amountIn,
-            //     0,
-            //     [WETH1, DAI],
-            //     "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
-            //     deadline
-            //     ).send({from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: uniswapRouterContract.options.address, gas: gasNeeded1}).then(function(res) {
-            //         console.log(res)
-            //     })
+            // // const transaction2 = await registry.uniswapRouterContract.methods.swapExactTokensForTokens(
+            // //     amountIn,
+            // //     0,
+            // //     [registry.WETH1, registry.DAI],
+            // //     "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
+            // //     deadline
+            // //     ).send({from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: registry.uniswapRouterContract.options.address, gas: gasNeeded1}).then(function(res) {
+            // //         console.log(res)
+            // //     })
             
            
-            // const signedTX2 = await web3.eth.sendTransaction(transaction2);
-            // const receiptTX2 =signedTX2.transactionHash;
+            // // const signedTX2 = await web3.eth.sendTransaction(transaction2);
+            // // const receiptTX2 =signedTX2.transactionHash;
 
-            // const transaction3 = await sushiswapRouterContract.methods.swapExactTokensForTokens(
-            //     amountIn,
-            //     0,
-            //     [DAI, WETH1],
-            //     "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
-            //     deadline
-            //     ).send({from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: sushiswapRouterContract.options.address, gas: gasNeeded1 * 3}).then(function(res) {
-            //         console.log(res)
-            //     })
+            // // const transaction3 = await registry.sushiswapRouterContract.methods.swapExactTokensForTokens(
+            // //     amountIn,
+            // //     0,
+            // //     [registry.DAI, registry.WETH1],
+            // //     "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
+            // //     deadline
+            // //     ).send({from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: registry.sushiswapRouterContract.options.address, gas: gasNeeded1 * 3}).then(function(res) {
+            // //         console.log(res)
+            // //     })
             
            
-            // const signedTX3 = await web3.eth.sendTransaction(transaction3);
-            // const receiptTX3 =signedTX3.transactionHash;
+            // // const signedTX3 = await web3.eth.sendTransaction(transaction3);
+            // // const receiptTX3 =signedTX3.transactionHash;
 
         
         }catch (error) {
 
             console.error(error);
         }
+    });
 
 }
 
-// FindArbitrageOpportunity();
+FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F");
 
-const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 8000 // 8 Seconds
-priceMonitor = setInterval(async () => { await FindArbitrageOpportunity() }, POLLING_INTERVAL)
+// const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 8 Seconds
+// priceMonitor = setInterval(async () => { await FindArbitrageOpportunity() }, POLLING_INTERVAL)
