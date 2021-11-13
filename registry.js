@@ -5,6 +5,7 @@ const IERC20 = require("./contractBuilds/IERC20.json");
 const crowSwapFactory = require("./contractBuilds/CrowSwapFactory.json");
 const crowSwapRouter = require("./contractBuilds/CrowDefiSwapPair.json");
 const shibaswapFactory = require("./contractBuilds/ShibaSwapFactory.json");
+const ERC20PresetMinterPauser = require('@openzeppelin/contracts/build/contracts/ERC20PresetMinterPauser.json')
 
 const Web3 = require("web3");
 const provider = new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/ba5ee6592e68419cab422190121eca4c")
@@ -39,6 +40,7 @@ module.exports = class Registry {
 
         this.UniswapV2Pair = UniswapV2Pair;
         this.IERC20 = IERC20;
+        this.ERC20PresetMinterPauser = ERC20PresetMinterPauser;
 
         this.allFactoryAddresses = {"SushiSwapFactoryAddress": this.SushiSwapFactoryAddress, "UniswapFactoryAddress": this.UniswapFactoryAddress, "sakeswapFactoryAddress": this.sakeswapFactoryAddress, "crowswapFactoryAddress": this.crowswapFactoryAddress, "shibaSwapFactoryAddress": this.shibaSwapFactoryAddress};
         this.allRouterAddresses = {"SushiSwapRouterAddress": this.SushiSwapRouterAddress, "UniswapRouterAddress": this.UniswapRouterAddress, "sakeswapRouterAddress": this.sakeswapRouterAddress, "crowswapRouterAddress": this.crowswapRouterAddress,};

@@ -44,7 +44,6 @@ async function loadWeb3() {
 
         res.send({ uniswapBuy: "hello" });
     });
-
 }
 
 async function loadBlockchainData() {
@@ -88,10 +87,7 @@ async function getExchangeTokenPairPrice() {
     getTokenPriceFromPoolReserves(sakeswapPairContract, "SakeSwap");
     getTokenPriceFromPoolReserves(crowswapPairContract, "CrowSwap");
     getTokenPriceFromPoolReserves(shibaswapPairContract, "ShibaSwap");
-
-
 }
-
 
 async function getTokenPriceFromPoolReserves(contract, exchangeName) {
 
@@ -100,8 +96,7 @@ async function getTokenPriceFromPoolReserves(contract, exchangeName) {
     state.blockNumber = await web3.eth.getBlockNumber();
     contract.events.Sync({}).on("data", (data) => updateState(data, exchangeName));
 
-    console.log("Current Block: " + state.blockNumber + " The price of: " + pairName +  " on " + exchangeName 
-                + " is: "  + (state.token0 / state.token1).toString());
+    console.log("Current Block: " + state.blockNumber + " The price of: " + pairName +  " on " + exchangeName + " is: "  + (state.token0 / state.token1).toString());
 }
 
 async function getReserves(contract) {
@@ -117,10 +112,8 @@ async function updateState(data, exchangeName) {
     state.token1 = data.returnValues.reserve1;
     state.blockNumber = data.blockNumber;
 
-    console.log("Current Block: " + state.blockNumber + " The price of: " + pairName + "on" + exchangeName +  "is: " 
-                + (state.tojen0 / state.token1).toString());
+    console.log("Current Block: " + state.blockNumber + " The price of: " + pairName + "on" + exchangeName +  "is: " + (state.tojen0 / state.token1).toString());
 }
-
 
 loadWeb3();
 loadBlockchainData();
@@ -141,7 +134,6 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             const pairContract0 = uniswapPairContract;
             const pairContract1 = sushiSwapPairContract;
             
-            
             var pair0Reserve, pair1Reserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
             var pair0Reserve1, upair0eserve1, sushiswapReserve0, sushiswapReserve1, sakeswapReserve0, sakeswapReserve1, shibaswapReserve0, shibaswapReserve1;
 
@@ -149,7 +141,6 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             pair0Reserve = await uniswapPairContract.methods.getReserves().call();
             pair1Reserve = await sushiSwapPairContract.methods.getReserves().call();
            
-
             //tuple unpack the token reserves reserve[0] == registry.DAI, reserve[1] ==weth
             var pair0Reserve0 = pair0Reserve[0];
             var pair0Reserve1 = pair0Reserve[1];
@@ -157,7 +148,6 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             var pair1Reserve0 = pair1Reserve[0];
             var pair1Reserve1 = pair1Reserve[1];
 
-            
             //calculate dai and weth prices from exchange reserves
             var PriceEth = (pair0Reserve1 / pair0Reserve1);
             var exchange0ETHPrice = (pair0Reserve1 / pair0Reserve1);
@@ -180,11 +170,9 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             var exchange0AmountETHForInputDAI = await registry.uniswapRouterContract.methods.getAmountOut(amountIn, pair0Reserve1, pair0Reserve0).cpair0//in wei
             var exchange1AmountETHForInputDAI = await registry.sushiswapRouterContract.methods.getAmountOut(amountIn, pair1Reserve1, pair1Reserve0).call(); //in wei
            
-
             var totalDifference, deadline, estimatedGasForApproval, estimatedGasForFlashLoan, totalEstimatedGas, gasCost;
             const gasPrice = await web3.eth.getGasPrice();
 
-        
             var exchange0Exchange1PriceDifference = (exchange1AmountETHForInputDAI / amountIn) - (exchange0AmountDaiForInputETH/amountIn);
 
             if (exchange0Exchange1PriceDifference <= 0) {
@@ -285,7 +273,6 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             console.error(error);
         }
     });
-
 }
 
 FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F");

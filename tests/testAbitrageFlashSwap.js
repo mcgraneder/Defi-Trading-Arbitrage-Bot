@@ -102,7 +102,6 @@ function initialiseFactoryContracts() {
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
     
-   
     token0 = new web3.eth.Contract(IERC20.abi, "0x0440Fd561D69baF34f288dABe3dFBCd35504D0a8");
     token1 = new web3.eth.Contract(IERC20.abi, "0xDA9B459dE90dcc0496fd9d29D5A7A5Fe8b83E3d8");
  
@@ -118,47 +117,12 @@ async function getExchangeTokenPairPrice() {
 
     uniswapPairContract= new web3.eth.Contract(UniswapV2Pair.abi, uniswapPair1);
     sushiSwapPairContract = new web3.eth.Contract(UniswapV2Pair.abi, sushiswapPair);
-
-    getTokenPriceFromPoolReserves(uniswapPairContract, "Uniswap");
-    getTokenPriceFromPoolReserves(sushiSwapPairContract, "SushiSwap");
-
-}
-
-
-async function getTokenPriceFromPoolReserves(contract, exchangeName) {
-
-    var state = { blockNumber: undefined, token0: undefined, token1: undefined};
-    [state.token0, state.token1] = await getReserves(contract)
-    state.blockNumber = await web3.eth.getBlockNumber();
-    contract.events.Sync({}).on("data", (data) => updateState(data, exchangeName));
-
-    console.log("Current Block: " + state.blockNumber + " The price of: " + pairName +  " on " + exchangeName 
-                + " is: "  + (state.token0 / state.token1).toString());
-}
-
-async function getReserves(contract) {
-
-    const reserves = await contract.methods.getReserves().call();
-    return [reserves.reserve0, reserves.reserve1];
-}
-
-async function updateState(data, exchangeName) {
-
-    
-    state.token0 = data.returnValues.reserve0;
-    state.token1 = data.returnValues.reserve1;
-    state.blockNumber = data.blockNumber;
-
-    console.log("Current Block: " + state.blockNumber + " The price of: " + pairName + "on" + exchangeName +  "is: " 
-                + (state.token0 / state.token1).toString());
 }
 
 
 loadWeb3();
-// const utils = new web3.eth.Contract(Utils.abi,'',{data:Utils.bytecode})
 initialiseFactoryContracts()
 loadBlockchainData();
-
 
 
 //we will look for profit every two blockss because (two transactions made)
@@ -324,7 +288,6 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
     
 
 }
-
 
 const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 8 Seconds
 priceMonitor = setInterval(async () => { await FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F");
