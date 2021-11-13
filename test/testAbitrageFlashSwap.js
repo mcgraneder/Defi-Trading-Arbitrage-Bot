@@ -22,14 +22,14 @@ app.get("/", function(req, res) {
 const privateKey = "0xc51f7826f42baad15e0ab5a6d11d5c49301c7feb5c5961f857725cb8f283b4bb"
   
 //ABIS
-const UniswapFactory = require("../node_modules/@uniswap/v2-core/build/IUniswapV2Factory.json");
-const UniswapV2Pair = require("../node_modules/@uniswap/v2-core/build/IUniswapV2Pair.json");
-const UniswapRouter = require("../contractBuilds/IUniswapV2Router02.json");
-const Utils = require("../contractBuilds/Utils.json");
-const IERC20 = require("../contractBuilds/IERC20.json");
-const crowSwapFactory = require("../contractBuilds/CrowSwapFactory.json");
-const crowSwapRouter = require("../contractBuilds/CrowDefiSwapPair.json");
-const shibaswapFactory = require("../contractBuilds/ShibaSwapFactory.json");
+const UniswapFactory = require("@uniswap/v2-core/build/IUniswapV2Factory");
+const UniswapV2Pair = require("@uniswap/v2-core/build/IUniswapV2Pair");
+const UniswapRouter = require("../build/contracts/IUniswapV2Router02.json");
+const Utils = require("../build/contracts/Utils.json");
+const IERC20 = require("../build/contracts/IERC20.json");
+const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
+const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
+const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
 
 
 //defining address parameters. 

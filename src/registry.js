@@ -1,10 +1,11 @@
-const UniswapFactory = require("../node_modules/@uniswap/v2-core/build/IUniswapV2Factory.json");
-const UniswapV2Pair = require("../node_modules/@uniswap/v2-core/build/IUniswapV2Pair.json");
-const UniswapRouter = require("./contractBuilds/IUniswapV2Router02.json");
-const IERC20 = require("./contractBuilds/IERC20.json");
-const crowSwapFactory = require("./contractBuilds/CrowSwapFactory.json");
-const crowSwapRouter = require("./contractBuilds/CrowDefiSwapPair.json");
-const shibaswapFactory = require("./contractBuilds/ShibaSwapFactory.json");
+const UniswapFactory = require("@uniswap/v2-core/build/IUniswapV2Factory");
+const UniswapV2Pair = require("@uniswap/v2-core/build/IUniswapV2Pair");
+const UniswapRouter = require("../build/contracts/IUniswapV2Router02.json");
+const IERC20 = require("../build/contracts/IERC20.json");
+const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
+const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
+const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
+const Arbitrage = require("../build/contracts/Arbitrage.json");
 const ERC20PresetMinterPauser = require('@openzeppelin/contracts/build/contracts/ERC20PresetMinterPauser.json')
 
 const Web3 = require("web3");
@@ -38,9 +39,12 @@ module.exports = class Registry {
         this.crowswapRouterContract = new web3.eth.Contract(crowSwapRouter, this.crowSapRouterAddress);
         this.shibaswapFactoryContract = new web3.eth.Contract(shibaswapFactory, this.shibaSwapFactoryAddress);
 
+        this.flashLoanContractAddress = "0xc9d039Cd9885Bfcb964f5dD4EEBfe4499F786dDb";
+
         this.UniswapV2Pair = UniswapV2Pair;
         this.IERC20 = IERC20;
         this.ERC20PresetMinterPauser = ERC20PresetMinterPauser;
+        this.Arbitrage = Arbitrage;
 
         this.allFactoryAddresses = {"SushiSwapFactoryAddress": this.SushiSwapFactoryAddress, "UniswapFactoryAddress": this.UniswapFactoryAddress, "sakeswapFactoryAddress": this.sakeswapFactoryAddress, "crowswapFactoryAddress": this.crowswapFactoryAddress, "shibaSwapFactoryAddress": this.shibaSwapFactoryAddress};
         this.allRouterAddresses = {"SushiSwapRouterAddress": this.SushiSwapRouterAddress, "UniswapRouterAddress": this.UniswapRouterAddress, "sakeswapRouterAddress": this.sakeswapRouterAddress, "crowswapRouterAddress": this.crowswapRouterAddress,};
