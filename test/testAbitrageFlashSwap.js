@@ -44,8 +44,8 @@ const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
 const token01 = "0x514910771af9ca656af840dff83e8264ecf986ca"; //Link
-const token0Addr = "0x46B35A098E38f543909a44b8ee061534F747beE1"; //Link
-const token1Addr = "0xF7d78aD1c7aA9026be9cf6595922d4921B4FcA2d" //WETH1
+const token0Addr = "0x4582bF332C93765E2161C4f903E7C0a2DF7f4C9E"; //Link
+const token1Addr = "0xB7d0f4658CCA21218C3e7F970a00efBA78F7b0DC" //WETH1
 const tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
 const pairName = "ETH/DAI";
 var localStorage = new LocalStorage('./scratch');
@@ -104,12 +104,12 @@ function initialiseFactoryContracts() {
     uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, UniswapRouterAddress);
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
-    maximumProfit = new web3.eth.Contract(MP.abi, "0x62d11AC91168413d734d92ae5DFA2Cf77B96Fef7")
+    maximumProfit = new web3.eth.Contract(MP.abi, "0xAbE223Ae9Ed5243B4e4a38388916f6fa2A2F19F9")
     ab = new web3.eth.Contract(arb.abi, "0xD6C311A1D0bBd7403a18e6283e5EC0C7Db09052f")
 
     
-    token0 = new web3.eth.Contract(IERC20.abi, "0x0440Fd561D69baF34f288dABe3dFBCd35504D0a8");
-    token1 = new web3.eth.Contract(IERC20.abi, "0xDA9B459dE90dcc0496fd9d29D5A7A5Fe8b83E3d8");
+    token0 = new web3.eth.Contract(IERC20.abi, "0x4582bF332C93765E2161C4f903E7C0a2DF7f4C9E");
+    token1 = new web3.eth.Contract(IERC20.abi, "0xB7d0f4658CCA21218C3e7F970a00efBA78F7b0DC");
  
 }
 
@@ -174,88 +174,69 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         var exchange1ETHPrice = (sushiswapReserve0 / sushiswapReserve1);
         var exchange1DAIRate = (1 / exchange1ETHPrice);
 
-        //now that we have the prices of DAI/WETH on the different exchanges we can calculate
-        //the pair price difference between each exchange and take the most profitiable to make
-        //our trade.
+        //Calculate how much profit we can by arbitraging between two pools
+        const returnValues = await getBuySellQuotes(uniswapPair1, sushiswapPair);
+        var outAmount = returnValues[0];
+        var debt = returnValues[1];
+        var amountIn = web3.utils.toWei("1", "Ether")
+       
+        var totalDifference, deadline, estimatedGasForApproval, estimatedGasForFlashLoan, totalEstimatedGas, gasCost;
+        const gasPrice = await web3.eth.getGasPrice();
 
-        const x = await maximumProfit.methods.getProfit(sushiswapPair, uniswapPair1, 1800).call();
-        console.log(x)
-        // console.log(ab.methods)
-        // const y = await maximumProfit.methods.calcBorrowAmount(x).call();
-        // console.log(y)
+        var exchange0Exchange1PriceDifference = (outAmount / amountIn) - (debt/amountIn);
 
-        
-        // const amountIn = calcBorrowAmount(pair0Reserve0, pair0Reserve1, pair1Reserve0, pair1Reserve1);
-        // console.log(amountIn)
+        if (exchange0Exchange1PriceDifference <= 0) {
 
-        // //use the dex router contracts to calulate the expected output and input amounts. we reverse the reserve oders bease
-        // //the trades are executed on opposite sides on both dexes
-        //check for arb tading DAI/ETH on uniswap/sushiswap 
-        // var exchange0AmountDaiForInputETH = await uniswapRouterContract.methods.getAmountIn(amountIn, pair0Reserve1, pair0Reserve0).call() //in wei
-        // var exchange1AmountDaiForInputETH = await sushiswapRouterContract.methods.getAmountIn(amountIn, pair1Reserve1, pair1Reserve0).call() //in wei
-        
-        // var exchange0AmountETHForInputDAI = await uniswapRouterContract.methods.getAmountOut(amountIn, pair0Reserve0, pair0Reserve1).cpair0//in wei
-        // var exchange1AmountETHForInputDAI = await sushiswapRouterContract.methods.getAmountOut(amountIn, pair1Reserve0, pair1Reserve1).call(); //in wei
-        
+            console.log(`No arbitrage exists for this current trade`);
+            console.log(exchange0Exchange1PriceDifference)
+            return                        
+        } 
 
-        // var totalDifference, deadline, estimatedGasForApproval, estimatedGasForFlashLoan, totalEstimatedGas, gasCost;
-        // const gasPrice = await web3.eth.getGasPrice();
+        totalDifference = exchange0Exchange1PriceDifference * web3.utils.fromWei(amountIn.toString(), "Ether");
+        deadline = Math.round(Date.now() /  1000 + validPeriod * 60);
 
-    
-        // var exchange0Exchange1PriceDifference = (exchange1AmountETHForInputDAI / amountIn) - (exchange0AmountDaiForInputETH/amountIn);
+        // to estimate the gas we can quote the expected gas that the flashwap loan will cost. howeecr
+        //we also need to call the approve function so we need to estimate gas for this too
+        estimatedGasForApproval = await token0.methods.approve(UniswapRouterAddress, amountIn).estimateGas();
+        // const estimatedGasForFlashLoan = await contract.methods.executeFlashSwap(...args).estimateGas();
+        estimatedGasForFlashLoan = (0.3 * 10 ** 6) * 2;
+        totalEstimatedGas = estimatedGasForApproval + estimatedGasForFlashLoan;
 
-        // if (exchange0Exchange1PriceDifference <= 0) {
+        //now that we have the estimated gas amonnt we need to query the current gas cost and multiply
+        //this by the estimated amount to get the final estimated gas price
+        gasCost = Number(gasPrice) * totalEstimatedGas * PriceEth //in token0
 
-        //     console.log(`No arbitrage exists for this current trade`);
-        //     console.log(exchange0Exchange1PriceDifference)
-        //     return                        
-        // } 
-
-        // totalDifference = exchange0Exchange1PriceDifference * web3.utils.fromWei(amountIn.toString(), "Ether");
-        // deadline = Math.round(Date.now() /  1000 + validPeriod * 60);
-
-        // // to estimate the gas we can quote the expected gas that the flashwap loan will cost. howeecr
-        // //we also need to call the approve function so we need to estimate gas for this too
-        // estimatedGasForApproval = await token0.methods.approve(UniswapRouterAddress, amountIn).estimateGas();
-        // // const estimatedGasForFlashLoan = await contract.methods.executeFlashSwap(...args).estimateGas();
-        // estimatedGasForFlashLoan = (0.3 * 10 ** 6) * 2;
-        // totalEstimatedGas = estimatedGasForApproval + estimatedGasForFlashLoan;
-
-        // //now that we have the estimated gas amonnt we need to query the current gas cost and multiply
-        // //this by the estimated amount to get the final estimated gas price
-        // gasCost = Number(gasPrice) * totalEstimatedGas * PriceEth //in token0
-
-        // console.log(`
-        //     \nThe estimated gas amount for calling the approve function is ${web3.utils.fromWei(estimatedGasForApproval.toString(), "Gwei")},` +
-        //     `The estimated gas amount for executing the flashswap is ${web3.utils.fromWei(estimatedGasForFlashLoan.toString(), "Gwei")} Gwei` +
-        //     `The current gas price on the ethereum mainnet is ${web3.utils.fromWei(totalEstimatedGas.toString(), "Gwei")}` +
-        //     `Hence the total estimated gas cost for this arbitrage swap is ${web3.utils.fromWei(totalEstimatedGas.toString(), "Gwei")}`
-        // )
+        console.log(`
+            \nThe estimated gas amount for calling the approve function is ${web3.utils.fromWei(estimatedGasForApproval.toString(), "Gwei")},` +
+            `The estimated gas amount for executing the flashswap is ${web3.utils.fromWei(estimatedGasForFlashLoan.toString(), "Gwei")} Gwei` +
+            `The current gas price on the ethereum mainnet is ${web3.utils.fromWei(totalEstimatedGas.toString(), "Gwei")}` +
+            `Hence the total estimated gas cost for this arbitrage swap is ${web3.utils.fromWei(totalEstimatedGas.toString(), "Gwei")}`
+        )
             
-        // //now that we have estimated the gas that it will cost for us to execute the trades on both exchanges we simly
-        // //subtract this from our total difference above to get the final expected profit from the trade if any.
-        // var totalProfit = (totalDifference) -  web3.utils.fromWei(gasCost.toString(), "Ether");       
-        // if (totalProfit < 0) {
+        //now that we have estimated the gas that it will cost for us to execute the trades on both exchanges we simly
+        //subtract this from our total difference above to get the final expected profit from the trade if any.
+        var totalProfit = (totalDifference) -  web3.utils.fromWei(gasCost.toString(), "Ether");       
+        if (totalProfit < 0) {
 
-        //     amountToTradeInEth += 1;
-        //     ex = "SushiSwap";
-        //     console.log(`\nThere is no profit to be made form this trade after the cost of gas and slippage your loss is ` + `${Math.abs(totalProfit)}`.red + ` Try increasing your trade amount`);
-        //     return;
+            amountToTradeInEth += 1;
+            ex = "SushiSwap";
+            console.log(`\nThere is no profit to be made form this trade after the cost of gas and slippage your loss is ` + `${Math.abs(totalProfit)}`.red + ` Try increasing your trade amount`);
+            return;
 
-        // } else {
+        } else {
             
-        //     ex = "SushiSwap";
-        //     console.log(`\nThe total estimated profit is ${totalDifference} - ${web3.utils.fromWei(gasCost.toString(), "Ether")} =S` + `${totalProfit}`.green);
-        //     console.log(`\n...Estimated profit expected. Preparing to execute flashloan. Note that these are only estimations the flashloan might still fail due to deylaed price feeds and market volaitity which affects the gas and slippage estimations`.green)
-        // }
+            ex = "SushiSwap";
+            console.log(`\nThe total estimated profit is ${totalDifference} - ${web3.utils.fromWei(gasCost.toString(), "Ether")} =S` + `${totalProfit}`.green);
+            console.log(`\n...Estimated profit expected. Preparing to execute flashloan. Note that these are only estimations the flashloan might still fail due to deylaed price feeds and market volaitity which affects the gas and slippage estimations`.green)
+        }
 
                     
-        // console.log(
-        //     `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(exchange0AmountDaiForInputETH.toString(), "Ether")} DAI on Uniswap. ` +
-        //     `conversley ${web3.utils.fromWei(sushiswapAmountETHForInputDAI.toString(), "Ether")} will buy us ${amountToTradeInEth} WETH on Sushiswap\n`
-        // );
+        console.log(
+            `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(debt.toString(), "Ether")} DAI on Uniswap. ` +
+            `conversley ${web3.utils.fromWei(sushiswapAmountETHForInputDAI.toString(), "Ether")} will buy us ${amountToTradeInEth} WETH on Sushiswap\n`
+        );
 
-        // // if (sushiProfit <= 0) return;
+        // if (sushiProfit <= 0) return;
 
 
         // // // const transaction0 = {from: "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE", to: WETH1, gas: gasNeeded0, data: eth.methods.approve(uniswapRouterContract.options.address, amountIn).encodeABI()}
@@ -305,139 +286,31 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
 }
 
-// function getOrderedReserves(pool0, pool1, baseTokenSmaller, pair0Reserve0,  pair0Reserve1, pair1Reserve0,  pair1Reserve1) {
+
+async function getBuySellQuotes(uniswapPair1, sushiswapPair) {
+
+    var baseTokenSmaller = await maximumProfit.methods.isbaseTokenSmaller(uniswapPair1, sushiswapPair).call();
+    baseTokenSmaller = baseTokenSmaller[0]
+
+    const  baseToken = baseTokenSmaller ? await uniswapPairContract.methods.token0().call() : await uniswapPairContract.methods.token1().call();
+
+    var orderedReserves = await maximumProfit.methods.getOrderedReserves(uniswapPair1, sushiswapPair, baseTokenSmaller).call();
+    orderedReserves = orderedReserves[2];
+
+    // borrow quote token on lower price pool, // sell borrowed quote token on higher price pool
+    var borrowAmount = web3.utils.toWei(amountToTradeInEth.toString(), "Ether");
+    var debtAmount = await uniswapRouterContract.methods.getAmountIn(borrowAmount, orderedReserves[0], orderedReserves[1]).call();
+    var baseTokenOutAmount = await uniswapRouterContract.methods.getAmountOut(borrowAmount, orderedReserves[3], orderedReserves[2]).call();
     
-//     [ pair0Reserve0,  pair0Reserve1 ]= IUniswapV2Pair(pool0).getReserves();
-//     [ pair1Reserve0,  pair1Reserve1 ] = IUniswapV2Pair(pool1).getReserves();
-
-//     // Calculate the price denominated in quote asset token
-//     [price0,  memory] =
-//         baseTokenSmaller
-//             ? (pair0Reserve0) / (pair0Reserve1) (pair1Reserve0) / (pair1Reserve1)
-//             : (pair0Reserve1) / (pair0Reserve0) (pair1Reserve1) / (pair1Reserve0);
-
-//     // get a1, b1, a2, b2 with following rule:
-//     // 1. (a1, b1) represents the pool with lower price, denominated in quote asset token
-//     // 2. (a1, a2) are the base tokens in two pools
-//     if (price0 < price1) {
-//         [lowerPool, higherPool] = [pool0, pool1];
-//         [a1, b1, a2, b2] = baseTokenSmaller
-//             ? [pair0Reserve0, pair0Reserve1, pair1Reserve0, pair1Reserve1]
-//             : [pair0Reserve1, pair0Reserve0, pair1Reserve1, pair1Reserve0];
-//     } else {
-//         (lowerPool, higherPool) = (pool1, pool0);
-//         (orderedReserves.a1, orderedReserves.b1, orderedReserves.a2, orderedReserves.b2) = baseTokenSmaller
-//             ? (pair1Reserve0, pair1Reserve1, pair0Reserve0, pair0Reserve1)
-//             : (pair1Reserve1, pair1Reserve0, pair0Reserve1, pair0Reserve0);
-//     }
-//     console.log('Borrow from pool:', lowerPool);
-//     console.log('Sell to pool:', higherPool);
-// }
-
-function calcBorrowAmount(a1, a2, b1, b2) {
-    // we can't use a1,b1,a2,b2 directly, because it will result overflow/underflow on the intermediate result
-    // so we:
-    //    1. divide all the numbers by d to prevent from overflow/underflow
-    //    2. calculate the result by using above numbers
-    //    3. multiply d with the result to get the final result
-    // Note: this workaround is only suitable for ERC20 token with 18 decimals, which I believe most tokens do
-
-    var min1 = a1 < b1 ? a1 : b1;
-    var min2 = a2 < b2 ? a2 : b2;
-    var min = min1 < min2 ? min1 : min2;
-
-    // choose appropriate number to divide based on the minimum number
-    var d;
-    if (min > 1e24) {
-        d = 1e20;
-    } else if (min > 1e23) {
-        d = 1e19;
-    } else if (min > 1e22) {
-        d = 1e18;
-    } else if (min > 1e21) {
-        d = 1e17;
-    } else if (min > 1e20) {
-        d = 1e16;
-    } else if (min > 1e19) {
-        d = 1e15;
-    } else if (min > 1e18) {
-        d = 1e14;
-    } else if (min > 1e17) {
-        d = 1e13;
-    } else if (min > 1e16) {
-        d = 1e12;
-    } else if (min > 1e15) {
-        d = 1e11;
+    if (baseTokenOutAmount < debtAmount) {
+        profit = 0;
     } else {
-        d = 1e10;
+        profit = baseTokenOutAmount - debtAmount;
     }
 
-    a1 = (a1 / d)
-    a2 = (a2 / d)
-    b1 = (b1 / d)
-    b2 =  (b2 / d);
+    console.log(profit);
 
-    a = a1 * b1 - a2 * b2;
-    b = 2 * b1 * b2 * (a1 + a2);
-    c = b1 * b2 * (a1 * b2 - a2 * b1);
-
-    var x1;
-    x1 = calcSolutionForQuadratic(a, b, c);
-
-    // console.log(x1)
-
-    // 0 < x < b1 and 0 < x < b2
-    
-   
-    var amount = (x1 > 0 && x1 < b1 && x1 < b2)
-    console.log("amount" + amount);
-    return amount;
-}
-
-/// @dev find solution of quadratic equation: ax^2 + bx + c = 0, only return the positive solution
-function calcSolutionForQuadratic(a,b, c) {
-    m = b**2 - 4 * a * c;
-    console.log(m)
-    // m < 0 leads to complex number
-    // if (m > 0) {
-    //     console.log('Complex number');
-    //     return;
-    // }
-
-    var sqrtM = (sqrt((m)));
-    var x1 = (-b + sqrtM) / (2 * a);
-    var x2 = (-b - sqrtM) / (2 * a);
-
-    return x1, x2;
-}
-
-/// @dev Newton’s method for caculating square root of n
-function sqrt(n)  {
-    
-    if (n < 1) {
-
-        console.log("n is not greater than 1");
-        return;
-    }
-
-    // The scale factor is a crude way to turn everything into integer calcs.
-    // Actually do (n * 10 ^ 4) ^ (1/2)
-    var _n = n * 10**6;
-    var  c = _n;
-    var res = _n;
-
-    var xi;
-    while (true) {
-        xi = (res + c / res) / 2;
-        // don't need be too precise to save gas
-        if (res - xi < 1000) {
-            break;
-        }
-        res = xi;
-    }
-    res = res / 10**3;
-
-    return res;
+    return [ baseTokenOutAmount, debtAmount ];
 }
 
 const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 8 Seconds
