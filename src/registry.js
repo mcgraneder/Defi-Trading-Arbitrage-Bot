@@ -6,6 +6,7 @@ const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
 const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
 const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
 const Arbitrage = require("../build/contracts/Arbitrage.json");
+const MaximumProfit = require("../build/contracts/MaximumProfit.json")
 const ERC20PresetMinterPauser = require('@openzeppelin/contracts/build/contracts/ERC20PresetMinterPauser.json')
 
 const Web3 = require("web3");
@@ -40,11 +41,13 @@ module.exports = class Registry {
         this.shibaswapFactoryContract = new web3.eth.Contract(shibaswapFactory, this.shibaSwapFactoryAddress);
 
         this.flashLoanContractAddress = "0xc9d039Cd9885Bfcb964f5dD4EEBfe4499F786dDb";
+        this.maximumProfitContract = "0x62d11AC91168413d734d92ae5DFA2Cf77B96Fef7";
 
         this.UniswapV2Pair = UniswapV2Pair;
         this.IERC20 = IERC20;
         this.ERC20PresetMinterPauser = ERC20PresetMinterPauser;
         this.Arbitrage = Arbitrage;
+        this.MaximumProfit = MaximumProfit;
 
         this.allFactoryAddresses = {"SushiSwapFactoryAddress": this.SushiSwapFactoryAddress, "UniswapFactoryAddress": this.UniswapFactoryAddress, "sakeswapFactoryAddress": this.sakeswapFactoryAddress, "crowswapFactoryAddress": this.crowswapFactoryAddress, "shibaSwapFactoryAddress": this.shibaSwapFactoryAddress};
         this.allRouterAddresses = {"SushiSwapRouterAddress": this.SushiSwapRouterAddress, "UniswapRouterAddress": this.UniswapRouterAddress, "sakeswapRouterAddress": this.sakeswapRouterAddress, "crowswapRouterAddress": this.crowswapRouterAddress,};

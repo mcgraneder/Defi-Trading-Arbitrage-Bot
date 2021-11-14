@@ -3,7 +3,7 @@ const Registry = require("../src/registry.js");
 let registry = new Registry()
 
 var web3, myAccount, token0, token1, gasLimit, receipt, aux, token0Name, token0Symbol, token1Name, token1Symbol;
-var IRouter, sRouter, uRouter, arbitrager;
+var IRouter, sRouter, uRouter, arbitrager, maximumProfit;
 
 async function createDummyTokenPools(amount0,amount1,amount2,amount3,amount4) {
 
@@ -24,10 +24,15 @@ async function createDummyTokenPools(amount0,amount1,amount2,amount3,amount4) {
 
     gasLimit = await arbitrage.deploy({arguments: [registry.UniswapFactoryAddress, registry.SushiSwapRouterAddress]}).estimateGas()
     receipt = await arbitrage.deploy({arguments: [registry.UniswapFactoryAddress, registry.SushiSwapRouterAddress]}).send({from: myAccount,gas: gasLimit})
-    // console.log(arbitrage);
     arbitrage.options.address = receipt._address
 
+    gasLimit = await maximumProfit.deploy().estimateGas()
+    receipt = await maximumProfit.deploy().send({from: myAccount,gas: gasLimit})
+    maximumProfit.options.address = receipt._address
+
     console.log("arbitrage contract deployed at " + arbitrage.options.address)
+    console.log("arbitrage contract deployed at " + maximumProfit.options.address)
+
 }
 
 async function loadWeb3() {
@@ -40,6 +45,7 @@ async function loadWeb3() {
     uRouter = new web3.eth.Contract(IRouter.abi,'0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D')
     sRouter = new web3.eth.Contract(IRouter.abi,'0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F')
     arbitrage = new web3.eth.Contract(registry.Arbitrage.abi,'',{data: registry.Arbitrage.bytecode})
+    maximumProfit = new web3.eth.Contract(registry.MaximumProfit.abi, '', {data: registry.MaximumProfit.bytecode});
     
 
 }
