@@ -216,6 +216,33 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
                 console.log(`\nThe total estimated profit is ${totalDifference} - ${web3.utils.fromWei(gasCost.toString(), "Ether")} =S` + `${totalProfit}`.green);
                 console.log(`\n...Estimated profit expected. Preparing to execute flashloan. Note that these are only estimations the flashloan might still fail due to deylaed price feeds and market volaitity which affects the gas and slippage estimations`.green)
             }
+
+            try {
+
+                let balancefore = await token0.methods.balanceOf(arbitrage.options.address).call()
+                balancefore = balancefore / 10 ** 18;
+                console.log("Token balance before arb: " + balancefore);
+    
+    
+                const transaction0 = {from: WHALE, to: token0.options.address, gas: estimatedGasForApproval, data: token0.methods.approve(uniswapRouterContract.options.address, amountIn).encodeABI()}
+                const signedTX0 = await web3.eth.sendTransaction(transaction0);
+                const receiptTX0 = signedTX0.transactionHash;
+               
+    
+                console.log("approval receipt", receiptTX0);
+    
+                const tx = await arbitrage.methods.testFlashSwap(uniswapPair1, sushiswapPair, amountIn).send({ from: WHALE, gas: gasCost}).then(async function(res) {
+                    console.log(res)
+                })
+    
+                let balanceAfter = await token0.methods.balanceOf(arbitrage.options.address).call()
+                balanceAfter = balanceAfter / 10 ** 18;
+                console.log("Token balance before arb: " + balanceAfter);
+    
+            } catch (err) {
+    
+                console.error(err);
+            }
         
         }catch (error) {
 
