@@ -1,1 +1,1 @@
-# DISCLAIMER: THIS CODE IS UNDER PRODUCTION AND IS NOT COMPLETE
+# Detailed Readme coming soon. Still need to write one or two tests but and make a slight edit to smart contract for flashloans from other exchanges but majority of code is complete and works for uni/sushi for dai/weth pair
