@@ -1,4 +1,14 @@
-This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required
+## Repo Contents
+This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required.
+
+1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit). Uniswap, like all the others exchanges, charges on you a fee for using their services (swapping tokens in this case), this fee currently is 0.3%. To see more on how flashswap or normal swaps works visit the [Uniswap docs](https://uniswap.org/docs/v2/).
+
+2) A demo that you can easily run to see the bots in action. Basically consist of forking ethereum mainnet locally, run the demo script that do the set ups for you and execute the bots.
+
+3) Theory of Arbitrage and some proposed improvements for possible production stage of this bort.
+
+First it will be explained how to install the required tools (probably you have already installed some of them, feel free to jump to the sections that you wish). Then I introduce how to run the demo, here assume that you are kind of newbie in blockchain and you don’t understand quiet well whats happening so its deeply explained. After, a very basic guide line to put the bots to work on an ethereum network, mainnet or testnet, I assume you know what you are doing at this point. Finally some improvements for a possible production stage and useful resourses are given.
+
 
 # Automated Market Maker Arbitrage
 An arbitrageur contract can be used to argitrage between Uniswap V2 like AMMs
