@@ -1,7 +1,8 @@
 const Web3 = require('web3');
 const Registry = require("../src/registry.js");
 let registry = new Registry()
-
+const MP = require("../build/contracts/TradeOrder.json")
+const arb1 = require("../build/contracts/FlashSwap.json");
 var web3, myAccount, token0, token1, gasLimit, receipt, aux, token0Name, token0Symbol, token1Name, token1Symbol;
 var IRouter, sRouter, uRouter, arbitrage, maximumProfit;
 
@@ -22,11 +23,11 @@ async function createDummyTokenPools(amount0,amount1,amount2,amount3,amount4) {
     await addLiquidity(amount0,amount1, deadline, uRouter, token0Symbol, token1Symbol);
     await addLiquidity(amount2,amount3, deadline, sRouter, token1Symbol, token0Symbol);
 
-    gasLimit = await arbitrage.deploy().estimateGas()
-    receipt = await arbitrage.deploy().send({from: myAccount,gas: gasLimit})
+    gasLimit = await arbitrage.deploy({arguments: [myAccount]}).estimateGas()
+    receipt = await arbitrage.deploy({arguments: [myAccount]}).send({from: myAccount,gas: gasLimit})
     arbitrage.options.address = receipt._address
 
-    gasLimit = await maximumProfit.deploy({arguments: [registry.WETH]}).estimateGas()
+    gasLimit = await maximumProfit.deploy().estimateGas()
     receipt = await maximumProfit.deploy().send({from: myAccount,gas: gasLimit})
     maximumProfit.options.address = receipt._address
 

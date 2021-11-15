@@ -5,8 +5,8 @@ const IERC20 = require("../build/contracts/IERC20.json");
 const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
 const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
 const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
-const FlashBotContract = require("../build/contracts/TestUniswapFlashSwap.json");
-const MaximumProfit = require("../build/contracts/MaximumProfit.json")
+const FlashBotContract = require("../build/contracts/FlashSwap.json");
+const MaximumProfit = require("../build/contracts/TradeOrder.json")
 const ERC20PresetMinterPauser = require('@openzeppelin/contracts/build/contracts/ERC20PresetMinterPauser.json')
 
 const Web3 = require("web3");
@@ -29,9 +29,8 @@ module.exports = class Registry {
         this.crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-
-        this.flashBotAddress = "0xc10dc1c7C1B2637f57b16BC726C7232008c28F0c";
-        this.maximumProfitContract = "0xEf49F69d97166a8f5e9F95AB860AF4Ca15C81EBc";
+        this.flashBotAddress = "0x9956aa25870aeD55eB70c50bc2C5A7CB5708A391";
+        this.maximumProfitContract = "0xe4f875dBbAE25e3c0bC9137E0068f65F446364e5";
 
         this.UniswapV2Pair = UniswapV2Pair;
         this.IERC20 = IERC20;
@@ -48,7 +47,7 @@ module.exports = class Registry {
         this.crowswapFactoryContract = new web3.eth.Contract(crowSwapFactory, this.crowswapFactoryAddress);
         this.crowswapRouterContract = new web3.eth.Contract(crowSwapRouter, this.crowSapRouterAddress);
         this.shibaswapFactoryContract = new web3.eth.Contract(shibaswapFactory, this.shibaSwapFactoryAddress);
-        this.flashBot = new web3.eth.Contract(FlashBotContract.abi, "0xc10dc1c7C1B2637f57b16BC726C7232008c28F0c");
+        this.flashBot = new web3.eth.Contract(FlashBotContract.abi, this.flashBotAddress);
         this.maximumProfit = new web3.eth.Contract(MaximumProfit.abi, this.maximumProfitAddress)
 
         this.allFactoryAddresses = {"SushiSwapFactoryAddress": this.SushiSwapFactoryAddress, "UniswapFactoryAddress": this.UniswapFactoryAddress, "sakeswapFactoryAddress": this.sakeswapFactoryAddress, "crowswapFactoryAddress": this.crowswapFactoryAddress, "shibaSwapFactoryAddress": this.shibaSwapFactoryAddress};

@@ -22,6 +22,7 @@ require('colors');
 const privateKey = "0xc51f7826f42baad15e0ab5a6d11d5c49301c7feb5c5961f857725cb8f283b4bb"
   
 //ABIS
+const MP = require("../build/contracts/TradeOrder.json")
 const UniswapFactory = require("@uniswap/v2-core/build/IUniswapV2Factory");
 const UniswapV2Pair = require("@uniswap/v2-core/build/IUniswapV2Pair");
 const UniswapRouter = require("../build/contracts/IUniswapV2Router02.json");
@@ -32,8 +33,7 @@ const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
 const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
 const Registry = require("../src/registry");
 let registry = new Registry();
-const MP = require("../build/contracts/MaximumProfit.json");
-const arb = require("../build/contracts/Arbitrage.json");
+const arb1 = require("../build/contracts/FlashSwap.json");
 
 
 //defining address parameters. 
@@ -45,8 +45,8 @@ const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
 const token01 = "0x514910771af9ca656af840dff83e8264ecf986ca"; //Link
-const token0Addr = "0x8A71fF29c3b1B38A4Df5aE4DF0948822c94AbfB2"; //Link
-const token1Addr = "0xECdEEded52Ca09b1d5fb81070882ED3A8AD99138" //WETH1
+const token0Addr = "0xBB91175307DD50bdebCfE82F2f343BbEf607e659"; //Link
+const token1Addr = "0xE844c3710e6319125375628b76e320F52ca67903" //WETH1
 const tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
 const pairName = "ETH/DAI";
 var localStorage = new LocalStorage('./scratch');
@@ -106,8 +106,8 @@ function initialiseFactoryContracts() {
     uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, UniswapRouterAddress);
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
-    // arbitrage = new web3.eth.Contract(MP.abi, "0xFe864e226dA9040fF2D3C0af8Dff3e041Acf538E")
-    arbitrage = new web3.eth.Contract(registry.FlashBotContract.abi, "0xc10dc1c7C1B2637f57b16BC726C7232008c28F0c")
+    max = new web3.eth.Contract(MP.abi, "0xe4f875dBbAE25e3c0bC9137E0068f65F446364e5")
+    arbitrage = new web3.eth.Contract(arb1.abi, "0x9956aa25870aeD55eB70c50bc2C5A7CB5708A391")
 
     
     token0 = new web3.eth.Contract(IERC20.abi, token0Addr);
@@ -145,9 +145,11 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
     
     try {
 
-        const pairContract0 = uniswapPairContract;
-        const pairContract1 = sushiSwapPairContract;
-        console.log("pairs", uniswapPair1, sushiswapPair )
+        const p0 = await uniswapPairContract.methods.token0().call();
+        const p1 = await uniswapPairContract.methods.token1().call();
+
+        // const pairContract1 = sushiSwapPairContract;
+        console.log("pairs", p0, p1 )
         
         
         var pair0Reserve, pair1Reserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
@@ -240,10 +242,10 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         }
 
                     
-        // console.log(
-        //     `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(debt.toString(), "Ether")} DAI on Uniswap. ` +
-        //     `conversley ${web3.utils.fromWei((debt).toString(), "Ether")} will buy us ${amountToTradeInEth} WETH on Sushiswap\n`
-        // );
+        console.log(
+            `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(debt.toString(), "Ether")} DAI on Uniswap. ` +
+            `conversley ${web3.utils.fromWei((debt).toString(), "Ether")} will buy us ${amountToTradeInEth} WETH on Sushiswap\n`
+        );
 
         try {
 
@@ -259,7 +261,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
             console.log("approval receipt", receiptTX0);
 
-            const tx = await arbitrage.methods.testFlashSwap("0x7A926AA59a09aba22f8dAcC7C3Bb040C622a7591", "0x06551c7707edED96EC172079b3d1C3Bd230CA9f4", amountIn).send({ from: WHALE, gas: gasCost}).then(async function(res) {
+            const tx = await arbitrage.methods.testFlashSwap(uniswapPair1, sushiswapPair, amountIn).send({ from: WHALE, gas: gasCost}).then(async function(res) {
                 console.log(res)
             })
 
