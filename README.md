@@ -20,7 +20,9 @@ There are a few different strategies in creating that AMM structure, we call it 
 
 1. Constant product market makers (CPMMs) - Uniswap
 
-https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8b2f3800-d13b-4cbf-80d9-e01e1edc51ee_254x105.png
+<img src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8b2f3800-d13b-4cbf-80d9-e01e1edc51ee_254x105.png" />
+
+
 
 
 ## The rationale
