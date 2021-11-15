@@ -103,5 +103,12 @@ We can get the solution:
 
 The solution x is the amount we need to borrow from Pair0.
 
+# Considerations, Reflections & Imporvement Proposals
+
+## Using cenralised exchanges and Aave
+I think, it would have been using a CEX (Centralized EXchange) like Binance or Coinbase as off-chain oracle to get price feeds.This is much easier and IMO much more efficent as some of the centralised exchanges have incredible APIs that are getting updated by the second Then to use Avee (lending platform) flashloans (similar to how flashswaps works) to arbitrage whatever DEX (Decentralized EXchanges) I wished. The only 'drawback' that I can see with this approach is that you must pay back the flashloan in the same asset you borrow so you probably need and extra trade.
+
+## Using Flashbots MEV (Miner Extractable Value)
+
 
 
