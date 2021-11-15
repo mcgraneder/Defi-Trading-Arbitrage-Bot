@@ -11,7 +11,17 @@ First it will be explained how to install the required tools (probably you have 
 
 
 # Automated Market Maker Arbitrage
-An arbitrageur contract can be used to argitrage between Uniswap V2 like AMMs
+**The current DEX ecosystem is mainly under one AMM family called constant function market makers** 
+As a market maker, providing liquidity is a tedious task, it often involves locking up significant capital, programming a trading bot and building up a feasible strategy. It is often in the hands of institutional providers where they have the capability and incentives to build such initiatives. 
+
+The AMM structure creates possible ways for any individual to become passive market makers without worrying about the technical details for market makings.
+
+There are a few different strategies in creating that AMM structure, we call it the constant function market makers (CFMMs), under the CFMMs, there are a few different substructures with their unique characteristics.
+
+1. Constant product market makers (CPMMs) - Uniswap
+
+https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F8b2f3800-d13b-4cbf-80d9-e01e1edc51ee_254x105.png
+
 
 ## The rationale
 Suppose that we want to do arbitrage transactions on a token pair in the form of TokenX/WETH. The TokenX/WETH pair first of all needs to exist on at least two exchanges in order for us to be able to arbitrage. In this case WETH is known as the base token. Note that the base token can be any token some common base tokens are USDT/USDC/DAI etc. Howeevr this bot impleemnts DAI/WETH with WETH being the base token
