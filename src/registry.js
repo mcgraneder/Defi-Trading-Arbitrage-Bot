@@ -5,7 +5,7 @@ const IERC20 = require("../build/contracts/IERC20.json");
 const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
 const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
 const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
-const Arbitrage = require("../build/contracts/Arbitrage.json");
+const FlashBotContract = require("../build/contracts/TestUniswapFlashSwap.json");
 const MaximumProfit = require("../build/contracts/MaximumProfit.json")
 const ERC20PresetMinterPauser = require('@openzeppelin/contracts/build/contracts/ERC20PresetMinterPauser.json')
 
@@ -30,6 +30,15 @@ module.exports = class Registry {
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
 
+        this.flashBotAddress = "0xc10dc1c7C1B2637f57b16BC726C7232008c28F0c";
+        this.maximumProfitContract = "0xEf49F69d97166a8f5e9F95AB860AF4Ca15C81EBc";
+
+        this.UniswapV2Pair = UniswapV2Pair;
+        this.IERC20 = IERC20;
+        this.ERC20PresetMinterPauser = ERC20PresetMinterPauser;
+        this.FlashBotContract = FlashBotContract;
+        this.MaximumProfitAddress = MaximumProfit;
+
         this.uniswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, this.UniswapFactoryAddress);
         this.uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, this.UniswapRouterAddress);
         this.sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, this.SushiSwapFactoryAddress);
@@ -39,15 +48,8 @@ module.exports = class Registry {
         this.crowswapFactoryContract = new web3.eth.Contract(crowSwapFactory, this.crowswapFactoryAddress);
         this.crowswapRouterContract = new web3.eth.Contract(crowSwapRouter, this.crowSapRouterAddress);
         this.shibaswapFactoryContract = new web3.eth.Contract(shibaswapFactory, this.shibaSwapFactoryAddress);
-
-        this.flashLoanContractAddress = "0xc9d039Cd9885Bfcb964f5dD4EEBfe4499F786dDb";
-        this.maximumProfitContract = "0x62d11AC91168413d734d92ae5DFA2Cf77B96Fef7";
-
-        this.UniswapV2Pair = UniswapV2Pair;
-        this.IERC20 = IERC20;
-        this.ERC20PresetMinterPauser = ERC20PresetMinterPauser;
-        this.Arbitrage = Arbitrage;
-        this.MaximumProfit = MaximumProfit;
+        this.flashBot = new web3.eth.Contract(FlashBotContract.abi, "0xc10dc1c7C1B2637f57b16BC726C7232008c28F0c");
+        this.maximumProfit = new web3.eth.Contract(MaximumProfit.abi, this.maximumProfitAddress)
 
         this.allFactoryAddresses = {"SushiSwapFactoryAddress": this.SushiSwapFactoryAddress, "UniswapFactoryAddress": this.UniswapFactoryAddress, "sakeswapFactoryAddress": this.sakeswapFactoryAddress, "crowswapFactoryAddress": this.crowswapFactoryAddress, "shibaSwapFactoryAddress": this.shibaSwapFactoryAddress};
         this.allRouterAddresses = {"SushiSwapRouterAddress": this.SushiSwapRouterAddress, "UniswapRouterAddress": this.UniswapRouterAddress, "sakeswapRouterAddress": this.sakeswapRouterAddress, "crowswapRouterAddress": this.crowswapRouterAddress,};

@@ -1,8 +1,8 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.6.6;
+pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import '@openzeppelin/contracts/utils//structs/EnumerableSet.sol';
+import '@openzeppelin/contracts/utils/structs/EnumerableSet.sol';
 // import 'hardhat/console.sol';
 import './interfaces/IUniswapV2Pair.sol';
 import './utils/Decimal.sol';
@@ -19,9 +19,12 @@ contract MaximumProfit {
         uint256 a2;
         uint256 b2;
     }
-    
+
+
+
     // address WETH;
-    address[] baseTokens = [0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2, 0xB7d0f4658CCA21218C3e7F970a00efBA78F7b0DC];
+    address public WETH;
+    address[] baseTokens = [0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2, 0x63ac0665E65d938a8DCc44e3C79c6cd2C18525c2];
 
     function baseTokensContains(address token) public view returns (bool hasBeenFound) {
         
@@ -33,6 +36,11 @@ contract MaximumProfit {
                 hasbeenFound = true;
                 break;
             }
+        }
+
+        if (hasBeenFound) {
+
+            return true;
         }
 
         return hasbeenFound;

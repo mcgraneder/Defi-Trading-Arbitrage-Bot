@@ -3,7 +3,7 @@ const Registry = require("../src/registry.js");
 let registry = new Registry()
 
 var web3, myAccount, token0, token1, gasLimit, receipt, aux, token0Name, token0Symbol, token1Name, token1Symbol;
-var IRouter, sRouter, uRouter, arbitrager, maximumProfit;
+var IRouter, sRouter, uRouter, arbitrage, maximumProfit;
 
 async function createDummyTokenPools(amount0,amount1,amount2,amount3,amount4) {
 
@@ -22,16 +22,16 @@ async function createDummyTokenPools(amount0,amount1,amount2,amount3,amount4) {
     await addLiquidity(amount0,amount1, deadline, uRouter, token0Symbol, token1Symbol);
     await addLiquidity(amount2,amount3, deadline, sRouter, token1Symbol, token0Symbol);
 
-    gasLimit = await arbitrage.deploy({arguments: [registry.UniswapFactoryAddress, registry.SushiSwapRouterAddress]}).estimateGas()
-    receipt = await arbitrage.deploy({arguments: [registry.UniswapFactoryAddress, registry.SushiSwapRouterAddress]}).send({from: myAccount,gas: gasLimit})
+    gasLimit = await arbitrage.deploy().estimateGas()
+    receipt = await arbitrage.deploy().send({from: myAccount,gas: gasLimit})
     arbitrage.options.address = receipt._address
 
-    gasLimit = await maximumProfit.deploy().estimateGas()
+    gasLimit = await maximumProfit.deploy({arguments: [registry.WETH]}).estimateGas()
     receipt = await maximumProfit.deploy().send({from: myAccount,gas: gasLimit})
     maximumProfit.options.address = receipt._address
 
     console.log("arbitrage contract deployed at " + arbitrage.options.address)
-    console.log("arbitrage contract deployed at " + maximumProfit.options.address)
+    console.log("maximumProfit contract deployed at " + maximumProfit.options.address)
 
 }
 
@@ -44,8 +44,8 @@ async function loadWeb3() {
     IRouter = require('@uniswap/v2-periphery/build/IUniswapV2Router02.json')
     uRouter = new web3.eth.Contract(IRouter.abi,'0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D')
     sRouter = new web3.eth.Contract(IRouter.abi,'0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F')
-    arbitrage = new web3.eth.Contract(registry.Arbitrage.abi,'',{data: registry.Arbitrage.bytecode})
-    maximumProfit = new web3.eth.Contract(registry.MaximumProfit.abi, '', {data: registry.MaximumProfit.bytecode});
+    arbitrage = new web3.eth.Contract(registry.FlashBotContract.abi,'',{data: registry.FlashBotContract.bytecode})
+    maximumProfit = new web3.eth.Contract(registry.MaximumProfitAddress.abi, '', {data: registry.MaximumProfitAddress.bytecode});
     
 
 }
@@ -85,13 +85,13 @@ async function mintDummyTokens(amount0,amount1,amount2,amount3,amount4) {
 
     //minting token0
     amount4 = web3.utils.toWei(web3.utils.toBN(amount4))
-    gasLimit = await token0.methods.mint(myAccount, amount4).estimateGas()
-    await token0.methods.mint(myAccount, amount4).send({from:myAccount, gas:gasLimit})
+    gasLimit = await token0.methods.mint(myAccount, BigInt(amount4 * 3)).estimateGas()
+    await token0.methods.mint(myAccount, BigInt(amount4 * 3)).send({from:myAccount, gas:gasLimit})
     console.log(`${web3.utils.fromWei(amount4)} ${token0Symbol} minted`)
     
     //minting token1
-    gasLimit = await token1.methods.mint(myAccount, amount4).estimateGas()
-    await token1.methods.mint(myAccount, amount4).send({from:myAccount, gas:gasLimit})
+    gasLimit = await token1.methods.mint(myAccount, BigInt(amount4 * 3)).estimateGas()
+    await token1.methods.mint(myAccount, BigInt(amount4 * 3)).send({from:myAccount, gas:gasLimit})
     console.log(`${web3.utils.fromWei(amount4)} ${token1Symbol} minted\n`)
 }
 
