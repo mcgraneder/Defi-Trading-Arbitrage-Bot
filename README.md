@@ -1,4 +1,4 @@
-<p justify-content="center">## Repo Contents
+## Repo Contents
 This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required.
 
 1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit). Uniswap, like all the others exchanges, charges on you a fee for using their services (swapping tokens in this case), this fee currently is 0.3%. To see more on how flashswap or normal swaps works visit the [Uniswap docs](https://uniswap.org/docs/v2/).
@@ -108,7 +108,7 @@ The solution x is the amount we need to borrow from Pair0.
 ## Using cenralised exchanges and Aave
 I think, it would have been using a CEX (Centralized EXchange) like Binance or Coinbase as off-chain oracle to get price feeds.This is much easier and IMO much more efficent as some of the centralised exchanges have incredible APIs that are getting updated by the second Then to use Avee (lending platform) flashloans (similar to how flashswaps works) to arbitrage whatever DEX (Decentralized EXchanges) I wished. The only 'drawback' that I can see with this approach is that you must pay back the flashloan in the same asset you borrow so you probably need and extra trade.
 
-## Using Flashbots MEV (Miner Extractable Value)</p>
+## Using Flashbots MEV (Miner Extractable Value)
 
 
 
