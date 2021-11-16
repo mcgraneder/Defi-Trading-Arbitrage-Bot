@@ -32,7 +32,7 @@ module.exports = class Registry {
         this.crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-        this.flashBotAddress = "0xc09Aad2cBC34F727dec7323E8167C42E33cd2149";
+        this.flashBotAddress = "0x78E4B27a471BaaA4F4BAE2f9F3F94c8C5684ff4a";
         this.maximumProfitContract = "0x23EC7650662D1bb8E4A6F6c9B5285FbcF2943459";
 
         //testing tokens

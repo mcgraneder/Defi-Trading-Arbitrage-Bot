@@ -177,6 +177,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             
             //if the price difference betwween the exchange we borrow from is less than the
             //price from the exchange we sell to the exit script, no arb available
+            console.log((outAmount / amountIn) - (debt/amountIn))
             var exchange0Exchange1PriceDifference = (outAmount / amountIn) - (debt/amountIn);
 
             if (exchange0Exchange1PriceDifference <= 0) {
@@ -261,11 +262,11 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 }
 
 //this function gets the buy and sell qoutes fo rth etrad
-async function getBuySellQuotes(uniswapPair, sushiswapPair) {
+async function getBuySellQuotes(uniswapPairx, sushiswapPairx) {
 
     ////we need to check if our base token is smaller this lets us determine the pool t borrow from, we alsways
     //borrow from smaller pool as we see bwlo
-    var baseTokenSmaller = await flashBot.methods.isbaseTokenSmaller(uniswapPair, sushiswapPair, borrowAmount).call();
+    var baseTokenSmaller = await flashBot.methods.isbaseTokenSmaller(uniswapPair, sushiswapPair).call();
     baseTokenSmaller = baseTokenSmaller[0]
 
     var baseToken;
@@ -278,12 +279,13 @@ async function getBuySellQuotes(uniswapPair, sushiswapPair) {
     }
 
     //next we order our reserves again borrow from smaller pool sell on higher
-    var orderedReserves = await flashBot.methods.getOrderedReserves(uniswapPair, sushiswapPair, baseTokenSmaller).call();
+    var orderedReserves = await flashBot.methods.getOrderedReserves(uniswapPairx, sushiswapPairx, baseTokenSmaller).call();
     orderedReserves = orderedReserves[2];
     const lowerPricePool = orderedReserves[0];
     const higherPricePool = orderedReserves[1];
 
     // borrow quote token on lower price pool, // sell borrowed quote token on higher price pool.
+    var borrowAmount = web3.utils.toWei(amountToTradeInEth.toString(), "Ether");
     var debtAmount = await registry.uniswapRouterContract.methods.getAmountIn(borrowAmount, orderedReserves[0], orderedReserves[1]).call();
     var baseTokenOutAmount = await registry.uniswapRouterContract.methods.getAmountOut(borrowAmount, orderedReserves[3], orderedReserves[2]).call();
     
@@ -292,5 +294,5 @@ async function getBuySellQuotes(uniswapPair, sushiswapPair) {
 
 // FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F");
 
-// const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 8 Seconds
-// priceMonitor = setInterval(async () => { await FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F") }, POLLING_INTERVAL)
+const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 8 Seconds
+priceMonitor = setInterval(async () => { await FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F") }, POLLING_INTERVAL)
