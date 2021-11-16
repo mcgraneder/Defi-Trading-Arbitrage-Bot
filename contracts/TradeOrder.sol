@@ -21,13 +21,14 @@ contract TradeOrder {
 
     address private constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
-<<<<<<< HEAD
-    address[] baseTokens = [WETH, 0xBB91175307DD50bdebCfE82F2f343BbEf607e659, 0x7aC0F08dd5CE5098ec8e0C98a0D2464E0602A32F];
-=======
+
+    // address[] baseTokens = [WETH, 0xBB91175307DD50bdebCfE82F2f343BbEf607e659, 0x7aC0F08dd5CE5098ec8e0C98a0D2464E0602A32F];
+
     //array of basetokens weth is added by standard and the other one is hard coded from my test script.
     //however we also have a function to let users add their own basetoken so it is dynamic
     address[] baseTokens = [WETH, 0xBB91175307DD50bdebCfE82F2f343BbEf607e659, 0xCa0bFD7aEFa72c61BbDF6Ad293AD2f943cfb592d];
->>>>>>> parent of e95ff79 (adding images for readme)
+
+
 
 
    function baseTokensContains(address token) public view returns (bool hasBeenFound) {

@@ -32,13 +32,8 @@ module.exports = class Registry {
         this.crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-<<<<<<< HEAD
-        this.flashBotAddress = "0x78E4B27a471BaaA4F4BAE2f9F3F94c8C5684ff4a";
+        this.flashBotAddress = "0xF4F1bB11B564701C704d4E2fdaa2516940AA6c78";
         this.maximumProfitContract = "0x23EC7650662D1bb8E4A6F6c9B5285FbcF2943459";
-=======
-        this.flashBotAddress = "0x24B1E62621E2E04B7A5dad390208A213239cD642";
-        this.maximumProfitContract = "0xc9c17F28f0c894E0CC111aCAA22337f7A88219Bf";
->>>>>>> parent of e95ff79 (adding images for readme)
 
         //testing tokens
     

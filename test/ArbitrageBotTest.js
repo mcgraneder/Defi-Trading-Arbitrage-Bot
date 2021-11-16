@@ -20,7 +20,7 @@ const MP = require("../build/contracts/TradeOrder.json")
 const UniswapFactory = require("@uniswap/v2-core/build/IUniswapV2Factory");
 const UniswapV2Pair = require("@uniswap/v2-core/build/IUniswapV2Pair");
 const UniswapRouter = require("../build/contracts/IUniswapV2Router02.json");
-const Utils = require("../build/contracts/Utils.json");
+// const Utils = require("../build/contracts/Utils.json");
 const IERC20 = require("../build/contracts/IERC20.json");
 const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
 const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
@@ -36,13 +36,8 @@ const SushiSwapRouterAddress = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
-<<<<<<< HEAD
-var token0Addr = "0x763509Af977ea8483F83038d4e272805e5e5465E"; //Link
-var token1Addr = "0x7aC0F08dd5CE5098ec8e0C98a0D2464E0602A32F" //WETH1
-=======
-const token0Addr = "0x20544193C66D13dC9147150FccF49f76e5D918b8"; //Link
-const token1Addr = "0xCa0bFD7aEFa72c61BbDF6Ad293AD2f943cfb592d" //WETH1
->>>>>>> parent of e95ff79 (adding images for readme)
+const token0Addr = "0x6A4A59E044b0f35E304005A97a60E97D72F5c70a"; //Link
+const token1Addr = "0x7D7224b9979343dE24Fd6BA2eB3F73f528cAA6cf" //WETH1
 var amountToTradeInEth = 1;
 const validPeriod = 5;
 
@@ -97,13 +92,8 @@ function initialiseFactoryContracts() {
     uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, UniswapRouterAddress);
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
-<<<<<<< HEAD
-    max = new web3.eth.Contract(MP.abi, "0x23EC7650662D1bb8E4A6F6c9B5285FbcF2943459")
-    arbitrage = new web3.eth.Contract(arb1.abi, "0xc09Aad2cBC34F727dec7323E8167C42E33cd2149")
-=======
-    max = new web3.eth.Contract(MP.abi, "0x29CCac26D76BCb81181C9e3821C3c76Eaec51406")
-    arbitrage = new web3.eth.Contract(arb1.abi, "0x3F91D2268EA1CDbB561229420F439dF19b6BddFf")
->>>>>>> parent of e95ff79 (adding images for readme)
+    max = new web3.eth.Contract(MP.abi, "0xE186Ee4fB53B9a6DF5c58a3FEC9Bffd1c30857A7")
+    arbitrage = new web3.eth.Contract(arb1.abi, "0xF4F1bB11B564701C704d4E2fdaa2516940AA6c78")
 
     
     token0 = new web3.eth.Contract(IERC20.abi, token0Addr);
@@ -145,7 +135,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         const p1 = await uniswapPairContract.methods.token1().call();
 
         // const pairContract1 = sushiSwapPairContract;
-        console.log("pairs", p0, p1 )
+        // console.log("pairs", p0, p1 )
         
         
         var pair0Reserve, pair1Reserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
@@ -179,7 +169,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         const returnValues = await getBuySellQuotes(uniswapPair1, sushiswapPair);
         var outAmount = returnValues[0];
         var debt = returnValues[1];
-        console.log("base token, lowerPool, higherPool: " + returnValues[2], returnValues[3], returnValues[4])
+        // console.log("base token, lowerPool, higherPool: " + returnValues[2], returnValues[3], returnValues[4])
         var amountIn = web3.utils.toWei("1", "Ether")
        
         var totalDifference, deadline, estimatedGasForApproval, estimatedGasForFlashLoan, totalEstimatedGas, gasCost;
@@ -240,14 +230,14 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
                     
         console.log(
             `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(debt.toString(), "Ether")} DAI on Uniswap. ` +
-            `conversley ${web3.utils.fromWei((debt).toString(), "Ether")} will buy us ${amountToTradeInEth} WETH on Sushiswap\n`
+            `conversley ${web3.utils.fromWei((debt).toString(), "Ether")} will buy us ${1 / amountToTradeInEth} WETH on Sushiswap\n`
         );
 
         try {
 
             let balancefore = await token1.methods.balanceOf(arbitrage.options.address).call()
             balancefore = balancefore / 10 ** 18;
-            console.log("Token balance before arb: " + balancefore);
+            // console.log("Token balance before arb: " + balancefore);
 
 
             const transaction0 = {from: WHALE, to: token0.options.address, gas: estimatedGasForApproval, data: token0.methods.approve(uniswapRouterContract.options.address, amountIn).encodeABI()}
@@ -263,7 +253,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
             let balanceAfter = await token1.methods.balanceOf(arbitrage.options.address).call()
             balanceAfter = balanceAfter / 10 ** 18;
-            console.log("Token balance After arb: " + balanceAfter);
+            console.log("\n\nToken balance before the arb is: " + balancefore + " The balance after the arb is: " + balanceAfter);
 
         } catch (err) {
 

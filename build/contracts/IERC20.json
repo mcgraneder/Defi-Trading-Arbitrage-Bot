@@ -238,7 +238,6 @@
     "absolutePath": "project:/contracts/interfaces/IERC20.sol",
     "exportedSymbols": {
       "IERC20": [
-<<<<<<< HEAD
         1530
       ]
     },
@@ -247,16 +246,6 @@
     "nodes": [
       {
         "id": 1448,
-=======
-        1576
-      ]
-    },
-    "id": 1577,
-    "nodeType": "SourceUnit",
-    "nodes": [
-      {
-        "id": 1494,
->>>>>>> parent of e95ff79 (adding images for readme)
         "literals": [
           "solidity",
           ">=",
@@ -272,52 +261,30 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-<<<<<<< HEAD
         "id": 1530,
         "linearizedBaseContracts": [
           1530
-=======
-        "id": 1576,
-        "linearizedBaseContracts": [
-          1576
->>>>>>> parent of e95ff79 (adding images for readme)
         ],
         "name": "IERC20",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "anonymous": false,
-<<<<<<< HEAD
             "id": 1456,
             "name": "Approval",
             "nodeType": "EventDefinition",
             "parameters": {
               "id": 1455,
-=======
-            "id": 1502,
-            "name": "Approval",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 1501,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1450,
-=======
-                  "id": 1496,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "owner",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
                   "scope": 1456,
-=======
-                  "scope": 1502,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "67:21:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -326,11 +293,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1449,
-=======
-                    "id": 1495,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "67:7:3",
@@ -344,20 +307,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1452,
-=======
-                  "id": 1498,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "spender",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
                   "scope": 1456,
-=======
-                  "scope": 1502,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "90:23:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -366,11 +321,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1451,
-=======
-                    "id": 1497,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "90:7:3",
@@ -384,20 +335,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1454,
-=======
-                  "id": 1500,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
                   "scope": 1456,
-=======
-                  "scope": 1502,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "115:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -406,11 +349,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1453,
-=======
-                    "id": 1499,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "115:4:3",
@@ -428,37 +367,21 @@
           },
           {
             "anonymous": false,
-<<<<<<< HEAD
             "id": 1464,
             "name": "Transfer",
             "nodeType": "EventDefinition",
             "parameters": {
               "id": 1463,
-=======
-            "id": 1510,
-            "name": "Transfer",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 1509,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1458,
-=======
-                  "id": 1504,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "from",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
                   "scope": 1464,
-=======
-                  "scope": 1510,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "148:20:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -467,11 +390,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1457,
-=======
-                    "id": 1503,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "148:7:3",
@@ -485,20 +404,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1460,
-=======
-                  "id": 1506,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "to",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
                   "scope": 1464,
-=======
-                  "scope": 1510,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "170:18:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -507,11 +418,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1459,
-=======
-                    "id": 1505,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "170:7:3",
@@ -525,20 +432,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1462,
-=======
-                  "id": 1508,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
                   "scope": 1464,
-=======
-                  "scope": 1510,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "190:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -547,11 +446,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1461,
-=======
-                    "id": 1507,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "190:4:3",
@@ -569,49 +464,29 @@
           },
           {
             "functionSelector": "06fdde03",
-<<<<<<< HEAD
             "id": 1469,
-=======
-            "id": 1515,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "name",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1465,
-=======
-              "id": 1511,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "223:2:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1468,
-=======
-              "id": 1514,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1467,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1469,
-=======
-                  "id": 1513,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1515,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "249:13:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -620,11 +495,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1466,
-=======
-                    "id": 1512,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "249:6:3",
@@ -638,11 +509,7 @@
               ],
               "src": "248:15:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "210:54:3",
             "stateMutability": "view",
             "virtual": false,
@@ -650,49 +517,29 @@
           },
           {
             "functionSelector": "95d89b41",
-<<<<<<< HEAD
             "id": 1474,
-=======
-            "id": 1520,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "symbol",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1470,
-=======
-              "id": 1516,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "285:2:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1473,
-=======
-              "id": 1519,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1472,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1474,
-=======
-                  "id": 1518,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1520,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "311:13:3",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -701,11 +548,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1471,
-=======
-                    "id": 1517,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "311:6:3",
@@ -719,11 +562,7 @@
               ],
               "src": "310:15:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "270:56:3",
             "stateMutability": "view",
             "virtual": false,
@@ -731,49 +570,29 @@
           },
           {
             "functionSelector": "313ce567",
-<<<<<<< HEAD
             "id": 1479,
-=======
-            "id": 1525,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "decimals",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1475,
-=======
-              "id": 1521,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "349:2:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1478,
-=======
-              "id": 1524,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1477,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1479,
-=======
-                  "id": 1523,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1525,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "375:5:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -782,11 +601,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1476,
-=======
-                    "id": 1522,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "375:5:3",
@@ -800,11 +615,7 @@
               ],
               "src": "374:7:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "332:50:3",
             "stateMutability": "view",
             "virtual": false,
@@ -812,49 +623,29 @@
           },
           {
             "functionSelector": "18160ddd",
-<<<<<<< HEAD
             "id": 1484,
-=======
-            "id": 1530,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "totalSupply",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1480,
-=======
-              "id": 1526,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "408:2:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1483,
-=======
-              "id": 1529,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1482,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1484,
-=======
-                  "id": 1528,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1530,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "434:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -863,11 +654,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1481,
-=======
-                    "id": 1527,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "434:4:3",
@@ -881,11 +668,7 @@
               ],
               "src": "433:6:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "388:52:3",
             "stateMutability": "view",
             "virtual": false,
@@ -893,39 +676,23 @@
           },
           {
             "functionSelector": "70a08231",
-<<<<<<< HEAD
             "id": 1491,
-=======
-            "id": 1537,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "balanceOf",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1487,
-=======
-              "id": 1533,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1486,
                   "mutability": "mutable",
                   "name": "owner",
                   "nodeType": "VariableDeclaration",
                   "scope": 1491,
-=======
-                  "id": 1532,
-                  "mutability": "mutable",
-                  "name": "owner",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1537,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "465:13:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -934,11 +701,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1485,
-=======
-                    "id": 1531,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "465:7:3",
@@ -954,28 +717,16 @@
               "src": "464:15:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1490,
-=======
-              "id": 1536,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1489,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1491,
-=======
-                  "id": 1535,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1537,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "503:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -984,11 +735,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1488,
-=======
-                    "id": 1534,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "503:4:3",
@@ -1002,11 +749,7 @@
               ],
               "src": "502:6:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "446:63:3",
             "stateMutability": "view",
             "virtual": false,
@@ -1014,39 +757,23 @@
           },
           {
             "functionSelector": "dd62ed3e",
-<<<<<<< HEAD
             "id": 1500,
-=======
-            "id": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "allowance",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1496,
-=======
-              "id": 1542,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1493,
                   "mutability": "mutable",
                   "name": "owner",
                   "nodeType": "VariableDeclaration",
                   "scope": 1500,
-=======
-                  "id": 1539,
-                  "mutability": "mutable",
-                  "name": "owner",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "534:13:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1055,11 +782,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1492,
-=======
-                    "id": 1538,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "534:7:3",
@@ -1073,19 +796,11 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1495,
                   "mutability": "mutable",
                   "name": "spender",
                   "nodeType": "VariableDeclaration",
                   "scope": 1500,
-=======
-                  "id": 1541,
-                  "mutability": "mutable",
-                  "name": "spender",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "549:15:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1094,11 +809,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1494,
-=======
-                    "id": 1540,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "549:7:3",
@@ -1114,28 +825,16 @@
               "src": "533:32:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1499,
-=======
-              "id": 1545,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1498,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1500,
-=======
-                  "id": 1544,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "589:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1144,11 +843,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1497,
-=======
-                    "id": 1543,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "589:4:3",
@@ -1162,11 +857,7 @@
               ],
               "src": "588:6:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "515:80:3",
             "stateMutability": "view",
             "virtual": false,
@@ -1174,39 +865,23 @@
           },
           {
             "functionSelector": "095ea7b3",
-<<<<<<< HEAD
             "id": 1509,
-=======
-            "id": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "approve",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1505,
-=======
-              "id": 1551,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1502,
                   "mutability": "mutable",
                   "name": "spender",
                   "nodeType": "VariableDeclaration",
                   "scope": 1509,
-=======
-                  "id": 1548,
-                  "mutability": "mutable",
-                  "name": "spender",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "620:15:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1215,11 +890,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1501,
-=======
-                    "id": 1547,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "620:7:3",
@@ -1233,19 +904,11 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1504,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "scope": 1509,
-=======
-                  "id": 1550,
-                  "mutability": "mutable",
-                  "name": "value",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "637:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1254,11 +917,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1503,
-=======
-                    "id": 1549,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "637:4:3",
@@ -1273,28 +932,16 @@
               "src": "619:29:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1508,
-=======
-              "id": 1554,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1507,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1509,
-=======
-                  "id": 1553,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "667:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1303,11 +950,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1506,
-=======
-                    "id": 1552,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "667:4:3",
@@ -1321,11 +964,7 @@
               ],
               "src": "666:6:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "603:70:3",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1333,39 +972,23 @@
           },
           {
             "functionSelector": "a9059cbb",
-<<<<<<< HEAD
             "id": 1518,
-=======
-            "id": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transfer",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1514,
-=======
-              "id": 1560,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1511,
                   "mutability": "mutable",
                   "name": "to",
                   "nodeType": "VariableDeclaration",
                   "scope": 1518,
-=======
-                  "id": 1557,
-                  "mutability": "mutable",
-                  "name": "to",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "697:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1374,11 +997,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1510,
-=======
-                    "id": 1556,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "697:7:3",
@@ -1392,19 +1011,11 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1513,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "scope": 1518,
-=======
-                  "id": 1559,
-                  "mutability": "mutable",
-                  "name": "value",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "709:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1413,11 +1024,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1512,
-=======
-                    "id": 1558,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "709:4:3",
@@ -1432,28 +1039,16 @@
               "src": "696:24:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1517,
-=======
-              "id": 1563,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1516,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1518,
-=======
-                  "id": 1562,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "739:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1462,11 +1057,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1515,
-=======
-                    "id": 1561,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "739:4:3",
@@ -1480,11 +1071,7 @@
               ],
               "src": "738:6:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "679:66:3",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -1492,39 +1079,23 @@
           },
           {
             "functionSelector": "23b872dd",
-<<<<<<< HEAD
             "id": 1529,
-=======
-            "id": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "transferFrom",
             "nodeType": "FunctionDefinition",
             "parameters": {
-<<<<<<< HEAD
               "id": 1525,
-=======
-              "id": 1571,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1520,
                   "mutability": "mutable",
                   "name": "from",
                   "nodeType": "VariableDeclaration",
                   "scope": 1529,
-=======
-                  "id": 1566,
-                  "mutability": "mutable",
-                  "name": "from",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "773:12:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1533,11 +1104,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1519,
-=======
-                    "id": 1565,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "773:7:3",
@@ -1551,19 +1118,11 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1522,
                   "mutability": "mutable",
                   "name": "to",
                   "nodeType": "VariableDeclaration",
                   "scope": 1529,
-=======
-                  "id": 1568,
-                  "mutability": "mutable",
-                  "name": "to",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "787:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1572,11 +1131,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1521,
-=======
-                    "id": 1567,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "787:7:3",
@@ -1590,19 +1145,11 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1524,
                   "mutability": "mutable",
                   "name": "value",
                   "nodeType": "VariableDeclaration",
                   "scope": 1529,
-=======
-                  "id": 1570,
-                  "mutability": "mutable",
-                  "name": "value",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "799:10:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1611,11 +1158,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1523,
-=======
-                    "id": 1569,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "799:4:3",
@@ -1630,28 +1173,16 @@
               "src": "772:38:3"
             },
             "returnParameters": {
-<<<<<<< HEAD
               "id": 1528,
-=======
-              "id": 1574,
->>>>>>> parent of e95ff79 (adding images for readme)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
                   "id": 1527,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
                   "scope": 1529,
-=======
-                  "id": 1573,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                   "src": "829:4:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1660,11 +1191,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-<<<<<<< HEAD
                     "id": 1526,
-=======
-                    "id": 1572,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "829:4:3",
@@ -1678,22 +1205,14 @@
               ],
               "src": "828:6:3"
             },
-<<<<<<< HEAD
             "scope": 1530,
-=======
-            "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
             "src": "751:84:3",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           }
         ],
-<<<<<<< HEAD
         "scope": 1531,
-=======
-        "scope": 1577,
->>>>>>> parent of e95ff79 (adding images for readme)
         "src": "28:810:3"
       }
     ],
@@ -1704,11 +1223,7 @@
       "absolutePath": "project:/contracts/interfaces/IERC20.sol",
       "exportedSymbols": {
         "IERC20": [
-<<<<<<< HEAD
           1530
-=======
-          1576
->>>>>>> parent of e95ff79 (adding images for readme)
         ]
       }
     },
@@ -1722,11 +1237,7 @@
             ".0"
           ]
         },
-<<<<<<< HEAD
         "id": 1448,
-=======
-        "id": 1494,
->>>>>>> parent of e95ff79 (adding images for readme)
         "name": "PragmaDirective",
         "src": "0:24:3"
       },
@@ -1742,17 +1253,10 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-<<<<<<< HEAD
             1530
           ],
           "name": "IERC20",
           "scope": 1531
-=======
-            1576
-          ],
-          "name": "IERC20",
-          "scope": 1577
->>>>>>> parent of e95ff79 (adding images for readme)
         },
         "children": [
           {
@@ -1769,11 +1273,7 @@
                       "indexed": true,
                       "mutability": "mutable",
                       "name": "owner",
-<<<<<<< HEAD
                       "scope": 1456,
-=======
-                      "scope": 1502,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1786,20 +1286,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1449,
-=======
-                        "id": 1495,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "67:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1450,
-=======
-                    "id": 1496,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "67:21:3"
                   },
@@ -1809,11 +1301,7 @@
                       "indexed": true,
                       "mutability": "mutable",
                       "name": "spender",
-<<<<<<< HEAD
                       "scope": 1456,
-=======
-                      "scope": 1502,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1826,20 +1314,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1451,
-=======
-                        "id": 1497,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "90:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1452,
-=======
-                    "id": 1498,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "90:23:3"
                   },
@@ -1849,11 +1329,7 @@
                       "indexed": false,
                       "mutability": "mutable",
                       "name": "value",
-<<<<<<< HEAD
                       "scope": 1456,
-=======
-                      "scope": 1502,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -1865,38 +1341,22 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1453,
-=======
-                        "id": 1499,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "115:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1454,
-=======
-                    "id": 1500,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "115:10:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1455,
-=======
-                "id": 1501,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "66:60:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1456,
-=======
-            "id": 1502,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "EventDefinition",
             "src": "52:75:3"
           },
@@ -1914,11 +1374,7 @@
                       "indexed": true,
                       "mutability": "mutable",
                       "name": "from",
-<<<<<<< HEAD
                       "scope": 1464,
-=======
-                      "scope": 1510,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1931,20 +1387,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1457,
-=======
-                        "id": 1503,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "148:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1458,
-=======
-                    "id": 1504,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "148:20:3"
                   },
@@ -1954,11 +1402,7 @@
                       "indexed": true,
                       "mutability": "mutable",
                       "name": "to",
-<<<<<<< HEAD
                       "scope": 1464,
-=======
-                      "scope": 1510,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -1971,20 +1415,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1459,
-=======
-                        "id": 1505,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "170:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1460,
-=======
-                    "id": 1506,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "170:18:3"
                   },
@@ -1994,11 +1430,7 @@
                       "indexed": false,
                       "mutability": "mutable",
                       "name": "value",
-<<<<<<< HEAD
                       "scope": 1464,
-=======
-                      "scope": 1510,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2010,38 +1442,22 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1461,
-=======
-                        "id": 1507,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "190:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1462,
-=======
-                    "id": 1508,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "190:10:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1463,
-=======
-                "id": 1509,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "147:54:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1464,
-=======
-            "id": 1510,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "EventDefinition",
             "src": "133:69:3"
           },
@@ -2055,11 +1471,7 @@
                 null
               ],
               "name": "name",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2072,11 +1484,7 @@
                   ]
                 },
                 "children": [],
-<<<<<<< HEAD
                 "id": 1465,
-=======
-                "id": 1511,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "223:2:3"
               },
@@ -2087,11 +1495,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1469,
-=======
-                      "scope": 1515,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string",
@@ -2103,38 +1507,22 @@
                           "name": "string",
                           "type": "string"
                         },
-<<<<<<< HEAD
                         "id": 1466,
-=======
-                        "id": 1512,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "249:6:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1467,
-=======
-                    "id": 1513,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "249:13:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1468,
-=======
-                "id": 1514,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "248:15:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1469,
-=======
-            "id": 1515,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "210:54:3"
           },
@@ -2148,11 +1536,7 @@
                 null
               ],
               "name": "symbol",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2165,11 +1549,7 @@
                   ]
                 },
                 "children": [],
-<<<<<<< HEAD
                 "id": 1470,
-=======
-                "id": 1516,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "285:2:3"
               },
@@ -2180,11 +1560,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1474,
-=======
-                      "scope": 1520,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "type": "string",
@@ -2196,38 +1572,22 @@
                           "name": "string",
                           "type": "string"
                         },
-<<<<<<< HEAD
                         "id": 1471,
-=======
-                        "id": 1517,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "311:6:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1472,
-=======
-                    "id": 1518,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "311:13:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1473,
-=======
-                "id": 1519,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "310:15:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1474,
-=======
-            "id": 1520,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "270:56:3"
           },
@@ -2241,11 +1601,7 @@
                 null
               ],
               "name": "decimals",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2258,11 +1614,7 @@
                   ]
                 },
                 "children": [],
-<<<<<<< HEAD
                 "id": 1475,
-=======
-                "id": 1521,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "349:2:3"
               },
@@ -2273,11 +1625,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1479,
-=======
-                      "scope": 1525,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint8",
@@ -2289,38 +1637,22 @@
                           "name": "uint8",
                           "type": "uint8"
                         },
-<<<<<<< HEAD
                         "id": 1476,
-=======
-                        "id": 1522,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "375:5:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1477,
-=======
-                    "id": 1523,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "375:5:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1478,
-=======
-                "id": 1524,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "374:7:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1479,
-=======
-            "id": 1525,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "332:50:3"
           },
@@ -2334,11 +1666,7 @@
                 null
               ],
               "name": "totalSupply",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2351,11 +1679,7 @@
                   ]
                 },
                 "children": [],
-<<<<<<< HEAD
                 "id": 1480,
-=======
-                "id": 1526,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "408:2:3"
               },
@@ -2366,11 +1690,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1484,
-=======
-                      "scope": 1530,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2382,38 +1702,22 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1481,
-=======
-                        "id": 1527,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "434:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1482,
-=======
-                    "id": 1528,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "434:4:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1483,
-=======
-                "id": 1529,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "433:6:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1484,
-=======
-            "id": 1530,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "388:52:3"
           },
@@ -2427,11 +1731,7 @@
                 null
               ],
               "name": "balanceOf",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2444,11 +1744,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "owner",
-<<<<<<< HEAD
                       "scope": 1491,
-=======
-                      "scope": 1537,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2461,29 +1757,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1485,
-=======
-                        "id": 1531,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "465:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1486,
-=======
-                    "id": 1532,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "465:13:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1487,
-=======
-                "id": 1533,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "464:15:3"
               },
@@ -2494,11 +1778,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1491,
-=======
-                      "scope": 1537,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2510,38 +1790,22 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1488,
-=======
-                        "id": 1534,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "503:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1489,
-=======
-                    "id": 1535,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "503:4:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1490,
-=======
-                "id": 1536,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "502:6:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1491,
-=======
-            "id": 1537,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "446:63:3"
           },
@@ -2555,11 +1819,7 @@
                 null
               ],
               "name": "allowance",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -2572,11 +1832,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "owner",
-<<<<<<< HEAD
                       "scope": 1500,
-=======
-                      "scope": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2589,20 +1845,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1492,
-=======
-                        "id": 1538,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "534:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1493,
-=======
-                    "id": 1539,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "534:13:3"
                   },
@@ -2611,11 +1859,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "spender",
-<<<<<<< HEAD
                       "scope": 1500,
-=======
-                      "scope": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2628,29 +1872,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1494,
-=======
-                        "id": 1540,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "549:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1495,
-=======
-                    "id": 1541,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "549:15:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1496,
-=======
-                "id": 1542,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "533:32:3"
               },
@@ -2661,11 +1893,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1500,
-=======
-                      "scope": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2677,38 +1905,22 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1497,
-=======
-                        "id": 1543,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "589:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1498,
-=======
-                    "id": 1544,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "589:4:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1499,
-=======
-                "id": 1545,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "588:6:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1500,
-=======
-            "id": 1546,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "515:80:3"
           },
@@ -2722,11 +1934,7 @@
                 null
               ],
               "name": "approve",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -2739,11 +1947,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "spender",
-<<<<<<< HEAD
                       "scope": 1509,
-=======
-                      "scope": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2756,20 +1960,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1501,
-=======
-                        "id": 1547,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "620:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1502,
-=======
-                    "id": 1548,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "620:15:3"
                   },
@@ -2778,11 +1974,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "value",
-<<<<<<< HEAD
                       "scope": 1509,
-=======
-                      "scope": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2794,29 +1986,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1503,
-=======
-                        "id": 1549,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "637:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1504,
-=======
-                    "id": 1550,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "637:10:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1505,
-=======
-                "id": 1551,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "619:29:3"
               },
@@ -2827,11 +2007,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1509,
-=======
-                      "scope": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -2843,38 +2019,22 @@
                           "name": "bool",
                           "type": "bool"
                         },
-<<<<<<< HEAD
                         "id": 1506,
-=======
-                        "id": 1552,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "667:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1507,
-=======
-                    "id": 1553,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "667:4:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1508,
-=======
-                "id": 1554,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "666:6:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1509,
-=======
-            "id": 1555,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "603:70:3"
           },
@@ -2888,11 +2048,7 @@
                 null
               ],
               "name": "transfer",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -2905,11 +2061,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "to",
-<<<<<<< HEAD
                       "scope": 1518,
-=======
-                      "scope": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -2922,20 +2074,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1510,
-=======
-                        "id": 1556,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "697:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1511,
-=======
-                    "id": 1557,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "697:10:3"
                   },
@@ -2944,11 +2088,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "value",
-<<<<<<< HEAD
                       "scope": 1518,
-=======
-                      "scope": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -2960,29 +2100,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1512,
-=======
-                        "id": 1558,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "709:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1513,
-=======
-                    "id": 1559,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "709:10:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1514,
-=======
-                "id": 1560,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "696:24:3"
               },
@@ -2993,11 +2121,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1518,
-=======
-                      "scope": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -3009,38 +2133,22 @@
                           "name": "bool",
                           "type": "bool"
                         },
-<<<<<<< HEAD
                         "id": 1515,
-=======
-                        "id": 1561,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "739:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1516,
-=======
-                    "id": 1562,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "739:4:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1517,
-=======
-                "id": 1563,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "738:6:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1518,
-=======
-            "id": 1564,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "679:66:3"
           },
@@ -3054,11 +2162,7 @@
                 null
               ],
               "name": "transferFrom",
-<<<<<<< HEAD
               "scope": 1530,
-=======
-              "scope": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -3071,11 +2175,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "from",
-<<<<<<< HEAD
                       "scope": 1529,
-=======
-                      "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -3088,20 +2188,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1519,
-=======
-                        "id": 1565,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "773:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1520,
-=======
-                    "id": 1566,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "773:12:3"
                   },
@@ -3110,11 +2202,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "to",
-<<<<<<< HEAD
                       "scope": 1529,
-=======
-                      "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -3127,20 +2215,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-<<<<<<< HEAD
                         "id": 1521,
-=======
-                        "id": 1567,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "787:7:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1522,
-=======
-                    "id": 1568,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "787:10:3"
                   },
@@ -3149,11 +2229,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "value",
-<<<<<<< HEAD
                       "scope": 1529,
-=======
-                      "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -3165,29 +2241,17 @@
                           "name": "uint",
                           "type": "uint256"
                         },
-<<<<<<< HEAD
                         "id": 1523,
-=======
-                        "id": 1569,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "799:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1524,
-=======
-                    "id": 1570,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "799:10:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1525,
-=======
-                "id": 1571,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "772:38:3"
               },
@@ -3198,11 +2262,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-<<<<<<< HEAD
                       "scope": 1529,
-=======
-                      "scope": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bool",
@@ -3214,56 +2274,32 @@
                           "name": "bool",
                           "type": "bool"
                         },
-<<<<<<< HEAD
                         "id": 1526,
-=======
-                        "id": 1572,
->>>>>>> parent of e95ff79 (adding images for readme)
                         "name": "ElementaryTypeName",
                         "src": "829:4:3"
                       }
                     ],
-<<<<<<< HEAD
                     "id": 1527,
-=======
-                    "id": 1573,
->>>>>>> parent of e95ff79 (adding images for readme)
                     "name": "VariableDeclaration",
                     "src": "829:4:3"
                   }
                 ],
-<<<<<<< HEAD
                 "id": 1528,
-=======
-                "id": 1574,
->>>>>>> parent of e95ff79 (adding images for readme)
                 "name": "ParameterList",
                 "src": "828:6:3"
               }
             ],
-<<<<<<< HEAD
             "id": 1529,
-=======
-            "id": 1575,
->>>>>>> parent of e95ff79 (adding images for readme)
             "name": "FunctionDefinition",
             "src": "751:84:3"
           }
         ],
-<<<<<<< HEAD
         "id": 1530,
-=======
-        "id": 1576,
->>>>>>> parent of e95ff79 (adding images for readme)
         "name": "ContractDefinition",
         "src": "28:810:3"
       }
     ],
-<<<<<<< HEAD
     "id": 1531,
-=======
-    "id": 1577,
->>>>>>> parent of e95ff79 (adding images for readme)
     "name": "SourceUnit",
     "src": "0:838:3"
   },
@@ -3273,11 +2309,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-<<<<<<< HEAD
-  "updatedAt": "2021-11-16T14:17:56.749Z",
-=======
-  "updatedAt": "2021-11-15T20:25:14.908Z",
->>>>>>> parent of e95ff79 (adding images for readme)
+  "updatedAt": "2021-11-16T18:37:34.567Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
