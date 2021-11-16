@@ -22,7 +22,7 @@ The first is Node.js. Node js is a javascript backend runtime enviornemt and we 
 
 ![Alt text](relative/path/to/img.jpg?raw=true "Title")
 
-<img src="../../../Documents/tempsnip.png">
+<img src="../../../Documents/tempsnip.png"/>
 
 
 # Automated Market Maker Arbitrage
