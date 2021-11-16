@@ -144,7 +144,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             var pair0Reserve1, upair0eserve1, sushiswapReserve0, sushiswapReserve1, sakeswapReserve0, sakeswapReserve1, shibaswapReserve0, shibaswapReserve1;
 
             //get the reserves for supported exchanges
-            pair0Reserve = await uniswapPairContract.methods.getReserves().call();
+            pair0Reserve = await sakeswapPairContract.methods.getReserves().call();
             pair1Reserve = await sushiSwapPairContract.methods.getReserves().call();
            
             //tuple unpack the token reserves reserve[0] == registry.DAI, reserve[1] ==weth
@@ -167,7 +167,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             //the pair price difference between each exchange and take the most profitiable to make
             //our trade. we do this with the getBuySellQuote function below
             var amountIn = web3.utils.toWei("1", "Ether")
-            const returnValues = await getBuySellQuotes(uniswapPair, sushiswapPair, amountIn);
+            const returnValues = await getBuySellQuotes(sakeswapPair, sushiswapPair, amountIn);
             var outAmount = returnValues[0];
             //how much we need to pay back flashloan
             var debt = returnValues[1];
