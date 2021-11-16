@@ -32,8 +32,8 @@ module.exports = class Registry {
         this.crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-        this.flashBotAddress = "0x24B1E62621E2E04B7A5dad390208A213239cD642";
-        this.maximumProfitContract = "0xc9c17F28f0c894E0CC111aCAA22337f7A88219Bf";
+        this.flashBotAddress = "0x4EBdE29e299B28DD7a9Fa536dF73Fd01eF6fb631";
+        this.maximumProfitContract = "0x3c15D5FB933CCA529ebcD7B6be5E0C1fae20962F";
 
         this.UniswapV2Pair = UniswapV2Pair;
         this.IERC20 = IERC20;
