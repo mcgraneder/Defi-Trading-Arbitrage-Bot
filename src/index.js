@@ -67,7 +67,7 @@ async function getExchangeTokenPairPrice() {
     weth = new web3.eth.Contract(registry.IERC20.abi, registry.DAI);
     dai = new web3.eth.Contract(registry.IERC20.abi, registry.WETH);
     flashBot = new web3.eth.Contract(registry.FlashBotContract.abi, registry.flashBotAddress)
-    maximumPofit = new web3.eth.Contract(registry)
+    // maximumPofit = new web3.eth.Contract(registry)
 
     //get all DAI/WETH pair addresses on all required exchanges
     uniswapPair = await registry.uniswapFactoryContract.methods.getPair(registry.DAI, registry.WETH).call();
@@ -292,5 +292,5 @@ async function getBuySellQuotes(uniswapPair, sushiswapPair) {
 
 // FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F");
 
-const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 8 Seconds
-priceMonitor = setInterval(async () => { await FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F") }, POLLING_INTERVAL)
+// const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 8 Seconds
+// priceMonitor = setInterval(async () => { await FindArbitrageOpportunity("0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D", "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F") }, POLLING_INTERVAL)

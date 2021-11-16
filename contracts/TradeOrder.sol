@@ -21,7 +21,7 @@ contract TradeOrder {
 
     address private constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
-    address[] baseTokens = [WETH, 0xBB91175307DD50bdebCfE82F2f343BbEf607e659, 0xad7D4C043d3B0eb94c6a0c4a3Bf18f747C8Ef61f];
+    address[] baseTokens = [WETH, 0xBB91175307DD50bdebCfE82F2f343BbEf607e659, 0x7aC0F08dd5CE5098ec8e0C98a0D2464E0602A32F];
 
 
    function baseTokensContains(address token) public view returns (bool hasBeenFound) {
@@ -42,6 +42,22 @@ contract TradeOrder {
         }
 
         return hasbeenFound;
+    }
+
+    function addBaseToken(address token) public {
+
+        require(token != address(0));
+        baseTokens.push(token);
+    }
+
+    function deleteBaseToken(address token) public {
+
+        baseTokens.pop();
+    }
+
+    function getBaseTokens() public returns(address[] memory) {
+
+        return baseTokens;
     }
 
     function isbaseTokenSmaller(address pool0, address pool1) public view returns (bool baseSmaller, address baseToken, address quoteToken) {

@@ -25,6 +25,7 @@
     "http": "0.0.1-security",
     "node-localstorage": "^2.2.1",
     "path": "^0.12.7",
-    "web3": "^1.6.0"
+    "web3": "^1.6.0",
+    "winston": "^3.3.3"
   }
 }

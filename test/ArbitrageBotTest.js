@@ -36,8 +36,8 @@ const SushiSwapRouterAddress = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
-var token0Addr = "0x3359bA959dCABB6c0a468e6373f3aC3fF899eB73"; //Link
-var token1Addr = "0xad7D4C043d3B0eb94c6a0c4a3Bf18f747C8Ef61f" //WETH1
+var token0Addr = "0x763509Af977ea8483F83038d4e272805e5e5465E"; //Link
+var token1Addr = "0x7aC0F08dd5CE5098ec8e0C98a0D2464E0602A32F" //WETH1
 var amountToTradeInEth = 1;
 const validPeriod = 5;
 
@@ -92,8 +92,8 @@ function initialiseFactoryContracts() {
     uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, UniswapRouterAddress);
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
-    max = new web3.eth.Contract(MP.abi, "0x0c04962113C1D63CD8f2c0a1D20c48Cdc97aE113")
-    arbitrage = new web3.eth.Contract(arb1.abi, "0xa34C9b46c1DcA6AfE1771971fdb3b79897FA7B3b")
+    max = new web3.eth.Contract(MP.abi, "0x23EC7650662D1bb8E4A6F6c9B5285FbcF2943459")
+    arbitrage = new web3.eth.Contract(arb1.abi, "0xc09Aad2cBC34F727dec7323E8167C42E33cd2149")
 
     
     token0 = new web3.eth.Contract(IERC20.abi, token0Addr);
