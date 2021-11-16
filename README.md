@@ -9,6 +9,21 @@ This repo containes a DEFI arbitrage bot which implements flashloans to maximize
 
 First it will be explained how to install the required tools (probably you have already installed some of them, feel free to jump to the sections that you wish). Then I introduce how to run the demo, here assume that you are kind of newbie in blockchain and you don’t understand quiet well whats happening so its deeply explained. After, a very basic guide line to put the bots to work on an ethereum network, mainnet or testnet, I assume you know what you are doing at this point. Finally some improvements for a possible production stage and useful resourses are given.
 
+# Instillation
+to use this code follow the detailed guide below. I have went the extra mile here to really explain eveeything so that anyone can run this code error free regardless of experience.
+
+### Software requirements
+Before you can actually run the code there is two pieces of sogtware that you are required to install on your mchine. Those are
+
+1) Node.js
+2) Truffle suite
+
+The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornemtn and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
+
+![Alt text](relative/path/to/img.jpg?raw=true "Title")
+
+<img src="../../../Documents/tempsnip.png">
+
 
 # Automated Market Maker Arbitrage
 **The current DEX ecosystem is mainly under one AMM family called constant function market makers** 
