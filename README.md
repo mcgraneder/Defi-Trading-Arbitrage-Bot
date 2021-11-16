@@ -20,7 +20,7 @@ Before you can actually run the code there is two pieces of sogtware that you ar
 
 The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornemtn and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
 
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
+![Alt text](../../../Documents/tempsnip.png?raw=true "Title")
 
 <img src="../../../Documents/tempsnip.png"/>
 
