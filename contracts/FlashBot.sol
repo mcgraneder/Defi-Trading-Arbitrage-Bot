@@ -93,6 +93,7 @@ contract FlashSwap is TradeOrder {
 
 
             //here we assign the callback data so we can query it when uniswap calls the V2Call function
+            //using a truct like this is a hand y way tto store the data
             CallbackData memory callbackData;
             callbackData.debtPool = info.lowerPool;
             callbackData.targetPool = info.higherPool;
@@ -117,14 +118,19 @@ contract FlashSwap is TradeOrder {
         // require(msg.sender == permissionedPairAddress, "Non permissioned address call");
         require(sender == address(this), "Not being sent from ths contract");
 
+        //here we check what order our borrowed amount is in i.e is is amount1 or amount 0
+        //the  we initialise our calllback struct to extract the data we set iin the flashwap func
         uint256 borrowedAmount = amount0 > 0 ? amount0 : amount1;
         CallbackData memory info = abi.decode(data, (CallbackData));
 
+        //we then transfer the borrowd tokens to the destination pool swap them and pay back the loan
         IERC20(info.borrowedToken).transfer(info.targetPool, borrowedAmount);
 
+        //we can use the uniswap interface to swap tokens on any exchange that is a fork of the uniswap codebase
         (uint256 amount0Out, uint256 amount1Out) = info.debtTokenSmaller ? (info.debtTokenOutAmount, uint256(0)) : (uint256(0), info.debtTokenOutAmount);
         IUniswapV2Pair(info.targetPool).swap(amount0Out, amount1Out, address(this), new bytes(0));
 
+        //transfer back to source exchange topay back flashloan
         IERC20(info.debtToken).transfer(info.debtPool, info.debtAmount);
     }
 

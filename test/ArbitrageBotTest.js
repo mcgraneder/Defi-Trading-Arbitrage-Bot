@@ -1,26 +1,20 @@
+//THIS IS THE TEST SCRIPT TO TEST THE BOT WORKS IN AN ARBITRAGE OPORTUNITY. WE MAINLY NEED THIS
+//TO TEST THE FLASHSWAP. SEE deployTestingContracts.js. IN THAT FILE WE CREATE TWO FAKE TOKENS 
+//AND MINT 100000 OF EACH WE THEN CREATE PAIRS OF THE TOKENS ON UNISWAP AND SUSHISAP AND ADD
+//LIQUIDITY SOUCH THAT THEIR IS A LARG PRICE DIFF BETWEEN UNI AND SUSHI. THAT WASY WE CAN USE
+//THSE TOKENS HERE TO TEST THE CASE OF PROFITABLE ARB.  SINCE THIS IS A TEST SCRIPT IT IS NOT AS REFINED AS THE
+//MAIN BOT AND MORE THINGS ARE HARDCODED FOR CLSARITY. THIS SCRIPT PRINTS MORE LOGS TO THE CONSOLE
+//IN ORDER TO SEE EXCSTLY WHAT THE OUTPUT OF THE MAIN ACLULATIONS ARE. THIS IS NOT DONE IN THE MAIN
+//BOT TO SAVE NEEDLEDSS RUNTIME
+
 const express = require("express");
-const http = require("http");
 const Web3 = require("web3");
-const cors = require('cors')
-const {LocalStorage} = require("node-localstorage");
 const axios = require('axios');
 const path = require("path");
 const app = express();
 var web3;
 require('colors');
 
-
-// const PORT = process.env.PORT || 5000
-// const server = http.createServer(app).listen(PORT, () => console.log(`Listening on ${ PORT }`))
-// app.use(express.static(path.join(__dirname, 'public')))
-// app.use(cors({credentials: true, origin: '*'}));
-// app.get("/", function(req, res) {
-
-//     res.send({ uniswapBuy: "hello" });
-// })
-
-const privateKey = "0xc51f7826f42baad15e0ab5a6d11d5c49301c7feb5c5961f857725cb8f283b4bb"
-  
 //ABIS
 const MP = require("../build/contracts/TradeOrder.json")
 const UniswapFactory = require("@uniswap/v2-core/build/IUniswapV2Factory");
@@ -32,9 +26,7 @@ const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
 const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
 const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
 const Registry = require("../src/registry");
-let registry = new Registry();
 const arb1 = require("../build/contracts/FlashSwap.json");
-
 
 //defining address parameters. 
 const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
@@ -44,16 +36,10 @@ const SushiSwapRouterAddress = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
 
-const token01 = "0x514910771af9ca656af840dff83e8264ecf986ca"; //Link
-const token0Addr = "0xBB91175307DD50bdebCfE82F2f343BbEf607e659"; //Link
-const token1Addr = "0xE844c3710e6319125375628b76e320F52ca67903" //WETH1
-const tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
-const pairName = "ETH/DAI";
-var localStorage = new LocalStorage('./scratch');
+const token0Addr = "0x20544193C66D13dC9147150FccF49f76e5D918b8"; //Link
+const token1Addr = "0xCa0bFD7aEFa72c61BbDF6Ad293AD2f943cfb592d" //WETH1
 var amountToTradeInEth = 1;
 const validPeriod = 5;
-var eth;
-var link;
 
 //here we will initialise the needed smart contracts aswell as some vars
 //PAIR CONTRACTSiswapPairContract, 0, sushiSwapPairContract, sakeswapPairContract, crowswapPairContract, shibaswapPairContract;Y CONTRACTS
@@ -106,13 +92,13 @@ function initialiseFactoryContracts() {
     uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, UniswapRouterAddress);
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
-    max = new web3.eth.Contract(MP.abi, "0xe4f875dBbAE25e3c0bC9137E0068f65F446364e5")
-    arbitrage = new web3.eth.Contract(arb1.abi, "0x9956aa25870aeD55eB70c50bc2C5A7CB5708A391")
+    max = new web3.eth.Contract(MP.abi, "0x29CCac26D76BCb81181C9e3821C3c76Eaec51406")
+    arbitrage = new web3.eth.Contract(arb1.abi, "0x3F91D2268EA1CDbB561229420F439dF19b6BddFf")
 
     
     token0 = new web3.eth.Contract(IERC20.abi, token0Addr);
     token1 = new web3.eth.Contract(IERC20.abi, token1Addr);
- 
+
 }
 
 async function getExchangeTokenPairPrice() {
@@ -249,7 +235,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
         try {
 
-            let balancefore = await token0.methods.balanceOf(arbitrage.options.address).call()
+            let balancefore = await token1.methods.balanceOf(arbitrage.options.address).call()
             balancefore = balancefore / 10 ** 18;
             console.log("Token balance before arb: " + balancefore);
 
@@ -265,9 +251,9 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
                 console.log(res)
             })
 
-            let balanceAfter = await token0.methods.balanceOf(arbitrage.options.address).call()
+            let balanceAfter = await token1.methods.balanceOf(arbitrage.options.address).call()
             balanceAfter = balanceAfter / 10 ** 18;
-            console.log("Token balance before arb: " + balanceAfter);
+            console.log("Token balance After arb: " + balanceAfter);
 
         } catch (err) {
 

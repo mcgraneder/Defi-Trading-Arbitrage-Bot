@@ -13,6 +13,9 @@ const Web3 = require("web3");
 const provider = new Web3.providers.WebsocketProvider("wss://mainnet.infura.io/ws/v3/ba5ee6592e68419cab422190121eca4c")
 web3 = new Web3(provider);
 
+
+//simple class which stores all needed information to arbitrage amoung the different exchanges
+//i intend to add setter functions so people can add their own exchange contacts and token pairs etc
 module.exports = class Registry {
 
     constructor() {
@@ -29,8 +32,8 @@ module.exports = class Registry {
         this.crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-        this.flashBotAddress = "0x9956aa25870aeD55eB70c50bc2C5A7CB5708A391";
-        this.maximumProfitContract = "0xe4f875dBbAE25e3c0bC9137E0068f65F446364e5";
+        this.flashBotAddress = "0x24B1E62621E2E04B7A5dad390208A213239cD642";
+        this.maximumProfitContract = "0xc9c17F28f0c894E0CC111aCAA22337f7A88219Bf";
 
         this.UniswapV2Pair = UniswapV2Pair;
         this.IERC20 = IERC20;
@@ -79,4 +82,6 @@ module.exports = class Registry {
 
         return this.allRouterContracts
     }
+
+
 }
