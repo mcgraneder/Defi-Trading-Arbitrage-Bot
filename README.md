@@ -1,4 +1,4 @@
-##Read me incomplete installatuon guide coming soon need to tie up some final bits
+# Read me incomplete installatuon guide coming soon need to tie up some final bits
 
 ## Repo Contents
 This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required.
