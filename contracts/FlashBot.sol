@@ -67,6 +67,7 @@ contract FlashSwap is TradeOrder {
     function testFlashSwap(address pool0, address pool1, uint256 borrowAmount) external {
 
         //here we make and instance of the info struct
+        
         ArbitrageInfo memory info;
         //we then call a function called isBaseTokenSmaller. this function will change the order of the trade
         //so that we are alwsys borrowing from the base token reserve
