@@ -1,15 +1,14 @@
 # Read me incomplete installatuon guide coming soon need to tie up some final bits
 
-## Repo Contents
+# Repo Contents
 This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required.
 
-1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit). Uniswap, like all the others exchanges, charges on you a fee for using their services (swapping tokens in this case), this fee currently is 0.3%. To see more on how flashswap or normal swaps works visit the [Uniswap docs](https://uniswap.org/docs/v2/).
+1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit).
 
 2) A demo that you can easily run to see the bots in action in a fixed setup where arbitrage will always work (local development). Basically consist of forking ethereum mainnet locally, run the demo script that do the set ups for you and execute the bots.
 
 3) Theory of Arbitrage and some proposed improvements for possible production stage of this bort.
 
-First it will be explained how to install the required tools (probably you have already installed some of them, feel free to jump to the sections that you wish). Then I introduce how to run the demo, here assume that you are kind of newbie in blockchain and you don’t understand quiet well whats happening so its deeply explained. After, a very basic guide line to put the bots to work on an ethereum network, mainnet or testnet, I assume you know what you are doing at this point. Finally some improvements for a possible production stage and useful resourses are given.
 
 # Instillation
 to use this code follow the detailed guide below. I have went the extra mile here to really explain eveeything so that anyone can run this code error free regardless of experience.
@@ -23,9 +22,7 @@ Before you can actually run the code there is two pieces of sogtware that you ar
 
 The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornment and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
 
-![Alt text](../../../Documents/tempsnip.png?raw=true "Title")
-
-<img src="https://drive.google.com/drive/u/1/my-drive/tempsnip.png"/>
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/tempsnip.png"/>
 
 Once you have downloaded node and carried out the installation process you can check to see if you have installed it correctly by opening up a terminal and executing the following command
 ```bash
@@ -75,6 +72,8 @@ npm install -g ganache-cli
 ```
 ### Infura
 While ganche is installing we can make out way over to the inufra website. The link is https://infura.io/. In order to get access to a free infura node we need to first make an account. When you make an account navigate to the main dashboard and click on the `create new project` button. This will creat for us anew project and and we can now connet to one of infuras nodes. To do so however we need the endpoint link. Grab the websocket endpoint shown in the snippet below. dont grab the http one as we need to use wesockt in order to get updating price feeds later on. http is not as good for this.
+
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/infura2.png"/>
 
 Now open up a terminal just make sure that its open somewhere in your project folder and then we are going to ganache aswell as this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
 ```bash
