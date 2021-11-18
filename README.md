@@ -5,7 +5,7 @@ This repo containes a DEFI arbitrage bot which implements flashloans to maximize
 
 1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit). Uniswap, like all the others exchanges, charges on you a fee for using their services (swapping tokens in this case), this fee currently is 0.3%. To see more on how flashswap or normal swaps works visit the [Uniswap docs](https://uniswap.org/docs/v2/).
 
-2) A demo that you can easily run to see the bots in action. Basically consist of forking ethereum mainnet locally, run the demo script that do the set ups for you and execute the bots.
+2) A demo that you can easily run to see the bots in action in a fixed setup where arbitrage will always work (local development). Basically consist of forking ethereum mainnet locally, run the demo script that do the set ups for you and execute the bots.
 
 3) Theory of Arbitrage and some proposed improvements for possible production stage of this bort.
 
@@ -20,12 +20,35 @@ Before you can actually run the code there is two pieces of sogtware that you ar
 1) Node.js
 2) Truffle suite
 
-The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornemtn and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
+The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornment and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
 
 ![Alt text](../../../Documents/tempsnip.png?raw=true "Title")
 
 <img src="https://drive.google.com/drive/u/1/my-drive/tempsnip.png"/>
 
+Once you have downloaded node and carried out the installation process you can check to see if you have installed it correctly by opening up a terminal and executing the following command
+```bash
+node -v
+
+//output should be in the form of
+v14.17.6
+```
+Once you have installed node.js the next thing you will need is the truffle suite. Unlike node we do not directly download this onto our machine but rather we use node's package manager to install truffle. to install it execute the following command
+```bash
+npm install truffle
+```
+The installation might take a few minutes but again, yu can check to see if you installed truffle correctly by running
+```bash
+truffle version
+//output should be in the form of
+Truffle v5.4.19 (core: 5.4.19)
+Solidity - ^0.7.0 (solc-js)
+Node v14.17.6
+Web3.js v1.5.3
+```
+Once you have these two project dependancies we are set to begin the installation of this code. In order to get this code on your machine click the green boc that says code in the top right hand corner. copy an dpast the url here. Then go to you comuter and make a new directory somewhere. Once you do open up a new terminal in this folder and execute the following command to clone the repo
+```
+git clone 
 
 # Automated Market Maker Arbitrage
 **The current DEX ecosystem is mainly under one AMM family called constant function market makers** 
