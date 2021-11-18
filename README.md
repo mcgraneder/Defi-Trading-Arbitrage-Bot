@@ -1,31 +1,110 @@
 # Read me incomplete installatuon guide coming soon need to tie up some final bits
 
-## Repo Contents
+# Repo Contents
 This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required.
 
-1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit). Uniswap, like all the others exchanges, charges on you a fee for using their services (swapping tokens in this case), this fee currently is 0.3%. To see more on how flashswap or normal swaps works visit the [Uniswap docs](https://uniswap.org/docs/v2/).
+1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit).
 
-2) A demo that you can easily run to see the bots in action. Basically consist of forking ethereum mainnet locally, run the demo script that do the set ups for you and execute the bots.
+2) A demo that you can easily run to see the bots in action in a fixed setup where arbitrage will always work (local development). Basically consist of forking ethereum mainnet locally, run the demo script that do the set ups for you and execute the bots.
 
 3) Theory of Arbitrage and some proposed improvements for possible production stage of this bort.
 
-First it will be explained how to install the required tools (probably you have already installed some of them, feel free to jump to the sections that you wish). Then I introduce how to run the demo, here assume that you are kind of newbie in blockchain and you don’t understand quiet well whats happening so its deeply explained. After, a very basic guide line to put the bots to work on an ethereum network, mainnet or testnet, I assume you know what you are doing at this point. Finally some improvements for a possible production stage and useful resourses are given.
 
 # Instillation
 to use this code follow the detailed guide below. I have went the extra mile here to really explain eveeything so that anyone can run this code error free regardless of experience.
 
-### Software requirements
+## (1) Software requirements
 Before you can actually run the code there is two pieces of sogtware that you are required to install on your mchine. Those are
 
-1) Node.js
-2) Truffle suite
+**1) Node.js**
 
-The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornemtn and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
+**(2) Truffle suite**
 
-![Alt text](../../../Documents/tempsnip.png?raw=true "Title")
+The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornment and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
 
-<img src="https://drive.google.com/drive/u/1/my-drive/tempsnip.png"/>
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/tempsnip.png"/>
 
+Once you have downloaded node and carried out the installation process you can check to see if you have installed it correctly by opening up a terminal and executing the following command
+```bash
+node -v
+
+//output should be in the form of
+v14.17.6
+```
+Once you have installed node.js the next thing you will need is the truffle suite. Unlike node we do not directly download this onto our machine but rather we use node's package manager to install truffle. to install it execute the following command
+```bash
+npm install truffle
+```
+The installation might take a few minutes but again, yu can check to see if you installed truffle correctly by running
+```bash
+truffle version
+//output should be in the form of
+Truffle v5.4.19 (core: 5.4.19)
+Solidity - ^0.7.0 (solc-js)
+Node v14.17.6
+Web3.js v1.5.3
+```
+
+## (2) cloning the repo and installing dependancies
+Once you have these two project dependancies we are set to begin the installation of this code. In order to get this code on your machine click the green boc that says code in the top right hand corner. copy an dpast the url here. Then go to you comuter and make a new directory somewhere. Once you do open up a new terminal in this folder and execute the following command to clone the repo
+```bash
+git clone https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot.git
+```
+once the code finishes installing on your machine change into the project folder by running
+```bash
+cd Defi-Trading-Arbitrage-Bot
+```
+then open the it in VS code with
+```bash
+code .
+```
+In order fo ryou to be able to run the code without an errors we need to first install all of the project dependancies required. We can again use nodes pacakge manager to do this. simply run
+```bash
+npm install
+```
+This installation might take a minute or two but if your curious at to what all of these dependancies are navigate to the package.json file and look under `dependancies`. We are nearly there in terms of running the code but we still need one main thing and that is a way to establish a connection to the ethereum blockchain so that we can access and execute smart contract functions in all of the contracts used in this project. We can establish a connection to the ethereum blockhain in different ways such as running our own node. But that is out of the scop of this project so what we will be using is a provider and connecting via an RPC node.
+
+## (3) establishing a connection to the ethereum blockhain
+### Ganache
+To do this we will be using ganache-cli. Ganache CLI is part of the Truffle suite of Ethereum development tools, is the command line version of Ganache, which is a like your personal blockchain for Ethereum development. Ganache CLI uses ethereumjs to simulate full client behavior and make developing Ethereum applications faster, easier, and safer. We will then be useing Infura who are an RPC Node provider so that we can use ganache to connect to an infura node ultimately allowing us to connect to the ethereum blockchain. So this step of the installation comes in two parts. We first will install ganche and then we will connect to an RPC node using Infura. To install ganche-cli open your terminal and run
+```bash
+npm install -g ganache-cli
+```
+### Infura
+While ganche is installing we can make out way over to the inufra website. The link is https://infura.io/. In order to get access to a free infura node we need to first make an account. When you make an account navigate to the main dashboard and click on the `create new project` button. This will creat for us anew project and and we can now connet to one of infuras nodes. To do so however we need the endpoint link. Grab the websocket endpoint shown in the snippet below. dont grab the http one as we need to use wesockt in order to get updating price feeds later on. http is not as good for this.
+
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/infura2.png"/>
+
+Now open up a terminal just make sure that its open somewhere in your project folder and then we are going to ganache aswell as this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
+```bash
+ganache-cli -f INFURA ENDPOINT GOES HERE -u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE -l 9999999999
+```
+Ok so ther eis a few things here. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this i svery useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems.
+
+## (4) deploying the contracts and running the Bot
+Now that we have our hanache server up and running establishing a connection to the ethereum blockhain we can finally run both the real maiine bot script AND the test enivornment script i made to test the credibility of my flashswap smart contract. On mainnet it is hard to find arbitrage for reasons explained in the sections below so i made a testing enviornemt that fixed to always be arbitragable. To run either script we first need to deploy our smart contratcs. Naviagte to the test enviornment folder. to do this open a terminal in the main project folder and type
+```bash
+cd ./src/test/
+```
+once here run the deployment script. We can run it two ways. the first deploys the script so that our pair is in the form `TOKENX/TOKENY` and the second deploys the script such that our tokens are in the form `TOKENY/TOKENX`. To run either execute one of the following commands
+```bash
+node deployTestingContracts.js -a  //TOKENX/TOKENY
+
+//or
+
+node deployTestingContracts.js -b  //TOKENY/TOKENX
+```
+after the deployment finsihes we can run both the test script and the main bot. to run the test script stay in the current directory and run
+```bash
+node arbitrageBotTest.js
+```
+and enjoy this script will always return a profut bcause it is a fixed test. if you would like to run the main bot move back into the src directory. so run both of these commands
+```bash
+cd ../
+
+node index.js
+```
+more than likely you will not get an arbitrage because the price differences between exchanges is much closer. however i have gotten one real arbitrage on forked mainnet since i have started this project. ive been building it for two weeks so once out of running it for days and days is not that consistent but this bot is not a production bot at all not by any strecth it is more of s proof of concept.  I have made a logger using mongoDB which logs various information such as price data and tranactions and other information to a mongo databsse. In this repo i commented out the mongoDB bcause it takes too long for me to explain the setup but the logs instead go to files in the logs folder. you can run the script and keep track of any arbs you get with the logs. they are very useful.Read the sections below to lesrn about how we could improve this script further and why arbitrage is profitable. I hope you are able to get thing srunning. If you cant feel free to email me with your questions at evan.mcgrane5@mail.dcu.ie. Enjoy.
 
 # Automated Market Maker Arbitrage
 **The current DEX ecosystem is mainly under one AMM family called constant function market makers** 
