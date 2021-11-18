@@ -14,7 +14,7 @@ First it will be explained how to install the required tools (probably you have 
 # Instillation
 to use this code follow the detailed guide below. I have went the extra mile here to really explain eveeything so that anyone can run this code error free regardless of experience.
 
-### Software requirements
+## (1) Software requirements
 Before you can actually run the code there is two pieces of sogtware that you are required to install on your mchine. Those are
 
 1) Node.js
@@ -46,6 +46,8 @@ Solidity - ^0.7.0 (solc-js)
 Node v14.17.6
 Web3.js v1.5.3
 ```
+
+## (2) cloning the repo and installing dependancies
 Once you have these two project dependancies we are set to begin the installation of this code. In order to get this code on your machine click the green boc that says code in the top right hand corner. copy an dpast the url here. Then go to you comuter and make a new directory somewhere. Once you do open up a new terminal in this folder and execute the following command to clone the repo
 ```bash
 git clone https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot.git
@@ -64,6 +66,7 @@ npm install
 ```
 This installation might take a minute or two but if your curious at to what all of these dependancies are navigate to the package.json file and look under `dependancies`. We are nearly there in terms of running the code but we still need one main thing and that is a way to establish a connection to the ethereum blockchain so that we can access and execute smart contract functions in all of the contracts used in this project. We can establish a connection to the ethereum blockhain in different ways such as running our own node. But that is out of the scop of this project so what we will be using is a provider and connecting via an RPC node.
 
+## (3) establishing a connection to the ethereum blockhain
 To do this we will be using ganache-cli. Ganache CLI is part of the Truffle suite of Ethereum development tools, is the command line version of Ganache, which is a like your personal blockchain for Ethereum development. Ganache CLI uses ethereumjs to simulate full client behavior and make developing Ethereum applications faster, easier, and safer. We will then be useing Infura who are an RPC Node provider so that we can use ganache to connect to an infura node ultimately allowing us to connect to the ethereum blockchain. So this step of the installation comes in two parts. We first will install ganche and then we will connect to an RPC node using Infura. To install ganche-cli open your terminal and run
 ```bash
 npm install -g ganache-cli
@@ -76,6 +79,7 @@ ganache-cli -f INFURA ENDPOINT GOES HERE -u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c
 ```
 Ok so ther eis a few things here. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this i svery useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems.
 
+## (4) deploying the contracts and running the Bot
 Now that we have our hanache server up and running establishing a connection to the ethereum blockhain we can finally run both the real maiine bot script AND the test enivornment script i made to test the credibility of my flashswap smart contract. On mainnet it is hard to find arbitrage for reasons explained in the sections below so i made a testing enviornemt that fixed to always be arbitragable. To run either script we first need to deploy our smart contratcs. Naviagte to the test enviornment folder. to do this open a terminal in the main project folder and type
 ```bash
 cd ./src/test/
