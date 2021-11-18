@@ -29,10 +29,12 @@ async function createDummyTokenPools(amount0,amount1,amount2,amount3,amount4) {
     gasLimit = await arbitrage.deploy({arguments: [myAccount]}).estimateGas()
     receipt = await arbitrage.deploy({arguments: [myAccount]}).send({from: myAccount,gas: gasLimit})
     arbitrage.options.address = receipt._address
+    registry.flashBotAddress = receipt._address
 
     gasLimit = await maximumProfit.deploy().estimateGas()
     receipt = await maximumProfit.deploy().send({from: myAccount,gas: gasLimit})
     maximumProfit.options.address = receipt._address
+    registry.MaximumProfitAddress = receipt._address
 
     console.log("arbitrage contract deployed at " + arbitrage.options.address)
     console.log("maximumProfit contract deployed at " + maximumProfit.options.address)
@@ -63,11 +65,13 @@ async function deployDummyTokens() {
     gasLimit = await token0.deploy({arguments: ['DummyToken0', 'DMYTKN0']}).estimateGas()
     receipt = await token0.deploy({arguments: ['DummyToken0', 'DMYTKN0']}).send({from: myAccount,gas: gasLimit})
     token0.options.address = receipt._address
+    registry.token0 = receipt._address
 
     //deploying token1
     gasLimit = await token1.deploy({arguments: ['DummyToken1', 'DMYTKN1']}).estimateGas()
     receipt = await token1.deploy({arguments: ['DummyToken1', 'DMYTKN1']}).send({from: myAccount,gas: gasLimit})
     token1.options.address = receipt._address
+    registry.token1 = receipt._address;
 
     if (token0.options.address>token1.options.address) {aux=token0; token0=token1; token1=aux}
     
@@ -125,3 +129,4 @@ if(process.argv[2] == "-b") { //case B: token1 cheaper on uniswap
 
     createDummyTokenPools(1e2,10e2,3e4,10e4,1e6).then(()=>{process.exit(0)});
 }
+

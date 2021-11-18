@@ -16,7 +16,7 @@ const { transactionLogger, priceDataLogger, generalLogger } = require('./logger'
 //GLOBAL VARS
 var web3;
 var counter = 0;
-const amountToTradeInEth = 50;
+const amountToTradeInEth = 1;
 const validPeriod = 5;
 var uniswapPair , sushiswapPair, sakeswapPair, crowswapPair, shibaswapPair;
 var server, PORT;
@@ -136,7 +136,7 @@ loadBlockchainData();
 
 //main arb function 
 //we will look for profit every two blockss because (two transactions made)
-async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterAddress) {
+async function FindArbitrageOpportunity(exchange0, exchange1, exchange0Pair, exchange1Pair) {
 
     let skip = true;
     console.log("hey")
@@ -164,8 +164,8 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             counter += 1;
 
             //get the reserves for supported exchanges
-            pair0Reserve = await uniswapPairContract.methods.getReserves().call();
-            pair1Reserve = await sakeswapPairContract.methods.getReserves().call();
+            pair0Reserve = await exchange0.methods.getReserves().call();
+            pair1Reserve = await exchange1.methods.getReserves().call();
            
             //tuple unpack the token reserves reserve[0] == registry.DAI, reserve[1] ==weth
             var pair0Reserve0 = pair0Reserve[0];
@@ -186,8 +186,8 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
             //now that we have the prices of registry.DAI/WETH on the different exchanges we can calculate
             //the pair price difference between each exchange and take the most profitiable to make
             //our trade. we do this with the getBuySellQuote function below
-            var amountIn = web3.utils.toWei("1", "Ether")
-            const returnValues = await getBuySellQuotes(uniswapPair, sakeswapPair, amountIn);
+            var amountIn = web3.utils.toWei("100", "Ether")
+            const returnValues = await getBuySellQuotes(exchange0, exchange1, exchange0Pair, exchange1Pair, amountIn);
             var outAmount = returnValues[0];
             //how much we need to pay back flashloan
             var debt = returnValues[1];
@@ -240,13 +240,13 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
                 
             if (totalProfit < 0) {
 
-                priceDataLogger.infor(`total estimated profit -> ${totalProfit}\n\n\n`)
+                priceDataLogger.info(`total estimated profit -> ${totalProfit}\n\n\n`)
                 console.log(`\nThere is no profit to be made form this trade after the cost of gas and slippage your loss is ` + `${Math.abs(totalProfit)}`.red + `\nTry increasing your trade amount`);
                 return;
 
             } else {
                 
-                priceDataLogger.infor(`No profit estimated after gas  -> ${totalProfit}\n\n\n`)
+                priceDataLogger.info(`No profit estimated after gas  -> ${totalProfit}\n\n\n`)
                 console.log(`\nThe total estimated profit is ${totalDifference} - ${totalEstimatedGas} =` + ` ${totalProfit} ETH`.green);
                 console.log(`\n...Estimated profit expected. Preparing to execute flashloan. preparing to execute flashloan..`);
             }
@@ -275,10 +275,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
                 console.log(`\nERC20 Approval transaction successful here is your receipt: ` + `\n\nApproval Receipt: ` + `${receiptTX0}\n`.green);
     
                 //call the flashswap
-                const tx = await flashBot.methods.testFlashSwap(uniswapPair, sushiswapPair, amountIn).send({ from: WHALE, gas: estimatedGasForFlashLoan}).then(async function(res) {
-                    console.log(res)
-
-                }).on("error", (error) => {
+                const tx = await flashBot.methods.testFlashSwap(exchange0Pair, exchange1Pair, amountIn).send({ from: WHALE, gas: estimatedGasForFlashLoan}).on("error", (error) => {
 
                     console.error(error);
                     transactionLogger.info(`flashswap failed transaction reverted (price data may have changed)`)
@@ -309,31 +306,31 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 }
 
 //this function gets the buy and sell qoutes fo rth etrad
-async function getBuySellQuotes(uniswapPairx, sushiswapPairx) {
+async function getBuySellQuotes(exchange0, exchange1, exchange0Pair, exchange1Pair, borrowAmount) {
 
     ////we need to check if our base token is smaller this lets us determine the pool t borrow from, we alsways
     //borrow from smaller pool as we see bwlo
-    var baseTokenSmaller = await flashBot.methods.isbaseTokenSmaller(uniswapPair, sushiswapPair).call();
+    var baseTokenSmaller = await flashBot.methods.isbaseTokenSmaller(exchange0Pair, exchange1Pair).call();
     baseTokenSmaller = baseTokenSmaller[0]
 
     var baseToken;
     
     //depending on result we set the base token to etehr dai or 1 (we take the loan out in this toen)
     if (baseTokenSmaller) {
-        baseToken = await uniswapPairContract.methods.dai().call()
+        baseToken = await exchange0.methods.dai().call()
     } else {
-        baseToken = await uniswapPairContract.methods.token1().call();
+        baseToken = await exchange1.methods.token1().call();
     }
 
     //next we order our reserves again borrow from smaller pool sell on higher
-    var orderedReserves = await flashBot.methods.getOrderedReserves(uniswapPairx, sushiswapPairx, baseTokenSmaller).call();
+    var orderedReserves = await flashBot.methods.getOrderedReserves(exchange0Pair, exchange1Pair, baseTokenSmaller).call();
     console.log(orderedReserves[0])
     orderedReserves = orderedReserves[2];
     const lowerPricePool = orderedReserves[0];
     const higherPricePool = orderedReserves[1];
 
     // borrow quote token on lower price pool, // sell borrowed quote token on higher price pool.
-    var borrowAmount = web3.utils.toWei(amountToTradeInEth.toString(), "Ether");
+    // var borrowAmount = web3.utils.toWei(amountToTradeInEth.toString(), "Ether");
     var debtAmount = await registry.uniswapRouterContract.methods.getAmountIn(borrowAmount, orderedReserves[0], orderedReserves[1]).call();
     var baseTokenOutAmount = await registry.uniswapRouterContract.methods.getAmountOut(borrowAmount, orderedReserves[3], orderedReserves[2]).call();
     
@@ -346,14 +343,14 @@ const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 10 Seconds
 if (process.argv[2] == "uni-sushi") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(registry.uniswapRouterContract, registry.sushiswapRouterContract);}, POLLING_INTERVAL)
+        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, sushiSwapPairContract, uniswapPair, sushiswapPair);}, POLLING_INTERVAL)
     }, 4000);//wait 2 seconds
 }
 
 if (process.argv[2] == "uni-sake") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(registry.uniswapRouterContract, registry.sakeswapRouterContract);}, POLLING_INTERVAL)
+        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, sakeswapPairContract, uniswapPair, sakeswapPair);}, POLLING_INTERVAL)
     }, 4000);//wait 2 seconds
 }
 
@@ -361,14 +358,14 @@ if (process.argv[2] == "uni-sake") {
 if (process.argv[2] == "uni-crow") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(registry.uniswapRouterContract, registry.crowswapRouterContract);}, POLLING_INTERVAL)
+        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, crowswapPairContract, uniswapPair, crowswapPair);}, POLLING_INTERVAL)
     }, 4000);//wait 2 seconds
 }
 
 if (process.argv[2] == "uni-shiba") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(registry.uniswapRouterContract, registry.sushiswapRouterContract);}, POLLING_INTERVAL)
+        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, shibaswapPairContract, uniswapPair, shibaswapPair);}, POLLING_INTERVAL)
     }, 4000);//wait 2 seconds
 }
 

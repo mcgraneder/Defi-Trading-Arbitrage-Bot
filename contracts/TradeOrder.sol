@@ -26,7 +26,7 @@ contract TradeOrder {
 
     //array of basetokens weth is added by standard and the other one is hard coded from my test script.
     //however we also have a function to let users add their own basetoken so it is dynamic
-    address[] baseTokens = [WETH, 0xBB91175307DD50bdebCfE82F2f343BbEf607e659, 0xe61dB86500d9C404031Cc60eDFEAD33188a83695];
+    address[] baseTokens = [WETH, 0xdbf25ce2B5df10cc56789adc591795abdfe002B0];
 
 
 

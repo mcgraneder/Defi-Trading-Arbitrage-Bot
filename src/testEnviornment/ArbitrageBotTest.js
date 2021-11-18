@@ -1,12 +1,4 @@
-//THIS IS THE TEST SCRIPT TO TEST THE BOT WORKS IN AN ARBITRAGE OPORTUNITY. WE MAINLY NEED THIS
-//TO TEST THE FLASHSWAP. SEE deployTestingContracts.js. IN THAT FILE WE CREATE TWO FAKE TOKENS 
-//AND MINT 100000 OF EACH WE THEN CREATE PAIRS OF THE TOKENS ON UNISWAP AND SUSHISAP AND ADD
-//LIQUIDITY SOUCH THAT THEIR IS A LARG PRICE DIFF BETWEEN UNI AND SUSHI. THAT WASY WE CAN USE
-//THSE TOKENS HERE TO TEST THE CASE OF PROFITABLE ARB.  SINCE THIS IS A TEST SCRIPT IT IS NOT AS REFINED AS THE
-//MAIN BOT AND MORE THINGS ARE HARDCODED FOR CLSARITY. THIS SCRIPT PRINTS MORE LOGS TO THE CONSOLE
-//IN ORDER TO SEE EXCSTLY WHAT THE OUTPUT OF THE MAIN ACLULATIONS ARE. THIS IS NOT DONE IN THE MAIN
-//BOT TO SAVE NEEDLEDSS RUNTIME
-
+//defining address parameters. 
 const express = require("express");
 const Web3 = require("web3");
 const axios = require('axios');
@@ -27,16 +19,14 @@ const crowSwapRouter = require("../../build/contracts/CrowDefiSwapPair.json");
 const shibaswapFactory = require("../../build/contracts/ShibaSwapFactory.json");
 const Registry = require("../registry");
 const arb1 = require("../../build/contracts/FlashSwap.json");
-
-//defining address parameters. 
 const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
 const WETH1 = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 const SushiSwapFactoryAddress = "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac";
 const SushiSwapRouterAddress = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
-const token0Addr = "0x2882272d0B7F60B0faE2C96bEF3594112431f073" //Link
-const token1Addr = "0xe61dB86500d9C404031Cc60eDFEAD33188a83695" //WETH1
+const token0Addr = "0x3806F6B92F899ACD32C8285Df70cB0f379A38713" //Link
+const token1Addr = "0xdbf25ce2B5df10cc56789adc591795abdfe002B0" //WETH1
 var amountToTradeInEth = 1;
 const validPeriod = 5;
 
@@ -92,7 +82,7 @@ function initialiseFactoryContracts() {
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
     max = new web3.eth.Contract(MP.abi, "0xE186Ee4fB53B9a6DF5c58a3FEC9Bffd1c30857A7")
-    arbitrage = new web3.eth.Contract(arb1.abi, "0xa3643b4edA7Edb00c373FA2575a500A772836939")
+    arbitrage = new web3.eth.Contract(arb1.abi, "0x79F86fDb626533F6ed19722D7CC3784ED24876dd")
 
 
     
@@ -100,6 +90,8 @@ function initialiseFactoryContracts() {
     token1 = new web3.eth.Contract(IERC20.abi, token1Addr);
 
 }
+
+
 
 async function getExchangeTokenPairPrice() {
 
@@ -134,12 +126,18 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         const p0 = await uniswapPairContract.methods.token0().call();
         const p1 = await uniswapPairContract.methods.token1().call();
 
+        // const pairContract1 = sushiSwapPairContract;
+        // console.log("pairs", p0, p1 )
+        
+        
         var pair0Reserve, pair1Reserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
         var pair0Reserve1, upair0eserve1, sushiswapReserve0, sushiswapReserve1, sakeswapReserve0, sakeswapReserve1, shibaswapReserve0, shibaswapReserve1;
 
         //get the reserves for supported exchanges
         pair0Reserve = await uniswapPairContract.methods.getReserves().call();
         pair1Reserve = await sushiSwapPairContract.methods.getReserves().call();
+        
+        console.log(pair0Reserve, pair1Reserve);
 
         //tuple unpack the token reserves reserve[0] == DAI, reserve[1] ==token0
         var pair0Reserve0 = pair0Reserve[0];
@@ -147,7 +145,10 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
         var pair1Reserve0 = pair1Reserve[0];
         var pair1Reserve1 = pair1Reserve[1];
- 
+
+        console.log(pair0Reserve0 / pair0Reserve1);
+
+        
         //calculate token0 and token0 prices from exchange reserves
         var PriceEth = (pair0Reserve1 / pair0Reserve1);
         var exchange0ETHPrice = (pair0Reserve1 / pair0Reserve1);
@@ -161,8 +162,10 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         var outAmount = returnValues[0];
         var debt = returnValues[1];
         // console.log("base token, lowerPool, higherPool: " + returnValues[2], returnValues[3], returnValues[4])
-        var amountIn = web3.utils.toWei(amountToTradeInEth.toString(), "Ether")
-        var totalDifference, deadline, estimatedGasForApproval, estimatedGasForFlashLoan, combinedGas, totalEstimatedGas;
+        var amountIn = web3.utils.toWei("1", "Ether")
+       
+        var totalDifference, deadline, estimatedGasForApproval, estimatedGasForFlashLoan, totalEstimatedGas, gasCost;
+       
 
         var exchange0Exchange1PriceDifference = (outAmount / 10**18) - (debt/10**18);
 
@@ -184,19 +187,20 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         estimatedGasForApproval = 2 * (0.03 *10**6)
         estimatedGasForFlashLoan = 2 * (0.15 *10**6) 
         const gasPrice = await web3.eth.getGasPrice()
-        combinedGas = estimatedGasForApproval + estimatedGasForFlashLoan;
-        totalEstimatedGas = Number(gasPrice) * combinedGas / 10**18
+        var gas = estimatedGasForApproval + estimatedGasForFlashLoan;
+        totalEstimatedGas = Number(gasPrice) * gas / 10**18
 
         console.log(`
             \nThe estimated gas amount for calling the approve function is ` + ` ${estimatedGasForApproval / 10 ** 6} Gwei,`.blue +
             `The estimated gas amount for executing the flashswap is ` + ` ${estimatedGasForFlashLoan / 10 ** 6} Gwei`.blue +
-            `The current gas price on the ethereum mainnet is ${combinedGas}` +
-            `\nHence the total estimated gas cost for this flashBot swap is ` + `${totalEstimatedGas} ETH`.green
+            `The current gas price on the ethereum mainnet is ${gasPrice}` +
+            `\nHence the total estimated gas cost for this flashBot swap is ` + `${totalEstimatedGas / 10 ** 9} ETH`.green
         )
             
         //now that we have estimated the gas that it will cost for us to execute the trades on both exchanges we simly
         //subtract this from our total difference above to get the final expected profit from the trade if any.
-        var totalProfit = (totalDifference) -  totalEstimatedGas;       
+        var totalProfit = (totalDifference) -  totalEstimatedGas;   
+        console.log(totalDifference, totalEstimatedGas)    
         if (totalProfit < 0) {
 
             console.log(`\nThere is no profit to be made form this trade after the cost of gas and slippage your loss is ` + `${Math.abs(totalProfit)}`.red + `\nTry increasing your trade amount`);
@@ -204,33 +208,41 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
         } else {
             
-            console.log(`\nThe total estimated profit is ${totalDifference} - ${totalEstimatedGas} =` + ` ${totalProfit} ETH`.green);
-            console.log(`\n...Estimated profit expected. Preparing to execute flashloan. preparing to execute flashloan..`);
+            console.log(`\nThe total estimated profit is ${totalDifference} - ${gasCost} =` + ` ${totalProfit} ETH`.green);
+            console.log(`\n...Estimated profit expected. Preparing to execute flashloan. preparing to execute flashloan..`)
         }
+
+                    
+        // console.log(
+        //     `${amountToTradeInEth} WETH will buy you ${web3.utils.fromWei(debt.toString(), "Ether")} DAI on Uniswap. ` +
+        //     `conversley ${web3.utils.fromWei((debt).toString(), "Ether")} will buy us ${1 / amountToTradeInEth} WETH on Sushiswap\n`
+        // );
 
         try {
 
             let balancefore = await token1.methods.balanceOf(arbitrage.options.address).call()
             balancefore = balancefore / 10 ** 18;
-            
+            // console.log("Token balance before arb: " + balancefore);
+
+
             const transaction0 = {from: WHALE, to: token0.options.address, gas: estimatedGasForApproval, data: token0.methods.approve(uniswapRouterContract.options.address, amountIn).encodeABI()}
             const signedTX0 = await web3.eth.sendTransaction(transaction0);
             const receiptTX0 = signedTX0.transactionHash;
            
-            console.log(`\nERC20 Approval transaction successful here is your receipt: ` + `\n\nApproval Receipt: ` + `${receiptTX0}\n`.green);
 
-            const tx = await arbitrage.methods.testFlashSwap(uniswapPair1, sushiswapPair, amountIn).send({ from: WHALE, gas: estimatedGasForFlashLoan})
-            console.log(tx)
+            console.log("approval receipt", receiptTX0);
+
+            const tx = await arbitrage.methods.testFlashSwap(uniswapPair1, sushiswapPair, amountIn).send({ from: WHALE, gas: 999999}).then(async function(res) {
+                console.log(res)
+            })
 
             let balanceAfter = await token1.methods.balanceOf(arbitrage.options.address).call()
             balanceAfter = balanceAfter / 10 ** 18;
-            console.log(`\n\nFlashswap successful your token balance before the trade was: ` + `${balancefore}`.green + ` your token balance after the trade is now: ${balanceAfter}`.green);
+            console.log("\n\nToken balance before the arb is: " + balancefore + " The balance after the arb is: " + balanceAfter);
 
         } catch (err) {
 
-            console.log(`\n\nThe flashswap failed unexpectedly. This may be due to a price change in between the time of your qoute and the time it took to execute the trade`.red);
             console.error(err);
-            
         }
 
     }catch (error) {
