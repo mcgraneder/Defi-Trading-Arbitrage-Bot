@@ -67,7 +67,7 @@ This installation might take a minute or two but if your curious at to what all 
 To do this we will be using ganache-cli. Ganache CLI is part of the Truffle suite of Ethereum development tools, is the command line version of Ganache, which is a like your personal blockchain for Ethereum development. Ganache CLI uses ethereumjs to simulate full client behavior and make developing Ethereum applications faster, easier, and safer. We will then be useing Infura who are an RPC Node provider so that we can use ganache to connect to an infura node ultimately allowing us to connect to the ethereum blockchain. So this step of the installation comes in two parts. We first will install ganche and then we will connect to an RPC node using Infura. To install ganche-cli open your terminal and run
 ```bash
 npm install -g ganache-cli
-'''
+```
 While hanche is installing we can make out way over to the inufra website. The link is https://infura.io/. In order to get access to a free infura node we need to first make an account. When you make an account navigate to the main dashboard and click on the `create new project` button. This will creat for us anew project and and we can now connet to one of infuras nodes. To do so however we need the endpoint link. Grab the websocket endpoint shown in the snippet below. dont grab the http one as we need to use wesockt in order to get updating price feeds later on. http is not as good for this.
 
 Now open up a terminal just make sure that its open somewhere in your project folder and then we are going to ganache aswell as this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
@@ -75,6 +75,30 @@ Now open up a terminal just make sure that its open somewhere in your project fo
 ganache-cli -f INFURA ENDPOINT GOES HERE -u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE -l 9999999999
 ```
 Ok so ther eis a few things here. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this i svery useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems.
+
+Now that we have our hanache server up and running establishing a connection to the ethereum blockhain we can finally run both the real maiine bot script AND the test enivornment script i made to test the credibility of my flashswap smart contract. On mainnet it is hard to find arbitrage for reasons explained in the sections below so i made a testing enviornemt that fixed to always be arbitragable. To run either script we first need to deploy our smart contratcs. Naviagte to the test enviornment folder. to do this open a terminal in the main project folder and type
+```bash
+cd ./src/test/
+```
+once here run the deployment script. We can run it two ways. the first deploys the script so that our pair is in the form `TOKENX/TOKENY` and the second deploys the script such that our tokens are in the form `TOKENY/TOKENX`. To run either execute one of the following commands
+```bash
+node deployTestingContracts.js -a  //TOKENX/TOKENY
+
+//or
+
+node deployTestingContracts.js -b  //TOKENY/TOKENX
+```
+after the deployment finsihes we can run both the test script and the main bot. to run the test script stay in the current directory and run
+```bash
+node arbitrageBotTest.js
+```
+and enjoy this script will always return a profut bcause it is a fixed test. if you would like to run the main bot move back into the src directory. so run both of these commands
+```bash
+cd ../
+
+node index.js
+```
+more than likely you will not get an arbitrage because the price differences between exchanges is much closer. however i have gotten one real arbitrage on forked mainnet since i have started this project. ive been building it for two weeks so once out of running it for days and days is not that consistent but this bot is not a production bot at all not by any strecth it is more of s proof of concept.  I have made a logger using mongoDB which logs various information such as price data and tranactions and other information to a mongo databsse. In this repo i commented out the mongoDB bcause it takes too long for me to explain the setup but the logs instead go to files in the logs folder. you can run the script and keep track of any arbs you get with the logs. they are very useful.Read the sections below to lesrn about how we could improve this script further and why arbitrage is profitable. I hope you are able to get thing srunning. If you cant feel free to email me with your questions at evan.mcgrane5@mail.dcu.ie. Enjoy.
 
 # Automated Market Maker Arbitrage
 **The current DEX ecosystem is mainly under one AMM family called constant function market makers** 
