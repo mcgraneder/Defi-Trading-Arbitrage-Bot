@@ -1,4 +1,4 @@
 .env
-.TradeOrder2.sol
-.tt.js
-node_modules
+./contracts/TradeOrder2.sol
+./src/testEnviornment/tt.js
+node_modules/

@@ -78,7 +78,16 @@ contract TradeOrder {
         require(baseTokensContains(pool0Token0) || baseTokensContains(pool0Token1), 'No base token in pair');
 
         (baseSmaller, baseToken, quoteToken) = baseTokensContains(pool0Token0) ? (true, pool0Token0, pool0Token1) : (false, pool0Token1, pool0Token0);
-        
+        // if the baseToken contains the qoute token or token0 then we set basetokensmaller to 
+        // true and token0 remains the ouote and token1 remains the base
+        // if (baseTokensContains(pool0Token0)) { 
+        //     (baseSmaller, baseToken, quoteToken) = (true, pool0Token0, pool0Token1);
+
+        // //is the basetoken is not equal to token 0 then the base token is not smaller and we revers the order of 
+        // //the base and quote token this efficetively would for example set DAI/WETH to WETH/DAI
+        //  } else {
+        //      (baseSmaller, baseToken, quoteToken) = (false, pool0Token1, pool0Token0);
+        //  }
 
     }   
     /// We borrow base token by using flash swap from lower price pool and sell them to higher price pool
@@ -92,19 +101,61 @@ contract TradeOrder {
         (Decimal.D256 memory price0, Decimal.D256 memory price1) =
             baseTokenSmaller ? (Decimal.from(pool0Reserve0).div(pool0Reserve1), Decimal.from(pool1Reserve0).div(pool1Reserve1)) : (Decimal.from(pool0Reserve1).div(pool0Reserve0), Decimal.from(pool1Reserve1).div(pool1Reserve0));
 
-        
+        //then we set the price vars
+        // Decimal.D256 memory price0;
+        // Decimal.D256 memory price1;
+
+        // //if the basetoken is smaller price token 0 is reserve0 / reserve 1
+        // //and the price token1 is reserve1 / reserve0
+        // if (baseTokenSmaller) {
+
+        //     Decimal.D256 memory price0 = Decimal.from(pool0Reserve0).div(pool0Reserve1);
+        //     Decimal.D256 memory price1 = Decimal.from(pool1Reserve0).div(pool1Reserve1);
+
+        // //if the base token is not smaller then we reverse the results for the token0 token 1 prices
+        // } else {
+        //     Decimal.D256 memory price0 = Decimal.from(pool0Reserve1).div(pool0Reserve0);
+        //     Decimal.D256 memory price1 = Decimal.from(pool1Reserve1).div(pool1Reserve0);
+
+        // }
         // // get a1, b1, a2, b2 with following rule:
         // 1. (a1, b1) represents the pool with lower price, denominated in quote asset token
         // 2. (a1, a2) are the base tokens in two pools
         if (price0.lessThan(price1)) {
             (lowerPool, higherPool) = (pool0, pool1);
             (orderedReserve.a1, orderedReserve.b1, orderedReserve.a2, orderedReserve.b2) = baseTokenSmaller ? (pool0Reserve0, pool0Reserve1, pool1Reserve0, pool1Reserve1) : (pool0Reserve1, pool0Reserve0, pool1Reserve1, pool1Reserve0);
-           
+            //  if (baseTokenSmaller) {
+                
+            //     orderedReserve.a1 = pool0Reserve0;
+            //     orderedReserve.b1 = pool0Reserve1;
+            //     orderedReserve.a2 = pool1Reserve0;
+            //     orderedReserve.b2 = pool1Reserve1;
+
+            // } else {
+
+            //     orderedReserve.a1 = pool0Reserve1;
+            //     orderedReserve.b1 = pool0Reserve0;
+            //     orderedReserve.a2 = pool1Reserve1;
+            //     orderedReserve.b2 = pool1Reserve0;
+            // }
 
         } else {
             (lowerPool, higherPool) = (pool1, pool0);
 
-            
+            // if (baseTokenSmaller) {
+
+            //     orderedReserve.a1 = pool1Reserve0;
+            //     orderedReserve.b1 = pool1Reserve1;
+            //     orderedReserve.a2 = pool0Reserve0;
+            //     orderedReserve.b2 = pool0Reserve1;
+        
+            // } else {
+
+            //     orderedReserve.a1 = pool1Reserve1;
+            //     orderedReserve.b1 = pool1Reserve0;
+            //     orderedReserve.a2 = pool0Reserve1;
+            //     orderedReserve.b2 = pool0Reserve0;
+            // }
             (orderedReserve.a1, orderedReserve.b1, orderedReserve.a2, orderedReserve.b2) = baseTokenSmaller ? (pool1Reserve0, pool1Reserve1, pool0Reserve0, pool0Reserve1) : (pool1Reserve1, pool1Reserve0, pool0Reserve1, pool0Reserve0);
         }
     }
