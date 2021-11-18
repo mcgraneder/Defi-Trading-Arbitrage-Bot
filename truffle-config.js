@@ -17,8 +17,8 @@
  * phrase from a file you've .gitignored so it doesn't accidentally become public.
  *
  */
-
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+require("dotenv").config();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
@@ -46,6 +46,16 @@ module.exports = {
     //  port: 8545,            // Standard Ethereum port (default: none)
     //  network_id: "*",       // Any network (default: none)
     // },
+    test: {
+      skipDryRun: true,
+      host: "127.0.0.1",
+      port: 8545,
+      network_id: "*",
+      provider: () => new HDWalletProvider(
+        "0xe0d7fe37578e48da513abbc944d04788e1e64dc15019ac9940b81e4dba3817ae",
+        "http://127.0.0.1:8545",
+      ),
+    },
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -75,7 +85,7 @@ module.exports = {
 
   // Set default mocha options here, use special reporters etc.
   mocha: {
-    // timeout: 100000
+    mocha: {enableTimeouts: false}
   },
 
   // Configure your compilers

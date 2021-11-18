@@ -32,9 +32,11 @@ module.exports = class Registry {
         this.crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-        this.flashBotAddress = "0xF4F1bB11B564701C704d4E2fdaa2516940AA6c78";
+        this.flashBotAddress = "0xa3643b4edA7Edb00c373FA2575a500A772836939";
         this.maximumProfitContract = "0x23EC7650662D1bb8E4A6F6c9B5285FbcF2943459";
 
+        this.token0 = "";
+        this.token1 = "";
         //testing tokens
     
         this.UniswapV2Pair = UniswapV2Pair;
@@ -75,15 +77,13 @@ module.exports = class Registry {
         return this.allRouterAddresses;
     }
 
-    getAllFactoryContracts() {
+    updateAddresses(add1, add2, add3) {
 
-        return this.allFactoryContracts
-    }
-
-    getAllFactoryContracts() {
-
-        return this.allRouterContracts
+        this.flashBotAddress = add1;
+        this.token1 = add2;
+        this.token0 = add3;
     }
 
 
 }
+

@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.2",
     "@sushiswap/sdk": "^5.0.0-canary.100",
+    "@truffle/hdwallet-provider": "^1.6.0",
     "@uniswap/sdk": "^3.0.3",
     "@uniswap/v2-core": "^1.0.1",
     "@uniswap/v2-periphery": "^1.1.0-beta.0",
@@ -25,7 +26,13 @@
     "http": "0.0.1-security",
     "node-localstorage": "^2.2.1",
     "path": "^0.12.7",
+    "truffle-assertions": "^0.9.2",
     "web3": "^1.6.0",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.10",
+    "ganache-core": "^2.13.2",
+    "jest": "^27.3.1"
   }
 }

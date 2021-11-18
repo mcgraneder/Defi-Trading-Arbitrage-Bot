@@ -1,5 +1,0 @@
-info: Nov-16-2021 15:25:27: 	Server started and running on http://localhost:5000
-info: Nov-16-2021 15:25:46: 	Server Sent A Hello World!
-info: Nov-16-2021 15:26:06: 	Server started and running on http://localhost:2000
-info: Nov-16-2021 15:26:12: 	Server Sent A Hello World!
-error: Nov-16-2021 15:26:12: 	400 || Not Found - /favicon.ico - GET - ::1

@@ -1,19 +1,8 @@
 const BN = require("bn.js")
-const { sendEther, pow } = require("./util")
-const { DAI, DAI_WHALE, USDC, USDC_WHALE, USDT, USDT_WHALE } = require("./config")
-
-const UniswapFactory = require("@uniswap/v2-core/build/IUniswapV2Factory");
-const UniswapV2Pair = require("@uniswap/v2-core/build/IUniswapV2Pair");
-const UniswapRouter = require("../build/contracts/IUniswapV2Router02.json");
-const Utils = require("../build/contracts/Utils.json");
 const IERC20 = require("../build/contracts/IERC20.json");
-const crowSwapFactory = require("../build/contracts/CrowSwapFactory.json");
-const crowSwapRouter = require("../build/contracts/CrowDefiSwapPair.json");
-const shibaswapFactory = require("../build/contracts/ShibaSwapFactory.json");
 const Registry = require("../src/registry");
 let registry = new Registry();
 const MP = require("../build/contracts/MaximumProfit.json");
-const arb = require("../build/contracts/TestUniswapFlashSwap.json");
 const Web3 = require('web3');
 var web3
 
@@ -46,9 +35,12 @@ async function init() {
         console.log(res)
     })
    
-    // for (const log of tx.logs) {
-    //     console.log(log.args.message, log.args.val.toString())
-    // }
+    const bal2 = await token0.methods.balanceOf(WHALE).call()
+    const bal3 = await token1.methods.balanceOf(WHALE).call()
+
+    // 7000010000000 11000010000000
+    // const rec = await token0.methods.transfer(arbitrage.options.address, FUND_AMOUNT).send( {from: WHALE})
+    console.log(bal2, bal3)
 }
 
 async function loadWeb3() {
