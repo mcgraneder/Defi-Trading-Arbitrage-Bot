@@ -17,8 +17,9 @@ to use this code follow the detailed guide below. I have went the extra mile her
 ## (1) Software requirements
 Before you can actually run the code there is two pieces of sogtware that you are required to install on your mchine. Those are
 
-1) Node.js
-2) Truffle suite
+**1) Node.js**
+
+**(2) Truffle suite**
 
 The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornment and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
 
@@ -67,11 +68,13 @@ npm install
 This installation might take a minute or two but if your curious at to what all of these dependancies are navigate to the package.json file and look under `dependancies`. We are nearly there in terms of running the code but we still need one main thing and that is a way to establish a connection to the ethereum blockchain so that we can access and execute smart contract functions in all of the contracts used in this project. We can establish a connection to the ethereum blockhain in different ways such as running our own node. But that is out of the scop of this project so what we will be using is a provider and connecting via an RPC node.
 
 ## (3) establishing a connection to the ethereum blockhain
+### Ganache
 To do this we will be using ganache-cli. Ganache CLI is part of the Truffle suite of Ethereum development tools, is the command line version of Ganache, which is a like your personal blockchain for Ethereum development. Ganache CLI uses ethereumjs to simulate full client behavior and make developing Ethereum applications faster, easier, and safer. We will then be useing Infura who are an RPC Node provider so that we can use ganache to connect to an infura node ultimately allowing us to connect to the ethereum blockchain. So this step of the installation comes in two parts. We first will install ganche and then we will connect to an RPC node using Infura. To install ganche-cli open your terminal and run
 ```bash
 npm install -g ganache-cli
 ```
-While hanche is installing we can make out way over to the inufra website. The link is https://infura.io/. In order to get access to a free infura node we need to first make an account. When you make an account navigate to the main dashboard and click on the `create new project` button. This will creat for us anew project and and we can now connet to one of infuras nodes. To do so however we need the endpoint link. Grab the websocket endpoint shown in the snippet below. dont grab the http one as we need to use wesockt in order to get updating price feeds later on. http is not as good for this.
+### Infura
+While ganche is installing we can make out way over to the inufra website. The link is https://infura.io/. In order to get access to a free infura node we need to first make an account. When you make an account navigate to the main dashboard and click on the `create new project` button. This will creat for us anew project and and we can now connet to one of infuras nodes. To do so however we need the endpoint link. Grab the websocket endpoint shown in the snippet below. dont grab the http one as we need to use wesockt in order to get updating price feeds later on. http is not as good for this.
 
 Now open up a terminal just make sure that its open somewhere in your project folder and then we are going to ganache aswell as this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
 ```bash
