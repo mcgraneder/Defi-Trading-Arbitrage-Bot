@@ -206,7 +206,7 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
                 console.log(`No arbitrage exists for this current trade\n\n\n`);
                 console.log(exchange0Exchange1PriceDifference)
-                priceDataLogger.infor(`No profit fo this trade`)
+                priceDataLogger.info(`No profit fo this trade`)
                 return                        
             } 
 
