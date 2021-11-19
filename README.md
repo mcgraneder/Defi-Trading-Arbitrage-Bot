@@ -81,19 +81,19 @@ ganache-cli -f https://eth-mainnet.alchemyapi.io/v2/INFURA_PROJECT_ID -d --db PA
 ```
 Ok so ther eis a few things here. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this i svery useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems. The other oprions used here are mor complex and i have taken the definitions from the documentation
 
-**-d, --deterministic**
+#### -d, --deterministic
 Generate deterministic addresses based on a pre-defined mnemonic. [boolean]
 this will generate the same addresses anytime.
 
-**-m, --mnemonic**
+#### -m, --mnemonic
 bip39 mnemonic phrase for generating a PRNG seed, which is in turn used for hierarchical deterministic (HD) account generation [string]
 This is mandatory while using --deterministic option, you have to supply the same mnemonic each time you start.
 
-**--db**
+#### --db
 Directory of chain database; creates one if it doesn't exist [string] [default: null]
 You can add parameter db, to save/persist the chain data (with all the transactions) so you can load same contracts state again in the next executions
 
-**-i, --networkId**
+#### -i, --networkId
 The Network ID ganache-cli will use to identify itself. [number] [default: System time at process start or Network ID of forked blockchain if configured.]
 this make sure that random networkID is not selected everytime you restart ganache
 
