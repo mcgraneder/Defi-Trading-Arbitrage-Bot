@@ -75,11 +75,27 @@ While ganche is installing we can make out way over to the inufra website. The l
 
 <img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/infura2.png"/>
 
-Now open up a terminal just make sure that its open somewhere in your project folder and then we are going to ganache aswell as this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
+Before you run ganache first make a new folder somewhere on your machine it dosn have to be in the projet filder. name it `ganache-BC-DB` naviagte into this foldr and make a new folder called `db`. We are going to need his so that we can save the sate of our ganache blockhain so that we have access to the deployed smart contracts each time we close ganache and restart it. Now open up a terminal just make sure that its open somewhere in your project folder and then we are going to ganache aswell as this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
 ```bash
-ganache-cli -f INFURA ENDPOINT GOES HERE -u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE -l 9999999999
+ganache-cli -f https://eth-mainnet.alchemyapi.io/v2/INFURA_PROJECT_ID -d --db PATH_TO_DB -i 1 --deterministic --mnemonic="add you mnenomic here you can get it from just running ganache cli and pything th eone it gives you" -u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE -l 999999999
 ```
-Ok so ther eis a few things here. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this i svery useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems.
+Ok so ther eis a few things here. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this i svery useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems. The other oprions used here are mor complex and i have taken the definitions from the documentation
+
+**-d, --deterministic**
+Generate deterministic addresses based on a pre-defined mnemonic. [boolean]
+this will generate the same addresses anytime.
+
+**-m, --mnemonic**
+bip39 mnemonic phrase for generating a PRNG seed, which is in turn used for hierarchical deterministic (HD) account generation [string]
+This is mandatory while using --deterministic option, you have to supply the same mnemonic each time you start.
+
+**--db**
+Directory of chain database; creates one if it doesn't exist [string] [default: null]
+You can add parameter db, to save/persist the chain data (with all the transactions) so you can load same contracts state again in the next executions
+
+**-i, --networkId**
+The Network ID ganache-cli will use to identify itself. [number] [default: System time at process start or Network ID of forked blockchain if configured.]
+this make sure that random networkID is not selected everytime you restart ganache
 
 ## (4) deploying the contracts and running the Bot
 Now that we have our hanache server up and running establishing a connection to the ethereum blockhain we can finally run both the real maiine bot script AND the test enivornment script i made to test the credibility of my flashswap smart contract. On mainnet it is hard to find arbitrage for reasons explained in the sections below so i made a testing enviornemt that fixed to always be arbitragable. To run either script we first need to deploy our smart contratcs. Naviagte to the test enviornment folder. to do this open a terminal in the main project folder and type
@@ -88,12 +104,21 @@ cd ./src/test/
 ```
 once here run the deployment script. We can run it two ways. the first deploys the script so that our pair is in the form `TOKENX/TOKENY` and the second deploys the script such that our tokens are in the form `TOKENY/TOKENX`. To run either execute one of the following commands
 ```bash
-node deployTestingContracts.js -a  //TOKENX/TOKENY
+node deployTestingContracts.js -TK0/TK1  //TOKENX/TOKENY
 
 //or
 
-node deployTestingContracts.js -b  //TOKENY/TOKENX
+node deployTestingContracts.js -TH1/TK0  //TOKENY/TOKENX
 ```
+The only thing that we need to do now is to copy the contract addresses for token0, token1 and the flashbot contract and past them into the resgitry file wehre i have defined the address names but left them blank for this very purpose for people installing this code. when you run the deploy script your rsult will look lik ethis
+
+Copy all of these addresses one by one and past them into their respective loaction sin the registry.js file as shown below. Thiswill the the only time you have to do this because remember that we set up ganaxhe cli to save our blockhain instance in a directory on our computer that way each new time we close ganache if we restart it using
+```bash
+ ganache-cli --db ../../ganacheCLIBCdata/db --u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE
+ ```
+ then all our our previous deployments will get saved and there will be no need to deploy again and copy over the addressed every time. However if you make a change to the smart contratts, then you will have to copy over but otherwise you only have to do it this once when your first install my code.
+ 
+## (5) Running the bots
 after the deployment finsihes we can run both the test script and the main bot. to run the test script stay in the current directory and run
 ```bash
 node arbitrageBotTest.js
