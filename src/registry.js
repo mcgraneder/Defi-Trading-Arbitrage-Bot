@@ -32,8 +32,8 @@ module.exports = class Registry {
         this.crowswapFactoryAddress = "0x9DEB29c9a4c7A88a3C0257393b7f3335338D9A9D";
         this.crowSwapRouterAddress = "0xa856139af24e63cc24d888728cd5eef574601374";
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
-        this.flashBotAddress = "0x79F86fDb626533F6ed19722D7CC3784ED24876dd";
-        this.maximumProfitContract = "0x23EC7650662D1bb8E4A6F6c9B5285FbcF2943459";
+        this.flashBotAddress = "";
+        this.maximumProfitContract = "";
 
         this.token0 = "";
         this.token1 = "";

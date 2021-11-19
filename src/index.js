@@ -254,13 +254,15 @@ async function FindArbitrageOpportunity(exchange0, exchange1, exchange0Pair, exc
             //if we have a profit then we can attemopt to call the flashswap and exeecute the trsade. see smart contract FlashBot.sol
             //note that we need a try catch block because our profit estimation is at best an estimation we may get frontrunned or the price
             //may change
+            //get balance before
+            let balancefore = await weth.methods.balanceOf(flashBot.options.address).call()
+            let balancefore1 = await dai.methods.balanceOf(flashBot.options.address).call()
+            balancefore = balancefore / 10 ** 18;
+            balancefore1 = balancefore1 / 10 ** 18;
+            priceDataLogger.info(`balance of DAI/WETH before trade -> ${balancefore1} : ${balancefore}`)
+            
             try {
 
-                //get balance before
-                let balancefore = await weth.methods.balanceOf(flashBot.options.address).call()
-                balancefore = balancefore / 10 ** 18;
-                priceDataLogger.info(`balance before trade -> ${balancefore}`)
-                
                 //approve the uniswap router to spend tokens on our behalf
                 const transaction0 = {from: WHALE, to: dai.options.address, gas: estimatedGasForApproval, data: dai.methods.approve(registry.UniswapRouterAddress, amountIn).encodeABI()}
                 const signedTX0 = await web3.eth.sendTransaction(transaction0).on("error", (error) => {
@@ -281,20 +283,22 @@ async function FindArbitrageOpportunity(exchange0, exchange1, exchange0Pair, exc
                     transactionLogger.info(`flashswap failed transaction reverted (price data may have changed)`)
                 });
     
-                //get the balance after and see if trade was successful
-                let balanceAfter = await dai.methods.balanceOf(flashBot.options.address).call()
-                balanceAfter = balanceAfter / 10 ** 18;
-                priceDataLogger.info(`balance before trade -> ${balanceAfter}\n\n`)
-                
-                console.log(`\n\nFlashswap successful your token balance before the trade was: ` + `${balancefore}`.green + ` your token balance after the trade is now: ${balanceAfter}`.green);
-
-    
             } catch (err) {
     
-            console.log(`\n\nThe flashswap failed unexpectedly. This may be due to a price change in between the time of your qoute and the time it took to execute the trade`.red);
+                console.log(`\n\nThe flashswap failed unexpectedly. This may be due to a price change in between the time of your qoute and the time it took to execute the trade`.red);
 
-                console.error(err);
+                    console.error(err);
             }
+
+            //get the balance after and see if trade was successful
+            let balanceAfter = await dai.methods.balanceOf(flashBot.options.address).call()
+            let balanceAfter1 = await weth.methods.balanceOf(flashBot.options.address).call()
+            balanceAfter = balanceAfter / 10 ** 18;
+            balanceAfter1 = balanceAfter1 / 10 ** 18;
+            priceDataLogger.info(`balance of DAI/WETH before trade -> ${balanceAfter} : ${balanceAfter1}\n\n`)
+            
+            console.log(`\n\nFlashswap successful your token balance before the trade was: ` + `${balancefore}`.green + ` your token balance after the trade is now: ${balanceAfter}`.green);
+
         
         }catch (error) {
 
@@ -326,6 +330,7 @@ async function getBuySellQuotes(exchange0, exchange1, exchange0Pair, exchange1Pa
     var orderedReserves = await flashBot.methods.getOrderedReserves(exchange0Pair, exchange1Pair, baseTokenSmaller).call();
     console.log(orderedReserves[0])
     orderedReserves = orderedReserves[2];
+    //lower and higher price pools after eserver sorting (see TradeOrder.sol)
     const lowerPricePool = orderedReserves[0];
     const higherPricePool = orderedReserves[1];
 
@@ -338,35 +343,56 @@ async function getBuySellQuotes(exchange0, exchange1, exchange0Pair, exchange1Pa
 }
 
 
+//here we let the user run the script for different exchanges. we coud add more here
+//but the user can run the bot scanning uni-sushi, uni-crow, uni-sake etc..
+//we montor the prices ervery 10 seconds
 const POLLING_INTERVAL = process.env.POLLING_INTERVAL || 10000 // 10 Seconds
 
 if (process.argv[2] == "uni-sushi") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, sushiSwapPairContract, uniswapPair, sushiswapPair);}, POLLING_INTERVAL)
-    }, 4000);//wait 2 seconds
-}
+        priceMonitor = setInterval(async () => { 
 
-if (process.argv[2] == "uni-sake") {
+            await FindArbitrageOpportunity(uniswapPairContract, sushiSwapPairContract, uniswapPair, sushiswapPair);
+        }, POLLING_INTERVAL)
+
+    }, 4000);//wait 2 seconds
+
+} else if (process.argv[2] == "uni-sake") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, sakeswapPairContract, uniswapPair, sakeswapPair);}, POLLING_INTERVAL)
+        priceMonitor = setInterval(async () => { 
+
+
+            await FindArbitrageOpportunity(uniswapPairContract, sakeswapPairContract, uniswapPair, sakeswapPair);
+        }, POLLING_INTERVAL)
+        
     }, 4000);//wait 2 seconds
-}
 
-
-if (process.argv[2] == "uni-crow") {
+} else if (process.argv[2] == "uni-crow") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, crowswapPairContract, uniswapPair, crowswapPair);}, POLLING_INTERVAL)
-    }, 4000);//wait 2 seconds
-}
+        priceMonitor = setInterval(async () => { 
 
-if (process.argv[2] == "uni-shiba") {
+            await FindArbitrageOpportunity(uniswapPairContract, crowswapPairContract, uniswapPair, crowswapPair);
+        }, POLLING_INTERVAL)
+
+    }, 4000);//wait 2 seconds
+
+} else if (process.argv[2] == "uni-shiba") {
 
     setTimeout(function(){
-        priceMonitor = setInterval(async () => { await FindArbitrageOpportunity(uniswapPairContract, shibaswapPairContract, uniswapPair, shibaswapPair);}, POLLING_INTERVAL)
+        priceMonitor = setInterval(async () => { 
+
+            await FindArbitrageOpportunity(uniswapPairContract, shibaswapPairContract, uniswapPair, shibaswapPair);
+        }, POLLING_INTERVAL)
+
     }, 4000);//wait 2 seconds
+
+} else {
+
+    console.log("invalid option.");
+    process.exit(0);
 }
 
 

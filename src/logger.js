@@ -1,3 +1,7 @@
+//here i have commented out the mongo db transaports as it would take too long for
+//me how to explain how to get this working in thrread me instillation. you can set
+//this up yoursled if intrested
+
 const { createLogger, format, transports } = require('winston');
 
 const transactionLogger = createLogger({

@@ -25,8 +25,8 @@ const SushiSwapFactoryAddress = "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac";
 const SushiSwapRouterAddress = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
-const token0Addr = "0x3806F6B92F899ACD32C8285Df70cB0f379A38713" //Link
-const token1Addr = "0xdbf25ce2B5df10cc56789adc591795abdfe002B0" //WETH1
+const token0Addr = "0x3ecE4C0ba940a4b675F91cE569999D5260CcA134" //Link
+const token1Addr = "0x6a42B877CeDc6eAc0e89A52314e927C286159EE2" //WETH1
 var amountToTradeInEth = 1;
 const validPeriod = 5;
 
@@ -82,7 +82,7 @@ function initialiseFactoryContracts() {
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
     max = new web3.eth.Contract(MP.abi, "0xE186Ee4fB53B9a6DF5c58a3FEC9Bffd1c30857A7")
-    arbitrage = new web3.eth.Contract(arb1.abi, "0x79F86fDb626533F6ed19722D7CC3784ED24876dd")
+    arbitrage = new web3.eth.Contract(arb1.abi, "0x8fd2EBaD4B78A24D415923De8bbc205829C4Ea0c")
 
 
     
@@ -220,8 +220,10 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
 
         try {
 
-            let balancefore = await token1.methods.balanceOf(arbitrage.options.address).call()
+            let balancefore = await token0.methods.balanceOf(arbitrage.options.address).call()
+            let balancefore1 = await token1.methods.balanceOf(arbitrage.options.address).call()
             balancefore = balancefore / 10 ** 18;
+            balancefore1 = balancefore1 / 10 ** 18;
             // console.log("Token balance before arb: " + balancefore);
 
 
@@ -236,9 +238,14 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
                 console.log(res)
             })
 
-            let balanceAfter = await token1.methods.balanceOf(arbitrage.options.address).call()
+            let balanceAfter = await token0.methods.balanceOf(arbitrage.options.address).call()
+            let balanceAfter1 = await token1.methods.balanceOf(arbitrage.options.address).call()
             balanceAfter = balanceAfter / 10 ** 18;
-            console.log("\n\nToken balance before the arb is: " + balancefore + " The balance after the arb is: " + balanceAfter);
+            balanceAfter1 = balanceAfter1 / 10 ** 18;
+
+            console.log("\n\nToke0 balance before the arb is: " + balancefore + " The token0 balance after the arb is: " + balanceAfter);
+            console.log("\n\nToke1 balance before the arb is: " + balancefore1 + " The token1 balance after the arb is: " + balanceAfter1);
+
 
         } catch (err) {
 
