@@ -1,6 +1,6 @@
-# Read me incomplete installatuon guide coming soon need to tie up some final bits
 
-# Repo Contents
+# DEFI Automated Market Maker Arbitrage (AMM) Trading bot
+## Repo Contents
 This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required.
 
 1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit).
