@@ -1,42 +1,33 @@
 //defining address parameters. 
 const express = require("express");
 const Web3 = require("web3");
-const axios = require('axios');
-const path = require("path");
-const app = express();
-var web3;
 require('colors');
+const Registry = require("../registry");
+let registry = new Registry()
 
 //ABIS
 const MP = require("../../build/contracts/TradeOrder.json")
 const UniswapFactory = require("@uniswap/v2-core/build/IUniswapV2Factory");
 const UniswapV2Pair = require("@uniswap/v2-core/build/IUniswapV2Pair");
 const UniswapRouter = require("../../build/contracts/IUniswapV2Router02.json");
-// const Utils = require("../build/contracts/Utils.json");
 const IERC20 = require("../../build/contracts/IERC20.json");
-const crowSwapFactory = require("../../build/contracts/CrowSwapFactory.json");
-const crowSwapRouter = require("../../build/contracts/CrowDefiSwapPair.json");
-const shibaswapFactory = require("../../build/contracts/ShibaSwapFactory.json");
-const Registry = require("../registry");
 const arb1 = require("../../build/contracts/FlashSwap.json");
-const DAI = "0x6b175474e89094c44da98b954eedeac495271d0f";
-const WETH1 = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 const SushiSwapFactoryAddress = "0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac";
 const SushiSwapRouterAddress = "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F";
 const UniswapFactoryAddress = "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
 const UniswapRouterAddress = "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D";
-const token0Addr = "0x3ecE4C0ba940a4b675F91cE569999D5260CcA134" //Link
-const token1Addr = "0x6a42B877CeDc6eAc0e89A52314e927C286159EE2" //WETH1
+const token0Addr = registry.token0;
+const token1Addr = registry.token1 //WETH1
 var amountToTradeInEth = 1;
 const validPeriod = 5;
 
 //here we will initialise the needed smart contracts aswell as some vars
 //PAIR CONTRACTSiswapPairContract, 0, sushiSwapPairContract, sakeswapPairContract, crowswapPairContract, shibaswapPairContract;Y CONTRACTS
-var uniswapFactoryContract, sushiswapFactoryContract, sakeswapFactoryContract, crowswapFactoryContract, shibaswapFactoryContract;
+var uniswapFactoryContract, sushiswapFactoryContract;
 //ROUTER CONTRACTS
 var uniswapRouterContract, sushiswapRouterContract;
 //TOKEN PAIRS ACROSS LISTED EXCHANGES
-var uniswapPair0, uniswapPair1, sushiswapPair, sakeswapPair, crowswapPair, shibaswapPair;
+var uniswapPair0, uniswapPair1, sushiswapPair;
 //HELPER VARS
 var userAccount;
 var account;
@@ -81,8 +72,8 @@ function initialiseFactoryContracts() {
     uniswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, UniswapRouterAddress);
     sushiswapFactoryContract = new web3.eth.Contract(UniswapFactory.abi, SushiSwapFactoryAddress);
     sushiswapRouterContract = new web3.eth.Contract(UniswapRouter.abi, SushiSwapRouterAddress);
-    max = new web3.eth.Contract(MP.abi, "0xE186Ee4fB53B9a6DF5c58a3FEC9Bffd1c30857A7")
-    arbitrage = new web3.eth.Contract(arb1.abi, "0x8fd2EBaD4B78A24D415923De8bbc205829C4Ea0c")
+    max = new web3.eth.Contract(MP.abi, registry.maximumProfitContract)
+    arbitrage = new web3.eth.Contract(arb1.abi, registry.flashBotAddress)
 
 
     
@@ -130,8 +121,8 @@ async function FindArbitrageOpportunity(exchange0RouterAddress, exchange1RouterA
         // console.log("pairs", p0, p1 )
         
         
-        var pair0Reserve, pair1Reserve, sakeswapReserve, crowswapReserve, shibaswapReserve, crowswapReserve0, crowswapReserve1;
-        var pair0Reserve1, upair0eserve1, sushiswapReserve0, sushiswapReserve1, sakeswapReserve0, sakeswapReserve1, shibaswapReserve0, shibaswapReserve1;
+        var pair0Reserve, pair1Reserve;
+        var pair0Reserve1, upair0eserve1, sushiswapReserve0, sushiswapReserve1;
 
         //get the reserves for supported exchanges
         pair0Reserve = await uniswapPairContract.methods.getReserves().call();

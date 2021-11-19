@@ -34,7 +34,6 @@ module.exports = class Registry {
         this.shibaSwapFactoryAddress = "0x115934131916C8b277DD010Ee02de363c09d037c";
         this.flashBotAddress = "";
         this.maximumProfitContract = "";
-
         this.token0 = "";
         this.token1 = "";
         //testing tokens
