@@ -112,7 +112,12 @@ node deployTestingContracts.js -TH1/TK0  //TOKENY/TOKENX
 ```
 The only thing that we need to do now is to copy the contract addresses for token0, token1 and the flashbot contract and past them into the resgitry file wehre i have defined the address names but left them blank for this very purpose for people installing this code. when you run the deploy script your rsult will look lik ethis
 
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/test.PNG"/>
+
 Copy all of these addresses one by one and past them into their respective loaction sin the registry.js file as shown below. Thiswill the the only time you have to do this because remember that we set up ganaxhe cli to save our blockhain instance in a directory on our computer that way each new time we close ganache if we restart it using
+
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/test2.PNG"/>
+
 ```bash
  ganache-cli --db ../../ganacheCLIBCdata/db --u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE
  ```
