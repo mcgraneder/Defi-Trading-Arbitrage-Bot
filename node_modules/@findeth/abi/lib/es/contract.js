@@ -1,2 +1,0 @@
-
-//# sourceMappingURL=contract.js.map
