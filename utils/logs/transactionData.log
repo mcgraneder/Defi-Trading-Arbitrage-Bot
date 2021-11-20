@@ -17,3 +17,7 @@ info: Nov-18-2021 17:59:42: 	approved exchange to spend users tokens (Successful
 info: Nov-18-2021 17:59:43: 	flashswap failed transaction reverted (price data may have changed)
 info: Nov-18-2021 18:00:06: 	approved exchange to spend users tokens (Successful) -> TX receipt -> 0x49bb39fb3328af9577c45c5ca51db137065465de42e5a1305e5e529b0708ba51
 info: Nov-18-2021 18:00:17: 	approved exchange to spend users tokens (Successful) -> TX receipt -> 0xce268585f6c370ea09c9df306b9eb3c3073030211e4ee0ddb07f50e7154e6810
+info: Nov-19-2021 11:40:46: 	approved exchange to spend users tokens (Successful) -> TX receipt -> 0xc05c77c1d8ca072d35232b3bcbcff2ae86790f07b0bb849b6813f3ff81fed605
+info: Nov-19-2021 13:55:16: 	approved exchange to spend users tokens (Successful) -> TX receipt -> 0xfcfd9ae66b41a0826f11df47a549dd02674652e5416977fada2c121d66776574
+info: Nov-19-2021 22:24:55: 	approved exchange to spend users tokens (Successful) -> TX receipt -> 0x37476081598b978fd99026b49c7ec1e847d932afc7c59a215d8384ee2db8f065
+info: Nov-20-2021 21:04:11: 	approved exchange to spend users tokens (Successful) -> TX receipt -> 0xdc1a659bc2f35f628f3e6403280c43247275f82945175d2eea6e3117d3b1cd68

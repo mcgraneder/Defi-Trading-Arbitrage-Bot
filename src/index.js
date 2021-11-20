@@ -126,7 +126,7 @@ async function updateState(data, exchangeName) {
     var token1 = data.returnValues.reserve1;
     var blockNumber = data.blockNumber;
 
-    console.log("Current Block: " + blockNumber + " The price of: " + pairName + "on" + exchangeName +  "is: " + (tojen0 / token1).toString());
+    // console.log("Current Block: " + blockNumber + " The price of: " + pairName + "on" + exchangeName +  "is: " + (tojen0 / token1).toString());
 }
 
 //calli inits before starting main arb
@@ -148,7 +148,7 @@ async function FindArbitrageOpportunity(exchange0, exchange1, exchange0Pair, exc
     //detetc events so the lines commented out would be substitued on real mainnet
     //for now i just call the arb bot every 8 seconds
 
-    //contract.events.Sync({}).on("data", (data) =>
+    // contract.events.Sync({}).on("data", (data) =>
     //newBlockEvent.on('data', async function(blockHeader) {
    
         try {
@@ -280,8 +280,12 @@ async function FindArbitrageOpportunity(exchange0, exchange1, exchange0Pair, exc
                 const tx = await flashBot.methods.testFlashSwap(exchange0Pair, exchange1Pair, amountIn).send({ from: WHALE, gas: estimatedGasForFlashLoan}).on("error", (error) => {
 
                     console.error(error);
+                    console.log()
                     transactionLogger.info(`flashswap failed transaction reverted (price data may have changed)`)
-                });
+                }).then(function(res) {
+
+                    console.log(res)
+                })
     
             } catch (err) {
     

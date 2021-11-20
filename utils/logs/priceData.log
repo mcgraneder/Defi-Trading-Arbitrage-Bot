@@ -544,3 +544,264 @@ info: Nov-18-2021 23:38:23: 	DAI/WETH on SushiSwap: -> 3965.7064830781196
 info: Nov-18-2021 23:38:23: 	DAI/WETH on SakeSwap: -> 4130.070783251712
 info: Nov-18-2021 23:38:23: 	DAI/WETH on CrowSwap: -> 3988.6681977750127
 info: Nov-18-2021 23:38:23: 	DAI/WETH on ShibaSwap: -> 3977.8443571145976
+info: Nov-19-2021 11:40:10: 	DAI/WETH on Uniswap: -> 4133.549134225664
+info: Nov-19-2021 11:40:10: 	DAI/WETH on SushiSwap: -> 4134.434329293872
+info: Nov-19-2021 11:40:10: 	DAI/WETH on SakeSwap: -> 3936.7140042828896
+info: Nov-19-2021 11:40:10: 	DAI/WETH on CrowSwap: -> 4132.551240324301
+info: Nov-19-2021 11:40:10: 	DAI/WETH on ShibaSwap: -> 4142.289995250202
+info: Nov-19-2021 11:40:23: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 11:40:23: 	Exhnage price difference -> -0.00014027035468870339 = -0.00014027035468870339
+info: Nov-19-2021 11:40:23: 	No profit fo this trade
+info: Nov-19-2021 11:40:30: 	DAI/WETH on Uniswap: -> 4133.549134225664
+info: Nov-19-2021 11:40:30: 	DAI/WETH on SushiSwap: -> 4134.434329293872
+info: Nov-19-2021 11:40:30: 	DAI/WETH on SakeSwap: -> 3936.7140042828896
+info: Nov-19-2021 11:40:30: 	DAI/WETH on CrowSwap: -> 4132.551240324301
+info: Nov-19-2021 11:40:30: 	DAI/WETH on ShibaSwap: -> 4142.289995250202
+info: Nov-19-2021 11:40:44: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 11:40:44: 	Exhnage price difference -> 0.00031560400632205457 = 0.00031560400632205457
+info: Nov-19-2021 11:40:44: 	total difference before gas -> 0.03156040063220546
+info: Nov-19-2021 11:40:44: 	total gas to execute trades -> undefined Wei
+info: Nov-19-2021 11:40:44: 	No profit estimated after gas  -> 0.02436040063220546
+
+
+
+info: Nov-19-2021 11:40:45: 	balance of DAI/WETH before trade -> 0 : 0
+info: Nov-19-2021 11:40:49: 	balance of DAI/WETH After trade -> 0.000315604006322056 : 0
+
+
+info: Nov-19-2021 11:40:54: 	DAI/WETH on Uniswap: -> 4133.529539973643
+info: Nov-19-2021 11:40:54: 	DAI/WETH on SushiSwap: -> 4134.434329293872
+info: Nov-19-2021 11:40:54: 	DAI/WETH on SakeSwap: -> 4179.313142758388
+info: Nov-19-2021 11:40:54: 	DAI/WETH on CrowSwap: -> 4132.551240324301
+info: Nov-19-2021 11:40:54: 	DAI/WETH on ShibaSwap: -> 4142.289995250202
+info: Nov-19-2021 11:41:34: 	DAI/WETH on Uniswap: -> 4133.529539973643
+info: Nov-19-2021 11:41:34: 	DAI/WETH on SushiSwap: -> 4134.434329293872
+info: Nov-19-2021 11:41:34: 	DAI/WETH on SakeSwap: -> 4179.313142758388
+info: Nov-19-2021 11:41:34: 	DAI/WETH on CrowSwap: -> 4132.551240324301
+info: Nov-19-2021 11:41:34: 	DAI/WETH on ShibaSwap: -> 4142.289995250202
+info: Nov-19-2021 11:41:48: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 11:41:48: 	Exhnage price difference -> -0.0006091269015913517 = -0.0006091269015913517
+info: Nov-19-2021 11:41:48: 	No profit fo this trade
+info: Nov-19-2021 11:41:57: 	DAI/WETH on Uniswap: -> 4133.529539973643
+info: Nov-19-2021 11:41:57: 	DAI/WETH on SushiSwap: -> 4134.434329293872
+info: Nov-19-2021 11:41:57: 	DAI/WETH on SakeSwap: -> 4179.313142758388
+info: Nov-19-2021 11:41:57: 	DAI/WETH on CrowSwap: -> 4132.551240324301
+info: Nov-19-2021 11:41:57: 	DAI/WETH on ShibaSwap: -> 4142.289995250202
+info: Nov-19-2021 11:41:58: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 11:41:58: 	Exhnage price difference -> -0.0006091269015913517 = -0.0006091269015913517
+info: Nov-19-2021 11:41:58: 	No profit fo this trade
+info: Nov-19-2021 11:42:29: 	DAI/WETH on Uniswap: -> 4133.529539973643
+info: Nov-19-2021 11:42:29: 	DAI/WETH on SushiSwap: -> 4134.434329293872
+info: Nov-19-2021 11:42:29: 	DAI/WETH on SakeSwap: -> 4179.313142758388
+info: Nov-19-2021 11:42:29: 	DAI/WETH on CrowSwap: -> 4132.551240324301
+info: Nov-19-2021 11:42:29: 	DAI/WETH on ShibaSwap: -> 4142.289995250202
+info: Nov-19-2021 11:42:42: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 11:42:42: 	Exhnage price difference -> -0.0006091269015913517 = -0.0006091269015913517
+info: Nov-19-2021 11:42:42: 	No profit fo this trade
+info: Nov-19-2021 11:47:42: 	DAI/WETH on Uniswap: -> 4133.529539973643
+info: Nov-19-2021 11:47:42: 	DAI/WETH on SushiSwap: -> 4134.434329293872
+info: Nov-19-2021 11:47:42: 	DAI/WETH on SakeSwap: -> 4179.313142758388
+info: Nov-19-2021 11:47:42: 	DAI/WETH on CrowSwap: -> 4132.551240324301
+info: Nov-19-2021 11:47:42: 	DAI/WETH on ShibaSwap: -> 4142.289995250202
+info: Nov-19-2021 11:47:55: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 11:47:55: 	Exhnage price difference -> -0.0006091269015913517 = -0.0006091269015913517
+info: Nov-19-2021 11:47:55: 	No profit fo this trade
+info: Nov-19-2021 13:55:02: 	DAI/WETH on Uniswap: -> 4184.8488902043455
+info: Nov-19-2021 13:55:02: 	DAI/WETH on SushiSwap: -> 4178.614127536565
+info: Nov-19-2021 13:55:02: 	DAI/WETH on SakeSwap: -> 3936.7140042828896
+info: Nov-19-2021 13:55:02: 	DAI/WETH on CrowSwap: -> 4163.784714970156
+info: Nov-19-2021 13:55:02: 	DAI/WETH on ShibaSwap: -> 4173.51527864273
+info: Nov-19-2021 13:55:14: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 13:55:14: 	Exhnage price difference -> 0.0006130573084275684 = 0.0006130573084275684
+info: Nov-19-2021 13:55:14: 	total difference before gas -> 0.06130573084275684
+info: Nov-19-2021 13:55:14: 	total gas to execute trades -> undefined Wei
+info: Nov-19-2021 13:55:14: 	No profit estimated after gas  -> 0.05410573084275684
+
+
+
+info: Nov-19-2021 13:55:15: 	balance of DAI/WETH before trade -> 0 : 0
+info: Nov-19-2021 13:55:18: 	balance of DAI/WETH before trade -> 0 : 0
+
+
+info: Nov-19-2021 13:55:23: 	DAI/WETH on Uniswap: -> 4184.829175136893
+info: Nov-19-2021 13:55:23: 	DAI/WETH on SushiSwap: -> 4178.614127536565
+info: Nov-19-2021 13:55:23: 	DAI/WETH on SakeSwap: -> 4179.313142758388
+info: Nov-19-2021 13:55:23: 	DAI/WETH on CrowSwap: -> 4163.784714970156
+info: Nov-19-2021 13:55:23: 	DAI/WETH on ShibaSwap: -> 4173.51527864273
+info: Nov-19-2021 13:55:24: 	
+
+User requesting to borrow 100 ETH
+info: Nov-19-2021 13:55:24: 	Exhnage price difference -> -0.0007937996144830282 = -0.0007937996144830282
+info: Nov-19-2021 13:55:24: 	No profit fo this trade
+info: Nov-19-2021 13:56:35: 	DAI/WETH on Uniswap: -> 4184.829175136893
+info: Nov-19-2021 13:56:35: 	DAI/WETH on SushiSwap: -> 4178.614127536565
+info: Nov-19-2021 13:56:35: 	DAI/WETH on SakeSwap: -> 4179.313142758388
+info: Nov-19-2021 13:56:35: 	DAI/WETH on CrowSwap: -> 4163.784714970156
+info: Nov-19-2021 13:56:35: 	DAI/WETH on ShibaSwap: -> 4173.51527864273
+info: Nov-19-2021 13:56:49: 	
+
+User requesting to borrow 100 ETH
+info: Nov-19-2021 13:56:49: 	Exhnage price difference -> -0.0007937996144830282 = -0.0007937996144830282
+info: Nov-19-2021 13:56:49: 	No profit fo this trade
+info: Nov-19-2021 22:24:41: 	DAI/WETH on Uniswap: -> 4276.703490140707
+info: Nov-19-2021 22:24:41: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-19-2021 22:24:41: 	DAI/WETH on SakeSwap: -> 4032.702219969914
+info: Nov-19-2021 22:24:41: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-19-2021 22:24:41: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-19-2021 22:24:52: 	
+
+User requesting to borrow 100 ETH
+info: Nov-19-2021 22:24:52: 	Exhnage price difference -> 0.0005512176772958996 = 0.0005512176772958996
+info: Nov-19-2021 22:24:52: 	total difference before gas -> 0.05512176772958996
+info: Nov-19-2021 22:24:52: 	total gas to execute trades -> undefined Wei
+info: Nov-19-2021 22:24:52: 	No profit estimated after gas  -> 0.04792176772958996
+
+
+
+info: Nov-19-2021 22:24:54: 	balance of DAI/WETH before trade -> 0 : 0
+info: Nov-19-2021 22:25:00: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-19-2021 22:25:00: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-19-2021 22:25:00: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-19-2021 22:25:00: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-19-2021 22:25:00: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-19-2021 22:25:01: 	balance of DAI/WETH before trade -> 0.000551217677295902
+
+
+info: Nov-19-2021 22:25:02: 	
+
+User requesting to borrow 100 ETH
+info: Nov-19-2021 22:25:02: 	Exhnage price difference -> -0.0008363991980835199 = -0.0008363991980835199
+info: Nov-19-2021 22:25:02: 	No profit fo this trade
+info: Nov-19-2021 22:25:10: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-19-2021 22:25:10: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-19-2021 22:25:10: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-19-2021 22:25:10: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-19-2021 22:25:10: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-19-2021 22:25:11: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 22:25:11: 	Exhnage price difference -> -0.0008363991980835199 = -0.0008363991980835199
+info: Nov-19-2021 22:25:11: 	No profit fo this trade
+info: Nov-19-2021 23:00:05: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-19-2021 23:00:05: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-19-2021 23:00:05: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-19-2021 23:00:05: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-19-2021 23:00:05: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-19-2021 23:00:19: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 23:00:19: 	Exhnage price difference -> -0.00012779053093603734 = -0.00012779053093603734
+info: Nov-19-2021 23:00:19: 	No profit fo this trade
+info: Nov-19-2021 23:00:33: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-19-2021 23:00:33: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-19-2021 23:00:33: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-19-2021 23:00:33: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-19-2021 23:00:33: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-19-2021 23:00:46: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 23:00:46: 	Exhnage price difference -> -0.0008363991980835199 = -0.0008363991980835199
+info: Nov-19-2021 23:00:46: 	No profit fo this trade
+info: Nov-19-2021 23:00:58: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-19-2021 23:00:58: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-19-2021 23:00:58: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-19-2021 23:00:58: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-19-2021 23:00:58: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-19-2021 23:01:12: 	
+
+User requesting to borrow 1 ETH
+info: Nov-19-2021 23:01:12: 	Exhnage price difference -> -0.00006268381878436063 = -0.00006268381878436063
+info: Nov-19-2021 23:01:12: 	No profit fo this trade
+info: Nov-19-2021 23:37:21: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-19-2021 23:37:21: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-19-2021 23:37:21: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-19-2021 23:37:21: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-19-2021 23:37:21: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-20-2021 11:55:41: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-20-2021 11:55:41: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-20-2021 11:55:41: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-20-2021 11:55:41: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-20-2021 11:55:41: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-20-2021 11:55:55: 	
+
+User requesting to borrow 1 ETH
+info: Nov-20-2021 11:55:55: 	Exhnage price difference -> -0.00006268381878436063 = -0.00006268381878436063
+info: Nov-20-2021 11:55:55: 	No profit fo this trade
+info: Nov-20-2021 12:14:51: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-20-2021 12:14:51: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-20-2021 12:14:51: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-20-2021 12:14:51: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-20-2021 12:14:51: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-20-2021 12:15:04: 	
+
+User requesting to borrow 1 ETH
+info: Nov-20-2021 12:15:04: 	Exhnage price difference -> -0.00012779053093603734 = -0.00012779053093603734
+info: Nov-20-2021 12:15:04: 	No profit fo this trade
+info: Nov-20-2021 12:15:20: 	DAI/WETH on Uniswap: -> 4276.683560096262
+info: Nov-20-2021 12:15:20: 	DAI/WETH on SushiSwap: -> 4279.019843484073
+info: Nov-20-2021 12:15:20: 	DAI/WETH on SakeSwap: -> 4278.192744517218
+info: Nov-20-2021 12:15:20: 	DAI/WETH on CrowSwap: -> 4262.186505494071
+info: Nov-20-2021 12:15:20: 	DAI/WETH on ShibaSwap: -> 4284.822366917381
+info: Nov-20-2021 12:15:34: 	
+
+User requesting to borrow 1 ETH
+info: Nov-20-2021 12:15:34: 	Exhnage price difference -> -0.00006268381878436063 = -0.00006268381878436063
+info: Nov-20-2021 12:15:34: 	No profit fo this trade
+info: Nov-20-2021 21:03:41: 	DAI/WETH on Uniswap: -> 4412.592932601915
+info: Nov-20-2021 21:03:41: 	DAI/WETH on SushiSwap: -> 4399.726044545518
+info: Nov-20-2021 21:03:41: 	DAI/WETH on SakeSwap: -> 4219.252016390779
+info: Nov-20-2021 21:03:41: 	DAI/WETH on CrowSwap: -> 4417.133026408288
+info: Nov-20-2021 21:03:41: 	DAI/WETH on ShibaSwap: -> 4404.30816795353
+info: Nov-20-2021 21:03:55: 	DAI/WETH on Uniswap: -> 4412.592932601915
+info: Nov-20-2021 21:03:55: 	DAI/WETH on SushiSwap: -> 4399.726044545518
+info: Nov-20-2021 21:03:55: 	DAI/WETH on SakeSwap: -> 4219.252016390779
+info: Nov-20-2021 21:03:55: 	DAI/WETH on CrowSwap: -> 4417.133026408288
+info: Nov-20-2021 21:03:55: 	DAI/WETH on ShibaSwap: -> 4404.30816795353
+info: Nov-20-2021 21:04:09: 	
+
+User requesting to borrow 1 ETH
+info: Nov-20-2021 21:04:09: 	Exhnage price difference -> 0.00022709663499506302 = 0.00022709663499506302
+info: Nov-20-2021 21:04:09: 	total difference before gas -> 0.022709663499506302
+info: Nov-20-2021 21:04:09: 	total gas to execute trades -> undefined Wei
+info: Nov-20-2021 21:04:09: 	No profit estimated after gas  -> 0.015509663499506303
+
+
+
+info: Nov-20-2021 21:04:11: 	balance of DAI/WETH before trade -> 0 : 0
+info: Nov-20-2021 21:04:14: 	balance of DAI/WETH before trade -> 0.000227096634995061 : 0
+
+
+info: Nov-20-2021 21:04:18: 	DAI/WETH on Uniswap: -> 4412.572694409502
+info: Nov-20-2021 21:04:18: 	DAI/WETH on SushiSwap: -> 4399.726044545518
+info: Nov-20-2021 21:04:18: 	DAI/WETH on SakeSwap: -> 4470.26497196891
+info: Nov-20-2021 21:04:18: 	DAI/WETH on CrowSwap: -> 4417.133026408288
+info: Nov-20-2021 21:04:18: 	DAI/WETH on ShibaSwap: -> 4404.30816795353
+info: Nov-20-2021 21:04:19: 	
+
+User requesting to borrow 1 ETH
+info: Nov-20-2021 21:04:19: 	Exhnage price difference -> -0.000501644549078209 = -0.000501644549078209
+info: Nov-20-2021 21:04:19: 	No profit fo this trade
+info: Nov-20-2021 21:04:33: 	DAI/WETH on Uniswap: -> 4412.572694409502
+info: Nov-20-2021 21:04:33: 	DAI/WETH on SushiSwap: -> 4399.726044545518
+info: Nov-20-2021 21:04:33: 	DAI/WETH on SakeSwap: -> 4470.26497196891
+info: Nov-20-2021 21:04:33: 	DAI/WETH on CrowSwap: -> 4417.133026408288
+info: Nov-20-2021 21:04:33: 	DAI/WETH on ShibaSwap: -> 4404.30816795353
+info: Nov-20-2021 21:04:46: 	
+
+User requesting to borrow 1 ETH
+info: Nov-20-2021 21:04:46: 	Exhnage price difference -> -0.00011411763869087835 = -0.00011411763869087835
+info: Nov-20-2021 21:04:46: 	No profit fo this trade
