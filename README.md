@@ -1,6 +1,6 @@
-# Read me incomplete installatuon guide coming soon need to tie up some final bits
 
-# Repo Contents
+# DEFI Automated Market Maker Arbitrage (AMM) Trading bot
+## Repo Contents
 This repo containes a DEFI arbitrage bot which implements flashloans to maximize arbitrage profitability between the uniswapV2 exchange along with some of its forks such as sushiswap, crowswap, sakeswap and shibaswap. This read me contains some theoretical information around aribtrage, flashbots and some of the mathematics involved aswell as detailed instructions on how to clone this repo and set up the installation in order to run the bot yourself with no coding required.
 
 1) A bot written in JS that observe the prices changes on a pre user-defined liquidity pools at Uniswap V2 / Sushiswap crowswap, sakeswap and shibaswap to determine if its possible to make a profit buying tokens cheaper at one exchange to selling them after for a bigger amount in the other, keeping the difference (profit).
@@ -20,7 +20,7 @@ Before you can actually run the code there is two pieces of sogtware that you ar
 
 **(2) Truffle suite**
 
-The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornment and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
+The first is Node.js. Node js is a javascript backend runtime enviornemt and we need it to run our arbitrage bot script. The second is the truffle suite which we need to interact and use smart contracts amounsgt other things. This pretty much is a bundle of packages for blockhain development. It comes with solidity, the truffle testing enviornment and a python for running simple web servers. To install Node.js go to https://nodejs.org/en/ and install the `Current Build`. A screenshot of the correct site is shown below
 
 <img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/tempsnip.png"/>
 
@@ -38,6 +38,7 @@ npm install truffle
 The installation might take a few minutes but again, yu can check to see if you installed truffle correctly by running
 ```bash
 truffle version
+
 //output should be in the form of
 Truffle v5.4.19 (core: 5.4.19)
 Solidity - ^0.7.0 (solc-js)
@@ -46,7 +47,7 @@ Web3.js v1.5.3
 ```
 
 ## (2) cloning the repo and installing dependancies
-Once you have these two project dependancies we are set to begin the installation of this code. In order to get this code on your machine click the green boc that says code in the top right hand corner. copy an dpast the url here. Then go to you comuter and make a new directory somewhere. Once you do open up a new terminal in this folder and execute the following command to clone the repo
+Once you have these two project dependancies we are set to begin the installation of this code. In order to get this code on your machine click the green box that says code in the top right hand corner. copy the URL from this box. Then go to you comuter and make a new directory somewhere. Once you do open up a new terminal in this folder and execute the following command to clone the repo
 ```bash
 git clone https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot.git
 ```
@@ -58,15 +59,15 @@ then open the it in VS code with
 ```bash
 code .
 ```
-In order fo ryou to be able to run the code without an errors we need to first install all of the project dependancies required. We can again use nodes pacakge manager to do this. simply run
+In order for you to be able to run the code without an errors we need to first install all of the project dependancies required. We can again use nodes pacakge manager to do this. simply run
 ```bash
 npm install
 ```
-This installation might take a minute or two but if your curious at to what all of these dependancies are navigate to the package.json file and look under `dependancies`. We are nearly there in terms of running the code but we still need one main thing and that is a way to establish a connection to the ethereum blockchain so that we can access and execute smart contract functions in all of the contracts used in this project. We can establish a connection to the ethereum blockhain in different ways such as running our own node. But that is out of the scop of this project so what we will be using is a provider and connecting via an RPC node.
+This installation might take a minute or two but if your curious as to what all of these dependancies are navigate to the package.json file and look under `dependancies`. We are nearly there in terms of running the code but we still need one main thing and that is a way to establish a connection to the ethereum blockchain so that we can access and execute smart contract functions in all of the contracts used in this project. We can establish a connection to the ethereum blockhain in different ways such as running our own node. But that is out of the scop of this project so what we will be using is a provider and connecting via an RPC node via the provider.
 
 ## (3) establishing a connection to the ethereum blockhain
 ### Ganache
-To do this we will be using ganache-cli. Ganache CLI is part of the Truffle suite of Ethereum development tools, is the command line version of Ganache, which is a like your personal blockchain for Ethereum development. Ganache CLI uses ethereumjs to simulate full client behavior and make developing Ethereum applications faster, easier, and safer. We will then be useing Infura who are an RPC Node provider so that we can use ganache to connect to an infura node ultimately allowing us to connect to the ethereum blockchain. So this step of the installation comes in two parts. We first will install ganche and then we will connect to an RPC node using Infura. To install ganche-cli open your terminal and run
+To do this we will be using ganache-cli and Infura who will be our provider. Ganache CLI is part of the Truffle suite of Ethereum development tools, and it is the command line version of Ganache, which is a like your personal blockchain for Ethereum development. Ganache CLI uses ethereumjs to simulate full client behavior and make developing Ethereum applications faster, easier, and we have much more control over certain parameters by using it over the ganache UI. We will then be useing Infura who are an RPC Node provider so that we can use ganache to connect to an infura node ultimately allowing us to connect to the ethereum blockchain. So this step of the installation comes in two parts. We first will install ganache and then we will connect to an RPC node using Infura. To install ganche-cli open your terminal and run
 ```bash
 npm install -g ganache-cli
 ```
@@ -75,34 +76,61 @@ While ganche is installing we can make out way over to the inufra website. The l
 
 <img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/infura2.png"/>
 
-Now open up a terminal just make sure that its open somewhere in your project folder and then we are going to ganache aswell as this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
+Now open up a terminal just make sure that its opned in the root of the main project folder and then we are going to start ganache-cli using our this infura endpoint to connect to ethereum and simulate the mainnet enviornemtn by forking it so run the following command to do so.
 ```bash
-ganache-cli -f INFURA ENDPOINT GOES HERE -u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE -l 9999999999
+ganache-cli -f https://eth-mainnet.alchemyapi.io/v2/Mi_VWBlr_isqKYTXOWVXRbGNDDuLiyiQ -u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE -l 9999999999
 ```
-Ok so ther eis a few things here. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this i svery useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems.
+Ok so there is a few things here that need explaining. Basically `-f` means we are forking mainnet enviornemt. forking mainnet allow sus to simulate the exact ethereum enviornemt but the great thing is we can get the address of any account on ethereum such as a whale who has lots of ether and we can use that account to send transactions. this is very useful when you dont want to risk losing your own money by testing on the real mainnet but still wasnt the feel of the mainnet enviornemnt. then we specify `-u` to unlock the whale account we wsnt to use. the account i have included above has plenty of WETH, DAI, ETH and more but you can find your own account by going to www.ethploer.io and exploring. Lastly we set the gas limit using `-l`. I picked a realkly high value so we dont run into any gas problems. The other oprions used here are mor complex and i have taken the definitions from the documentation.
 
 ## (4) deploying the contracts and running the Bot
-Now that we have our hanache server up and running establishing a connection to the ethereum blockhain we can finally run both the real maiine bot script AND the test enivornment script i made to test the credibility of my flashswap smart contract. On mainnet it is hard to find arbitrage for reasons explained in the sections below so i made a testing enviornemt that fixed to always be arbitragable. To run either script we first need to deploy our smart contratcs. Naviagte to the test enviornment folder. to do this open a terminal in the main project folder and type
+Now that we have our ganache server up and running establishing a connection to the ethereum blockhain we can finally run both the real main bot script AND also the test enivornment script i made in order to test the credibility of my flashswap smart contract. I did this because On mainnet it is hard to find arbitrage for reasons explained in the sections below so it would take too long to wait around for an arbitragable opportunity to see if my flashswap works. Thus, i made a testing enviornemt that is fixed to always be arbitragable. To run either script we first need to deploy our smart contratcs. Naviagte to the test enviornment folder. to do this open a terminal in the main project folder and type
 ```bash
 cd ./src/test/
 ```
 once here run the deployment script. We can run it two ways. the first deploys the script so that our pair is in the form `TOKENX/TOKENY` and the second deploys the script such that our tokens are in the form `TOKENY/TOKENX`. To run either execute one of the following commands
 ```bash
-node deployTestingContracts.js -a  //TOKENX/TOKENY
+node deployTestingContracts.js -TK0/TK1  //TOKENX/TOKENY
 
 //or
 
-node deployTestingContracts.js -b  //TOKENY/TOKENX
+node deployTestingContracts.js -TH1/TK0  //TOKENY/TOKENX
 ```
+The only thing that we need to do now is to copy the contract addresses for token0, token1 and the flashbot contract and pas them into the resgitry.js file wehre i have defined the address names but left them blank for this very purpose for people installing this code. the registry.js file is also in `src/` when you run the deploy script your result will look like this
+
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/test2.PNG"/>
+
+Copy all of these addresses one by one and past them into their respective loaction i n the registry.js file as shown below. Note that you will need to do this each and every time you stop and restart ganache.
+
+<img src="https://github.com/mcgraneder/Defi-Trading-Arbitrage-Bot/blob/main/images/test.PNG"/>
+
+```bash
+ ganache-cli --db ../../ganacheCLIBCdata/db --u 0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE
+ ```
+ 
+## (5) Running the bots
 after the deployment finsihes we can run both the test script and the main bot. to run the test script stay in the current directory and run
 ```bash
 node arbitrageBotTest.js
 ```
-and enjoy this script will always return a profut bcause it is a fixed test. if you would like to run the main bot move back into the src directory. so run both of these commands
+and enjoy this script will always return a profut bcause it is a fixed test. if you would like to run the main bot move back into the src directory with. then run both of these commands
 ```bash
 cd ../
+```
+You can run any of the commands below to run the bot. Each seperate script runs the bot for arbitrage on different exchsnges. if you want you can run them all simulatneously in different terminals
+```bash
+node index.js -uni-sushi
 
-node index.js
+//OR
+
+node index.js -uni-sake
+
+//OR
+
+node index.js -uni-crow
+
+//OR
+
+node index.js -uni-shiba
 ```
 more than likely you will not get an arbitrage because the price differences between exchanges is much closer. however i have gotten one real arbitrage on forked mainnet since i have started this project. ive been building it for two weeks so once out of running it for days and days is not that consistent but this bot is not a production bot at all not by any strecth it is more of s proof of concept.  I have made a logger using mongoDB which logs various information such as price data and tranactions and other information to a mongo databsse. In this repo i commented out the mongoDB bcause it takes too long for me to explain the setup but the logs instead go to files in the logs folder. you can run the script and keep track of any arbs you get with the logs. they are very useful.Read the sections below to lesrn about how we could improve this script further and why arbitrage is profitable. I hope you are able to get thing srunning. If you cant feel free to email me with your questions at evan.mcgrane5@mail.dcu.ie. Enjoy.
 
